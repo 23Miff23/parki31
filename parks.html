@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>31 ПАРК v4.0</title>
+<style>
+:root{--bg:#0a1018;--card:#141d2b;--card2:#1e2b3e;--line:#2a3b52;--accent:#38bdf8;
+--green:#22c55e;--yellow:#fbbf24;--red:#ef4444;--purple:#a855f7;--text:#e6edf5;--muted:#7a8ba3}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+background:linear-gradient(180deg,#0a1018,#0f1a2a);color:var(--text);min-height:100vh;
+padding-bottom:90px;font-size:15px}
+header{background:rgba(20,29,43,.95);backdrop-filter:blur(10px);padding:12px 14px 10px;
+border-bottom:1px solid var(--line);position:sticky;top:0;z-index:50}
+h1{font-size:15px;font-weight:700;margin-bottom:6px;
+background:linear-gradient(90deg,var(--accent),var(--purple));
+-webkit-background-clip:text;background-clip:text;color:transparent}
+.bar{background:var(--card2);height:7px;border-radius:10px;overflow:hidden;margin-bottom:5px}
+.bar-fill{height:100%;background:linear-gradient(90deg,var(--green),var(--accent));transition:width .5s}
+.meta{display:flex;justify-content:space-between;font-size:10px;color:var(--muted)}
+main{padding:12px}
+.tabs{display:flex;gap:4px;padding:6px 12px 0;overflow-x:auto;position:sticky;top:70px;
+background:linear-gradient(180deg,rgba(10,16,24,.98),rgba(10,16,24,.92));z-index:40;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex-shrink:0;padding:7px 13px;background:var(--card);border:1px solid var(--line);
+border-radius:11px;font-size:12px;color:var(--muted);cursor:pointer;font-weight:500;transition:.2s}
+.tab.active{background:linear-gradient(135deg,var(--accent),var(--purple));color:#fff;border-color:transparent;
+box-shadow:0 4px 14px rgba(56,189,248,.3)}
+.section{display:none;animation:fade .3s}.section.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:13px;
+margin-bottom:10px;position:relative;overflow:hidden;transition:.25s}
+.card.done{border-color:var(--green);background:linear-gradient(135deg,#0d2818,var(--card))}
+.card.done::before{content:'✓';position:absolute;top:11px;right:13px;color:var(--green);
+font-size:20px;font-weight:900}
+.card-head{display:flex;align-items:flex-start;gap:9px;margin-bottom:9px}
+.num{flex-shrink:0;width:34px;height:34px;border-radius:10px;
+background:linear-gradient(135deg,var(--accent),var(--purple));display:flex;align-items:center;
+justify-content:center;font-weight:800;font-size:14px;color:#fff}
+.card.done .num{background:linear-gradient(135deg,var(--green),#16a34a)}
+.title{font-size:14px;font-weight:700;line-height:1.25}
+.sub{font-size:10px;color:var(--muted);margin-top:2px}
+.badges{display:flex;flex-wrap:wrap;gap:4px;margin:7px 0}
+.badge{font-size:9.5px;padding:3px 7px;border-radius:8px;background:var(--card2);color:var(--muted);
+border:1px solid var(--line)}
+.badge.free{color:var(--green);border-color:#166534}
+.badge.paid{color:var(--yellow);border-color:#78350f}
+.badge.terrain{color:var(--accent);border-color:#0c4a6e}
+.badge.express{color:var(--purple);border-color:#6b21a8}
+</style>
+</head>
+<body>
+  <header>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+    <h1 style="flex:1">🏃 31 ПАРК <span style="font-size:10px;color:var(--accent)">v4.0</span></h1>
+    <div class="profile active" onclick="switchTab('family')" style="padding:5px 10px;font-size:11px">
+      <span id="curName">Я</span>
+    </div>
+  </div>
+  <div class="bar"><div class="bar-fill" id="topBar" style="width:0%"></div></div>
+  <div class="meta">
+    <span id="topProg">0 / 31</span>
+    <span id="topKm">0.0 км</span>
+    <span id="topTime">0 ч 00 м</span>
+  </div>
+</header>
+
+<div class="tabs">
+  <div class="tab active" data-tab="challenge">🏃 Челлендж</div>
+  <div class="tab" data-tab="wheel">🎲 Колесо</div>
+  <div class="tab" data-tab="map">🗺️ Карта</div>
+  <div class="tab" data-tab="stats">📊 Статистика</div>
+  <div class="tab" data-tab="ach">🏆 Достижения</div>
+  <div class="tab" data-tab="family">👨‍👩‍👧 Профили</div>
+  <div class="tab" data-tab="settings">⚙️ Настройки</div>
+</div>
+
+<main>
+  <section class="section active" id="challenge">
+    <div class="row" style="display:flex;gap:8px;margin-bottom:12px">
+      <button class="btn btn-ghost" style="flex:1" onclick="showNext()">🎯 Следующий парк</button>
+      <button class="btn btn-ghost" onclick="resetAll()">↺</button>
+    </div>
+    <div id="parkList"></div>
+  </section>
+
+  <section class="section" id="wheel">
+    <div class="wheel" style="text-align:center;padding:26px 14px;background:var(--card);
+      border-radius:20px;border:1px solid var(--line);margin-bottom:12px">
+      <div style="font-size:14px;color:var(--muted)">🎰 Куда бежим?</div>
+      <div class="wheel-result" id="wheelRes" style="font-size:19px;font-weight:800;margin:12px 0;
+        min-height:26px;color:var(--accent)">Нажми кнопку</div>
+      <button class="btn btn-primary" onclick="spinWheel()" style="width:100%">Крутить</button>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:12px">
+        <button class="btn btn-ghost" onclick="spinWheel('free')">🟢 Бесплатные</button>
+        <button class="btn btn-ghost" onclick="spinWheel('10')">🔟 10 км</button>
+        <button class="btn btn-ghost" onclick="spinWheel('near')">🚇 Ближние</button>
+        <button class="btn btn-ghost" onclick="spinWheel('adv')">🏔️ Приключение</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="map">
+    <div class="map-wrap" style="background:var(--card);border-radius:16px;padding:9px;
+      border:1px solid var(--line);margin-bottom:12px;overflow:hidden">
+      <svg class="map" viewBox="0 0 800 700" id="mapSvg" style="width:100%;height:auto;display:block"></svg>
+    </div>
+    <div class="hint" style="font-size:11px;color:var(--muted);text-align:center;margin:12px 0">
+      🟢 пройдено · 🔵 следующее · нажми на точку
+    </div>
+  </section>
+
+  <section class="section" id="stats"><div id="statsContent"></div></section>
+  <section class="section" id="ach"><div class="ach-grid" id="achGrid"
+    style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:9px"></div></section>
+  <section class="section" id="family">
+    <div id="profilesList" style="display:flex;gap:6px;overflow-x:auto;padding:6px 0;margin-bottom:9px"></div>
+    <button class="btn btn-primary" style="width:100%;margin-bottom:8px" onclick="addProfile()">➕ Добавить профиль</button>
+    <div id="familyStats" style="margin-top:14px"></div>
+  </section>
+  <section class="section" id="settings">
+    <button class="btn btn-ghost" style="width:100%;margin-bottom:8px" onclick="exportData()">📤 Экспорт JSON</button>
+    <button class="btn btn-ghost" style="width:100%;margin-bottom:8px" onclick="document.getElementById('importFile').click()">📥 Импорт JSON</button>
+    <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
+    <button class="btn btn-ghost" style="width:100%;margin-bottom:8px" onclick="resetAll()">🗑️ Сбросить прогресс</button>
+  </section>
+</main>
+
+<div class="modal" id="runModal" style="position:fixed;inset:0;background:rgba(0,0,0,.85);
+  display:none;align-items:center;justify-content:center;z-index:200;padding:18px">
+  <div class="modal-box" style="background:var(--card);border-radius:20px;padding:20px;
+    max-width:440px;width:100%;border:1px solid var(--line);max-height:88vh;overflow-y:auto">
+    <h3 id="modalTitle" style="font-size:16px;margin-bottom:12px;color:var(--accent)">Отметить пробежку</h3>
+    <div style="margin-bottom:10px"><label style="font-size:10.5px;color:var(--muted)">Дата</label>
+      <input type="date" id="fDate" style="width:100%;padding:9px;background:var(--card2);
+      border:1px solid var(--line);border-radius:10px;color:var(--text);font-size:13px"></div>
+    <div style="margin-bottom:10px"><label style="font-size:10.5px;color:var(--muted)">Км</label>
+      <input type="number" id="fKm" step="0.1" value="5" style="width:100%;padding:9px;
+      background:var(--card2);border:1px solid var(--line);border-radius:10px;
+      color:var(--text);font-size:13px"></div>
+    <div style="margin-bottom:10px"><label style="font-size:10.5px;color:var(--muted)">Минут</label>
+      <input type="number" id="fMin" value="30" style="width:100%;padding:9px;background:var(--card2);
+      border:1px solid var(--line);border-radius:10px;color:var(--text);font-size:13px"></div>
+    <div style="margin-bottom:10px"><label style="font-size:10.5px;color:var(--muted)">Погода</label>
+      <div class="weather-pick" id="weatherPick" style="display:grid;grid-template-columns:repeat(4,1fr);gap:5px">
+        <div class="w-btn" data-w="☀️" style="padding:9px;background:var(--card2);border:1px solid var(--line);
+          border-radius:10px;text-align:center;font-size:17px;cursor:pointer">☀️</div>
+        <div class="w-btn" data-w="🌧️" style="padding:9px;background:var(--card2);border:1px solid var(--line);
+          border-radius:10px;text-align:center;font-size:17px;cursor:pointer">🌧️</div>
+        <div class="w-btn" data-w="❄️" style="padding:9px;background:var(--card2);border:1px solid var(--line);
+          border-radius:10px;text-align:center;font-size:17px;cursor:pointer">❄️</div>
+        <div class="w-btn" data-w="🌫️" style="padding:9px;background:var(--card2);border:1px solid var(--line);
+          border-radius:10px;text-align:center;font-size:17px;cursor:pointer">🌫️</div>
+      </div></div>
+    <div style="margin-bottom:10px"><label style="font-size:10.5px;color:var(--muted)">Заметка</label>
+      <textarea id="fNotes" rows="2" style="width:100%;padding:9px;background:var(--card2);
+      border:1px solid var(--line);border-radius:10px;color:var(--text);font-size:13px"></textarea></div>
+    <div style="display:flex;gap:7px;margin-top:12px">
+      <button class="btn btn-ghost" style="flex:1" onclick="closeModal()">Отмена</button>
+      <button class="btn btn-green" style="flex:2" onclick="saveRun()"
+        style="background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;padding:10px;border:none;
+        border-radius:11px;font-weight:600">✓ Сохранить</button>
+    </div>
+  </div>
+</div>
+
+<style>
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:5px;padding:10px 15px;
+border-radius:11px;border:none;font-size:13px;font-weight:600;cursor:pointer;color:#fff;
+font-family:inherit;transition:.2s}
+.btn:active{transform:scale(.96)}
+.btn-primary{background:linear-gradient(135deg,#38bdf8,#a855f7)}
+.btn-green{background:linear-gradient(135deg,#22c55e,#16a34a)}
+.btn-ghost{background:#1e2b3e;color:#e6edf5;border:1px solid #2a3b52}
+.row{display:flex;gap:7px;margin-bottom:10px}
+.mode{padding:8px 5px;border-radius:10px;background:#1e2b3e;border:1px solid #2a3b52;
+text-align:center;font-size:9.5px;cursor:pointer}
+.mode .m-title{font-weight:700;font-size:10.5px;margin-bottom:2px}
+.mode.light .m-title{color:#22c55e}
+.mode.standard .m-title{color:#38bdf8}
+.mode.adventure .m-title{color:#ef4444}
+.run-info{margin-top:9px;padding:9px;background:#1e2b3e;border-radius:10px;font-size:11px;
+line-height:1.6;color:#7a8ba3}
+.run-info b{color:#e6edf5}
+.ach{background:#141d2b;border:1px solid #2a3b52;border-radius:13px;padding:11px;
+text-align:center;opacity:.4;transition:.3s}
+.ach.on{opacity:1;border-color:#fbbf24;background:linear-gradient(135deg,#2a1f0a,#141d2b)}
+.ach .ico{font-size:26px;margin-bottom:5px;display:block}
+.ach .nm{font-size:10.5px;font-weight:700;margin-bottom:2px}
+.ach .ds{font-size:9px;color:#7a8ba3}
+.profile{flex-shrink:0;padding:8px 14px;background:#1e2b3e;border:1px solid #2a3b52;
+border-radius:20px;font-size:12px;cursor:pointer;color:#7a8ba3}
+.profile.active{background:linear-gradient(135deg,#38bdf8,#a855f7);color:#fff;border-color:transparent}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:12px}
+.stat{background:#141d2b;border:1px solid #2a3b52;border-radius:13px;padding:12px}
+.stat-val{font-size:22px;font-weight:800;color:#38bdf8;line-height:1.1}
+.stat-lbl{font-size:10px;color:#7a8ba3;margin-top:3px}
+</style>
+<script>
+const RAW = [
+  [1,"Павловский парк",600,"Пушкинский","эл. Павловск",1,"умеренный",9,59.68,30.45,["forest","historic","express"],"Павловск"],
+  [2,"Парк Сосновка",302,"Выборгский","Политехническая",0,"ровный",10,60.02,30.35,["forest"],null],
+  [3,"Парк Сергиевка",200,"Петродворцовый","эл. Старый Петергоф",0,"умеренный",7,59.88,29.92,["forest","water","express"],"Петергоф"],
+  [4,"Приморский парк Победы",168,"Петроградский","Крестовский остров",0,"ровный",10,59.97,30.22,["water"],null],
+  [5,"Ораниенбаум",162,"Ломоносов","эл. Ораниенбаум",1,"ровный",7,59.92,29.78,["historic","water","express"],"Ломоносов"],
+  [6,"Удельный парк",153,"Приморский","Удельная",0,"умеренный",9,60.03,30.30,["forest"],null],
+  [7,"Шуваловский парк",134,"Выборгский","Парголово",0,"холмистый",8,60.05,30.28,["forest","historic"],null],
+  [8,"Александрия",115,"Петродворцовый","эл. Новый Петергоф",1,"ровный",8,59.88,29.92,["historic","water","express"],"Петергоф"],
+  [9,"Екатерининский парк",107,"Пушкинский","эл. Царское Село",1,"ровный",9,59.71,30.40,["historic","express"],"Пушкин"],
+  [10,"Нижний парк Петергоф",102,"Петродворцовый","эл. Новый Петергоф",1,"ровный",8,59.88,29.90,["historic","water","express"],"Петергоф"],
+  [11,"Александровский парк",100,"Пушкинский","эл. Царское Село",0,"ровный",9,59.72,30.40,["historic","forest","express"],"Пушкин"],
+  [12,"Елагин остров",96.8,"Петроградский","Крестовский остров",1,"ровный",10,59.97,30.25,["water","historic"],null],
+  [13,"Московский парк Победы",68,"Московский","Парк Победы",0,"ровный",9,59.86,30.32,["water"],null],
+  [14,"Парк Дубки",60,"Курортный","эл. Сестрорецк",0,"умеренный",8,60.10,29.95,["forest","water","express"],"Сестрорецк"],
+  [15,"Южно-Приморский парк",58,"Красносельский","Проспект Ветеранов",0,"ровный",9,59.85,30.15,["water"],null],
+  [16,"Дудергофские высоты",50,"Красносельский","эл. Можайская",0,"холмистый",7,59.70,30.11,["forest","mountain"],null],
+  [17,"Парк Интернационалистов",45,"Фрунзенский","Купчино",0,"ровный",9,59.84,30.39,["water"],null],
+  [18,"Парк 300-летия",38.6,"Приморский","Приморская",0,"ровный",10,59.98,30.20,["water"],null],
+  [19,"Парк Екатерингоф",30,"Кировский","Нарвская",0,"ровный",8,59.90,30.25,["water","historic"],null],
+  [20,"Баболовский парк",30,"Пушкинский","эл. Царское Село",0,"умеренный",8,59.70,30.36,["forest","historic","express"],"Пушкин"],
+  [21,"Парк Знаменка",30,"Петродворцовый","эл. Знаменка",0,"умеренный",7,59.87,29.92,["forest","historic","express"],"Петергоф"],
+  [22,"Парк Академика Сахарова",26.3,"Калининский","Гражданский пр.",0,"ровный",9,60.03,30.40,["water"],null],
+  [23,"Таврический сад",21.1,"Центральный","Чернышевская",0,"ровный",9,59.94,30.37,["water","historic"],null],
+  [24,"Пискарёвский парк",20,"Калининский","Пл. Мужества",0,"ровный",8,59.99,30.42,["historic"],null],
+  [25,"Полюстровский парк",20,"Красногвардейский","Лесная",0,"ровный",7,59.97,30.40,["water"],null],
+  [26,"Колпинский парк",20,"Колпинский","эл. Колпино",0,"ровный",8,59.75,30.60,["water","historic","express"],"Колпино"],
+  [27,"Парк Александрино",18,"Кировский","Пр. Ветеранов",0,"ровный",8,59.85,30.18,["water"],null],
+  [28,"Парк Авиаторов",15,"Московский","Московская",0,"ровный",8,59.85,30.22,["water"],null],
+  [29,"Парк Озеро Долгое",15,"Приморский","Комендантский пр.",0,"ровный",9,60.02,30.28,["water"],null],
+  [30,"Летний сад",11.2,"Центральный","Гостиный двор",0,"ровный",8,59.94,30.33,["historic","water"],null],
+  [31,"Михайловский сад",9,"Центральный","Гостиный двор",0,"ровный",8,59.94,30.33,["historic","water"],null]
+];
+const PARKS = RAW.map(r=>({id:r[0],name:r[1],area:r[2],district:r[3],metro:r[4],
+paid:r[5]===1,terrain:r[6],run:r[7],lat:r[8],lon:r[9],tags:r[10],express:r[11],
+modes:{light:{km:5,min:30},standard:{km:10,min:60},adventure:{km:10,min:75}}}));
+const ACHS = [
+{id:"first",ico:"🎯",nm:"Первый шаг",ds:"1 парк"},
+{id:"five",ico:"🖐️",nm:"Разогрев",ds:"5 парков"},
+{id:"ten",ico:"🔟",nm:"Десятка",ds:"10"},
+{id:"twenty",ico:"💪",nm:"Половина",ds:"16"},
+{id:"all",ico:"🏆",nm:"Все 31",ds:"Финиш"},
+{id:"forest",ico:"🌲",nm:"Лесной бегун",ds:"5 лесопарков"},
+{id:"water",ico:"🌊",nm:"Балтийский круг",ds:"7 у воды"},
+{id:"hills",ico:"⛰️",nm:"Рельефный",ds:"3 холмистых"},
+{id:"dawn",ico:"🌅",nm:"Рассвет",ds:"Утро"},
+{id:"night",ico:"🌙",nm:"Ночной",ds:"Вечер"},
+{id:"snow",ico:"❄️",nm:"Зимний",ds:"Снег"},
+{id:"rain",ico:"☔",nm:"Погода",ds:"Дождь"},
+{id:"100km",ico:"💯",nm:"Сотня",ds:"100 км"},
+{id:"200km",ico:"🚀",nm:"200 км",ds:"200"},
+{id:"310km",ico:"🏅",nm:"310 км",ds:"Всё"}
+];
+  const PROFILES_KEY="parks31_profiles_v4",ACTIVE_KEY="parks31_active_v4";
+function loadProfiles(){
+  let p=JSON.parse(localStorage.getItem(PROFILES_KEY)||"null");
+  if(!p){p=[{id:"me",name:"Я"}];localStorage.setItem(PROFILES_KEY,JSON.stringify(p));}
+  return p;
+}
+let profiles=loadProfiles();
+let activeProfile=localStorage.getItem(ACTIVE_KEY)||profiles[0].id;
+function getActiveProfile(){return profiles.find(p=>p.id===activeProfile)||profiles[0];}
+function setActiveProfile(id){activeProfile=id;localStorage.setItem(ACTIVE_KEY,id);loadState();render();renderProfiles();}
+let state;
+function loadState(){
+  const k="parks31_v4_"+activeProfile;
+  state=JSON.parse(localStorage.getItem(k)||'{"runs":{},"ach":{},"playerName":""}');
+  if(!state.runs)state.runs={};if(!state.ach)state.ach={};
+}
+loadState();
+function save(){localStorage.setItem("parks31_v4_"+activeProfile,JSON.stringify(state));}
+const totalKm=()=>Object.values(state.runs).reduce((s,r)=>s+(parseFloat(r.km)||0),0);
+const totalMin=()=>Object.values(state.runs).reduce((s,r)=>s+(parseInt(r.min)||0),0);
+const doneCount=()=>Object.keys(state.runs).length;
+const terrIcon=t=>({ровный:"🟩",умеренный:"🟨",холмистый:"🟥"}[t]||"⬜");
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function render(){renderHeader();renderParks();renderStats();renderAch();renderMap();renderProfiles();}
+function renderHeader(){
+  const c=doneCount(),km=totalKm(),min=totalMin();
+  document.getElementById("topProg").textContent=`${c} / 31`;
+  document.getElementById("topKm").textContent=km.toFixed(1)+" км";
+  document.getElementById("topTime").textContent=`${Math.floor(min/60)}ч ${String(min%60).padStart(2,'0')}м`;
+  document.getElementById("topBar").style.width=(c/31*100)+"%";
+  document.getElementById("curName").textContent=getActiveProfile().name;
+}
+
+function renderParks(){
+  document.getElementById("parkList").innerHTML=PARKS.map(p=>{
+    const run=state.runs[p.id],isDone=!!run;
+    return `<div class="card ${isDone?'done':''}" id="card-${p.id}">
+      <div class="card-head">
+        <div class="num">${p.id}</div>
+        <div style="flex:1">
+          <div class="title">${p.name}</div>
+          <div class="sub">${p.area} га · ${p.district} · ${p.metro}</div>
+        </div>
+      </div>
+      <div class="badges">
+        <span class="badge ${p.paid?'paid':'free'}">${p.paid?'🎟 Платный':'✓ Бесплатно'}</span>
+        <span class="badge terrain">${terrIcon(p.terrain)} ${p.terrain}</span>
+        <span class="badge">🏃 ${p.run}/10</span>
+        ${p.express?`<span class="badge express">🚆</span>`:''}
+        ${p.tags.includes('forest')?'<span class="badge">🌲</span>':''}
+        ${p.tags.includes('water')?'<span class="badge">🌊</span>':''}
+        ${p.tags.includes('historic')?'<span class="badge">🏛</span>':''}
+      </div>
+      ${isDone?`<div class="run-info">✓ <b>${run.date}</b> · ${run.km} км · ${run.min} мин ${run.weather||''} ${run.feel?`· ${run.feel}/5`:''}
+        ${run.notes?`<br>💬 <i>${esc(run.notes)}</i>`:''}</div>
+        <div class="row" style="margin-top:9px;margin-bottom:0">
+          <button class="btn btn-ghost" style="flex:1" onclick="openModal(${p.id},'light')">↺</button>
+          <button class="btn btn-ghost" onclick="removeRun(${p.id})">🗑</button>
+        </div>`
+      :`<div class="modes" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;margin-top:9px">
+        <div class="mode light" onclick="openModal(${p.id},'light')">
+          <div class="m-title">🟢 Лайт</div><div class="m-sub">5 км · 30 мин</div></div>
+        <div class="mode standard" onclick="openModal(${p.id},'standard')">
+          <div class="m-title">🔵 Стандарт</div><div class="m-sub">10 км · 60 мин</div></div>
+        <div class="mode adventure" onclick="openModal(${p.id},'adventure')">
+          <div class="m-title">🔴 Прикл.</div><div class="m-sub">10 км · 75 мин</div></div>
+      </div>`}
+    </div>`;
+  }).join("");
+ }
+  let editingPark=null,editingMode=null,pickedWeather="";
+function openModal(id,mode){
+  editingPark=id;editingMode=mode;
+  const p=PARKS.find(x=>x.id===id),ex=state.runs[id],m=p.modes[mode];
+  document.getElementById("modalTitle").textContent=p.name;
+  document.getElementById("fDate").value=ex?.date||new Date().toISOString().slice(0,10);
+  document.getElementById("fKm").value=ex?.km||m.km;
+  document.getElementById("fMin").value=ex?.min||m.min;
+  document.getElementById("fNotes").value=ex?.notes||"";
+  pickedWeather=ex?.weather||"";
+  document.querySelectorAll("#weatherPick .w-btn").forEach(el=>{
+    el.style.background=(el.dataset.w===pickedWeather)?"linear-gradient(135deg,#38bdf8,#a855f7)":"#1e2b3e";
+    el.style.borderColor=(el.dataset.w===pickedWeather)?"transparent":"#2a3b52";
+  });
+  document.getElementById("runModal").style.display="flex";
+}
+function closeModal(){document.getElementById("runModal").style.display="none";}
+document.querySelectorAll("#weatherPick .w-btn").forEach(el=>el.addEventListener("click",()=>{
+  pickedWeather=(pickedWeather===el.dataset.w)?"":el.dataset.w;
+  document.querySelectorAll("#weatherPick .w-btn").forEach(x=>{
+    x.style.background=(x.dataset.w===pickedWeather)?"linear-gradient(135deg,#38bdf8,#a855f7)":"#1e2b3e";
+    x.style.borderColor=(x.dataset.w===pickedWeather)?"transparent":"#2a3b52";
+  });
+}));
+function saveRun(){
+  if(!editingPark)return;
+  state.runs[editingPark]={mode:editingMode,date:document.getElementById("fDate").value,
+    km:parseFloat(document.getElementById("fKm").value)||0,
+    min:parseInt(document.getElementById("fMin").value)||0,
+    weather:pickedWeather,
+    notes:document.getElementById("fNotes").value.trim()};
+  save();closeModal();render();
+}
+function removeRun(id){if(!confirm("Удалить?"))return;delete state.runs[id];save();render();}
+function resetAll(){if(!confirm("Сбросить прогресс?"))return;
+  state={runs:{},ach:{},playerName:state.playerName};save();render();}
+function showNext(){const p=PARKS.find(x=>!state.runs[x.id]);
+  if(!p){alert("Все парки пройдены! 🏆");return;}
+  document.getElementById("card-"+p.id)?.scrollIntoView({behavior:"smooth",block:"center"});}
+
+function spinWheel(filter){
+  let pool=PARKS.filter(p=>!state.runs[p.id]);
+  if(filter==="free")pool=pool.filter(p=>!p.paid);
+  if(filter==="10")pool=pool.filter(p=>p.area>20);
+  if(filter==="near")pool=pool.filter(p=>!p.express);
+  if(filter==="adv")pool=pool.filter(p=>p.tags.includes('forest')||p.terrain==='холмистый');
+  if(!pool.length)pool=PARKS.filter(p=>!state.runs[p.id]);
+  const res=document.getElementById("wheelRes");
+  if(!pool.length){res.textContent="Все пройдены! 🏆";return;}
+  let n=0;const t=setInterval(()=>{
+    res.textContent=pool[Math.floor(Math.random()*pool.length)].name;
+    if(++n>15){clearInterval(t);const pick=pool[Math.floor(Math.random()*pool.length)];
+      res.textContent="🎯 "+pick.name;setTimeout(()=>openModal(pick.id,"standard"),900);}
+  },80);
+}
+
+function renderMap(){
+  const svg=document.getElementById("mapSvg"),W=800,H=700;
+  const latMin=59.65,latMax=60.15,lonMin=29.72,lonMax=30.65;
+  const x=lon=>(lon-lonMin)/(lonMax-lonMin)*W,y=lat=>(latMax-lat)/(latMax-latMin)*H;
+  const nextP=PARKS.find(p=>!state.runs[p.id]);
+  let s=`<rect width="${W}" height="${H}" fill="#0e1825" rx="14"/>
+    <text x="20" y="30" fill="#38bdf8" font-size="18" font-weight="700">Карта завоевания</text>
+    <text x="20" y="52" fill="#7a8ba3" font-size="12">${doneCount()} из 31 · нажми на точку</text>`;
+  PARKS.forEach(p=>{const cx=x(p.lon),cy=y(p.lat),done=!!state.runs[p.id];
+    const next=nextP&&nextP.id===p.id;
+    const color=done?"#22c55e":next?"#38bdf8":p.express?"#a855f7":"#4a5b74";
+    const r=done?11:next?13:p.express?9:8;
+    s+=`<g style="cursor:pointer" onclick="scrollToPark(${p.id})">
+      <circle cx="${cx}" cy="${cy}" r="${r}" fill="${color}" stroke="#0a1018" stroke-width="2"/>
+      <text x="${cx}" y="${cy+4}" fill="${done?'#0a1018':'#e6edf5'}" font-size="10" font-weight="700" text-anchor="middle">${p.id}</text>
+    </g>`;});
+  svg.innerHTML=s;
+}
+function scrollToPark(id){switchTab("challenge");
+  setTimeout(()=>document.getElementById("card-"+id)?.scrollIntoView({behavior:"smooth",block:"center"}),100);}
+
+function renderProfiles(){
+  document.getElementById("profilesList").innerHTML=profiles.map(p=>`
+    <div class="profile ${p.id===activeProfile?'active':''}" onclick="setActiveProfile('${p.id}')">
+      ${esc(p.name)}
+    </div>`).join("");
+  const fs=document.getElementById("familyStats");
+  if(fs)fs.innerHTML=`<div class="card"><div style="font-size:13px;font-weight:700;margin-bottom:10px">📊 Профили</div>
+    ${profiles.map(p=>{const s=JSON.parse(localStorage.getItem("parks31_v4_"+p.id)||"{}");
+      const c=Object.keys(s.runs||{}).length;
+      const km=Object.values(s.runs||{}).reduce((a,r)=>a+(parseFloat(r.km)||0),0);
+      return `<div style="display:flex;justify-content:space-between;padding:6px 0;font-size:12px;border-bottom:1px solid var(--line)">
+        <span>${esc(p.name)}</span><span style="color:var(--muted)">${c}/31 · ${km.toFixed(1)} км</span></div>`;
+    }).join("")}</div>`;
+}
+function addProfile(){
+  const n=prompt("Имя профиля:");if(!n)return;
+  const id="p"+Date.now();profiles.push({id,name:n});
+  localStorage.setItem(PROFILES_KEY,JSON.stringify(profiles));
+  setActiveProfile(id);
+}
+  function renderStats(){
+  const c=doneCount(),km=totalKm(),min=totalMin();
+  const pace=km>0?min/km:0,pM=Math.floor(pace),pS=Math.round((pace-pM)*60);
+  let html=`<div class="stat-grid">
+    <div class="stat"><div class="stat-val">${c}/31</div><div class="stat-lbl">Парков</div></div>
+    <div class="stat"><div class="stat-val">${(c/31*100).toFixed(0)}%</div><div class="stat-lbl">Прогресс</div></div>
+    <div class="stat"><div class="stat-val">${km.toFixed(1)}</div><div class="stat-lbl">Км</div></div>
+    <div class="stat"><div class="stat-val">${Math.floor(min/60)}ч ${String(min%60).padStart(2,'0')}м</div><div class="stat-lbl">Время</div></div>
+    <div class="stat"><div class="stat-val">${km>0?pM+":"+String(pS).padStart(2,'0'):"—"}</div><div class="stat-lbl">Темп /км</div></div>
+    <div class="stat"><div class="stat-val">${c}</div><div class="stat-lbl">Пробежек</div></div>
+  </div>`;
+  const byTag={forest:0,water:0,historic:0};
+  PARKS.forEach(p=>{if(state.runs[p.id])p.tags.forEach(t=>{if(byTag[t]!==undefined)byTag[t]++;});});
+  html+=`<div class="card"><div style="font-size:13px;font-weight:700;margin-bottom:8px">🎨 Мой Петербург</div>
+    <div style="font-size:13px;line-height:1.8">🌲 Лес: <b>${byTag.forest}</b><br>🌊 Вода: <b>${byTag.water}</b><br>🏛 История: <b>${byTag.historic}</b></div></div>`;
+  if(c===31){
+    const ds=Object.values(state.runs).map(r=>r.date).sort();
+    html+=`<div style="text-align:center;padding:26px 18px;background:linear-gradient(135deg,#1a1a2e,#2d1b4e);
+      border-radius:20px;border:2px solid #fbbf24;margin:12px 0">
+      <div style="font-size:44px">🏅</div>
+      <div style="font-size:20px;color:#fbbf24;font-weight:800;margin-bottom:9px">PARK RUNNER · SPB</div>
+      <div style="font-size:14px;line-height:1.8"><b>31 / 31 парков</b><br>${km.toFixed(1)} км · ${Math.floor(min/60)} ч ${min%60} мин<br>
+      <span style="color:#7a8ba3;font-size:12px">${ds[0]} → ${ds[ds.length-1]}</span></div>
+    </div>`;
+  }
+  document.getElementById("statsContent").innerHTML=html;
+}
+
+function checkAch(){
+  const c=doneCount(),km=totalKm();
+  const tags={forest:0,water:0,historic:0,hills:0};
+  PARKS.forEach(p=>{if(!state.runs[p.id])return;
+    p.tags.forEach(t=>{if(tags[t]!==undefined)tags[t]++;});
+    if(p.terrain==='холмистый')tags.hills++;});
+  const w=Object.values(state.runs).map(r=>r.weather);
+  const a=state.ach||(state.ach={});const U=k=>a[k]=true;
+  if(c>=1)U("first");if(c>=5)U("five");if(c>=10)U("ten");if(c>=16)U("twenty");if(c>=31)U("all");
+  if(tags.forest>=5)U("forest");if(tags.water>=7)U("water");if(tags.hills>=3)U("hills");
+  if(w.includes("🌅"))U("dawn");if(w.includes("🌙"))U("night");
+  if(w.includes("❄️"))U("snow");if(w.includes("🌧️"))U("rain");
+  if(km>=100)U("100km");if(km>=200)U("200km");if(km>=310)U("310km");
+  save();
+}
+function renderAch(){
+  checkAch();const a=state.ach||{};
+  document.getElementById("achGrid").innerHTML=ACHS.map(x=>`
+    <div class="ach ${a[x.id]?'on':''}"><span class="ico">${x.ico}</span>
+    <div class="nm">${x.nm}</div><div class="ds">${x.ds}</div></div>`).join("");
+}
+
+function downloadFile(name,content,mime="application/octet-stream"){
+  const blob=new Blob([content],{type:mime});const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");a.href=url;a.download=name;a.click();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);}
+function exportData(){downloadFile(`parks31-${getActiveProfile().name}.json`,JSON.stringify(state,null,2),"application/json");}
+function importData(ev){
+  const f=ev.target.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=e=>{try{state=JSON.parse(e.target.result);save();render();alert("Загружено ✓");}
+    catch(err){alert("Ошибка");}};
+  r.readAsText(f);
+}
+
+function switchTab(name){
+  document.querySelectorAll(".tab").forEach(t=>t.classList.toggle("active",t.dataset.tab===name));
+  document.querySelectorAll(".section").forEach(s=>s.classList.toggle("active",s.id===name));
+  if(name==="map")renderMap();
+}
+document.querySelectorAll(".tab").forEach(t=>t.addEventListener("click",()=>switchTab(t.dataset.tab)));
+document.getElementById("runModal").addEventListener("click",e=>{if(e.target.id==="runModal")closeModal();});
+document.getElementById("fDate").value=new Date().toISOString().slice(0,10);
+
+render();
+</script>
+</body>
+</html>
