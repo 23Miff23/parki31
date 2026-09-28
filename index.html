@@ -111,7 +111,7 @@ body.compact .card{padding:8px}
 <script>
 const GIST_ID = "1039f0884bc9002c7d3fe5ff8d52f114";
 const TOKEN = "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";
-const API = "https://api.github.com/gists/" + GIST_ID;
+const API = "https://api.github.com/gists/" + GIST_ID;const RAW_URL = "https://gist.githubusercontent.com/23Miff23/" + GIST_ID + "/raw/data.json";
 const TARGET_PACE = 325;
 let DATA = {parks:{}};
 let saveTimer;
@@ -145,7 +145,7 @@ function diffPace(r){const p=paceOf(r);if(!p)return null;const d=p-TARGET_PACE;r
 function setSync(t,c){const e=document.getElementById("sync");e.textContent=t;e.className="sync "+c}
 function scheduleSave(){clearTimeout(saveTimer);saveTimer=setTimeout(saveData,800)}
 function getPark(id){if(!DATA.parks[id])DATA.parks[id]={done:false,runs:[]};return DATA.parks[id]}
-async function loadData(){try{const r=await fetch(API,{headers:{"Authorization":"token "+TOKEN}});const j=await r.json();DATA=JSON.parse(j.files["data.json"].content);if(!DATA.parks)DATA.parks={};setSync("☁️ Данные синхронизированы","ok");renderAll()}catch(e){console.error(e);setSync("⚠️ Ошибка синхронизации","err");renderAll()}}
+async function loadData(){try{const r=await fetch(RAW_URL+"?t="+Date.now());DATA=await r.json();if(!DATA.parks)DATA.parks={};setSync("☁️ Данные синхронизированы","ok");renderAll()}catch(e){console.error(e);setSync("⚠️ Ошибка синхронизации","err");renderAll()}}
 async function saveData(){setSync("☁️ Сохранение...","");try{await fetch(API,{method:"PATCH",headers:{"Authorization":"token "+TOKEN,"Content-Type":"application/json"},body:JSON.stringify({files:{"data.json":{content:JSON.stringify(DATA)}}})});setSync("☁️ Сохранено","ok")}catch(e){console.error(e);setSync("⚠️ Ошибка сохранения","err")}}
 function getSortedP(){const arr=P.slice();if(UI.sort==="name")arr.sort((a,b)=>a.n.localeCompare(b.n,"ru"));else if(UI.sort==="recent"){arr.sort((a,b)=>{const ra=getPark(a.id).runs||[],rb=getPark(b.id).runs||[];const da=ra.length?ra[ra.length-1].date:"";const db=rb.length?rb[rb.length-1].date:"";return db.localeCompare(da)})}return arr}
 function buildHTML(){const arr=getSortedP();const el=document.getElementById("content");let html="",curBlock="";arr.forEach(p=>{if(p.b&&p.b!==curBlock){html+=`<div class="st">${p.b}</div>`;curBlock=p.b}
