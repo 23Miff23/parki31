@@ -20,6 +20,22 @@ body{font-family:-apple-system,sans-serif;background:var(--bg);color:var(--t);ma
 .stat{background:var(--card);border:1px solid var(--br);border-radius:8px;padding:8px 4px;text-align:center}
 .sv{display:block;font-size:16px;font-weight:bold;color:var(--g)}
 .sl{display:block;font-size:9px;color:var(--m);margin-top:2px}
+.box{background:var(--card);border:1px solid var(--br);border-radius:10px;padding:12px;margin:10px 0}
+.bx-title{font-size:11px;color:var(--b);font-weight:bold;margin-bottom:8px}
+.goal-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.goal-row label{font-size:11px}
+.goal-row input{width:80px;background:var(--bd);border:1px solid var(--br);color:var(--t);border-radius:4px;padding:5px;font-size:11px;text-align:center}
+.goal-progress{background:var(--br);border-radius:6px;height:12px;overflow:hidden;margin-bottom:4px}
+.goal-fill{background:linear-gradient(90deg,var(--g),var(--b));height:100%;width:0;transition:width .4s}
+.goal-text{font-size:10px;color:var(--m);text-align:center}
+.legend{display:flex;gap:12px;justify-content:center;font-size:10px;color:var(--m);margin-top:4px}
+.legend .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:3px;vertical-align:middle}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.cal-wd{text-align:center;font-size:9px;color:var(--m);padding:2px 0;font-weight:bold}
+.cal-cell{text-align:center;font-size:10px;padding:5px 0;border-radius:4px;background:var(--bd);color:var(--t)}
+.cal-cell.empty{background:transparent}
+.cal-cell.today{outline:2px solid var(--b)}
+.cal-cell.hasrun{background:rgba(0,255,136,.25);color:var(--g);font-weight:bold}
 .ach{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:10px 0}
 .achitem{background:var(--card);border:1px solid var(--br);border-radius:6px;padding:4px 8px;font-size:10px;opacity:.35;filter:grayscale(1)}
 .achitem.on{opacity:1;filter:none;border-color:var(--g)}
@@ -45,7 +61,7 @@ body{font-family:-apple-system,sans-serif;background:var(--bg);color:var(--t);ma
 .rc h4{margin:0 0 5px;color:var(--g);font-size:10px;text-transform:uppercase}
 .ri{margin-bottom:4px;font-size:10px}.ri:last-child{margin-bottom:0}
 .dl{margin-top:10px;grid-column:span 2;display:flex;flex-wrap:wrap;gap:8px}
-.dlb{display:inline-block;background:linear-gradient(135deg,#00ff88,#00b359);color:#12141a;padding:7px 12px;border-radius:6px;text-decoration:none;font-weight:bold;font-size:10px}
+.dlb{display:inline-block;background:linear-gradient(135deg,#00ff88,#00b359);color:#12141a;padding:7px 12px;border-radius:6px;text-decoration:none;font-weight:bold;font-size:10px;border:none;cursor:pointer}
 .dlb.g10{background:linear-gradient(135deg,#ff6b35,#cc4400);color:#fff}
 .runs{margin-top:10px;border-top:1px solid var(--br);padding-top:10px}
 .runs h4{margin:0 0 8px;color:var(--b);font-size:10px;text-transform:uppercase}
@@ -73,7 +89,7 @@ body{font-family:-apple-system,sans-serif;background:var(--bg);color:var(--t);ma
 .bottombtns{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
 .bottombtns button{flex:1;min-width:130px;padding:10px;border-radius:8px;font-weight:bold;font-size:11px;cursor:pointer;border:1px solid var(--br);background:var(--card);color:var(--t)}
 .bottombtns .danger{border-color:var(--red);color:var(--red)}
-body.compact .ic,body.compact .rc,body.compact .br,body.compact .dl,body.compact .pl{display:none}
+body.compact .ic,body.compact .rc,body.compact .br,body.compact .dl,body.compact .pl,body.compact .box{display:none}
 body.compact .card{padding:8px}
 </style>
 </head>
@@ -90,6 +106,25 @@ body.compact .card{padding:8px}
 <button class="tbtn" id="themeBtn">🌗 Тема</button>
 <button class="tbtn" id="compactBtn">📱 Компактно</button>
 </div>
+
+<!-- Цель на сезон -->
+<div class="box">
+<div class="bx-title">🎯 Цель на сезон</div>
+<div class="goal-row">
+<label>Пробежать:</label>
+<input type="number" id="goalInput" placeholder="500" min="1">
+<label>км</label>
+</div>
+<div class="goal-progress"><div class="goal-fill" id="goalFill"></div></div>
+<div class="goal-text" id="goalText">0 / 500 км</div>
+</div>
+
+<!-- График -->
+<div class="box" id="chartBox"></div>
+
+<!-- Календарь -->
+<div class="box" id="calendarBox"></div>
+
 <div class="toolbar">
 <select id="filterSel">
 <option value="all">Все парки</option>
@@ -111,7 +146,8 @@ body.compact .card{padding:8px}
 <script>
 const GIST_ID = "1039f0884bc9002c7d3fe5ff8d52f114";
 const TOKEN = "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";
-const API = "https://api.github.com/gists/" + GIST_ID;const RAW_URL = "https://gist.githubusercontent.com/23Miff23/" + GIST_ID + "/raw/data.json";
+const API = "https://api.github.com/gists/" + GIST_ID;
+const RAW_URL = "https://gist.githubusercontent.com/23Miff23/" + GIST_ID + "/raw/data.json";
 const TARGET_PACE = 325;
 let DATA = {parks:{}};
 let saveTimer;
@@ -120,7 +156,8 @@ let UI = {
   compact: localStorage.getItem("ui_compact")==="1",
   filter: localStorage.getItem("ui_filter")||"all",
   sort: localStorage.getItem("ui_sort")||"default"
-};const P=[
+};
+const P=[
 {id:1,b:"Блок 1: Центральные парки Санкт-Петербурга",n:"1. ЦПКиО им. Кирова (Елагин остров)",l:"Петроградский район",f:1,bd:["Вход: Платный","💡 Освещение: Есть","🌱 Просушка: Апрель"],inf:["Плоский, торцовые подъемы.","2-й Елагин мост. Туалеты есть.","Грунтовый отсев. Шоссейные.","Кофейни у павильонов."],r:["⚡ 5 км (~27:10): 1 круг по периметру.","🔥 10 км (~54:30): 2 кольца + петли."],g5:"1-5k.gpx",g10:"1-10k.gpx"},
 {id:2,n:"2. Приморский парк Победы",l:"Крестовский остров",f:1,bd:["Вход: Бесплатно","💡 Освещение: Отличное","🌱 Просушка: Нет"],inf:["Равнинный, ветер с залива.","м. Крестовский остров.","Асфальт и грунт. Шоссейные.","Кофейни у входа."],r:["⚡ 5 км (~27:00): Батарейная дор.","🔥 10 км (~54:00): Южная дор. ➔ Яхтенный мост."],g5:"2-5k.gpx",g10:"2-10k.gpx"},
 {id:3,n:"3. Таврический сад",l:"Центральный район",b:1,bd:["Вход: Бесплатно","💡 Освещение: Частичное","🌱 Просушка: Апрель"],inf:["Абсолютно плоский.","Главный вход с Кирочной ул.","Плотный грунт. Шоссейные.","Оранжерея с кафе."],r:["⚡ 5 км (~27:30): 3.5 круга.","🔥 10 км (~54:00): 3 круга + Нева."],g5:"3-5k.gpx",g10:"3-10k.gpx"},
@@ -137,28 +174,29 @@ let UI = {
 {id:14,n:"14. Павловский парк",l:"г. Павловск",p:1,bd:["Вход: Платный в вых.","💡 Освещение: Нет","🌱 Просушка: Апрель"],inf:["Умеренно-холмистый.","У вокзала.","Отсев, тропы. Шоссейные.","Кафе у вокзала."],r:["⚡ 5 км (~27:10): Вокзал ➔ Храм Дружбы.","🔥 10 км (~53:30): Большой круг."],g5:"14-5k.gpx",g10:"14-10k.gpx"},
 {id:15,n:"15. Гатчинский музей-заповедник",l:"г. Гатчина",b:1,bd:["Вход: Бесплатно","💡 Освещение: Нет","🌱 Просушка: Сезонная"],inf:["Равнинный, берега озер.","У дворца.","Отсев, брусчатка. Шоссейные.","Кафе в центре Гатчины."],r:["⚡ 5 км (~27:00): Белое озеро.","🔥 10 км (~53:00): Черное озеро."],g5:"15-5k.gpx",g10:"15-10k.gpx"},
 {id:16,n:"16. Лемболовские озера",l:"пос. Токсово / Лемболово",b:1,bd:["Вход: Бесплатно","💡 Освещение: Нет","🌱 Просушка: Медленная"],inf:["Холмистый (Карельский перешеек).","Ж/д ст. Лемболово.","Лесные тропы. Трейловые!","Магазины в поселках."],r:["⚡ 5 км (~29:30): Кросс по холмам.","🔥 10 км (~59:00): Трейловая десятка."]}
-];
-function timeToSec(t){if(!t)return 0;const p=t.replace(",",".").split(":");if(p.length===2)return(+p[0])*60+(+p[1]);if(p.length===3)return(+p[0])*3600+(+p[1])*60+(+p[2]);return+p[0]||0}
-function secToTime(s){if(!s)return"—";const m=Math.floor(s/60),sec=Math.round(s%60);return m+":"+String(sec).padStart(2,"0")}
+];function timeToSec(t){if(!t)return 0;const p=t.replace(",",".").split(":");if(p.length===2)return(+p[0])*60+(+p[1]);if(p.length===3)return(+p[0])*3600+(+p[1])*60+(+p[2]);return+p[0]||0}
+function secToTime(s){if(!s&&s!==0)return"—";const m=Math.floor(s/60),sec=Math.round(s%60);return m+":"+String(sec).padStart(2,"0")}
 function paceOf(r){const sec=timeToSec(r.time);const d=parseFloat(r.dist);if(!sec||!d)return null;return sec/d}
-function diffPace(r){const p=paceOf(r);if(!p)return null;const d=p-TARGET_PACE;return{text:(d>=0?"+":"−")+secToTime(Math.abs(d)),plus:d>=0}}
 function setSync(t,c){const e=document.getElementById("sync");e.textContent=t;e.className="sync "+c}
 function scheduleSave(){clearTimeout(saveTimer);saveTimer=setTimeout(saveData,800)}
 function getPark(id){if(!DATA.parks[id])DATA.parks[id]={done:false,runs:[]};return DATA.parks[id]}
-async function loadData(){try{const r=await fetch(RAW_URL+"?t="+Date.now());DATA=await r.json();if(!DATA.parks)DATA.parks={};setSync("☁️ Данные синхронизированы","ok");renderAll()}catch(e){console.error(e);setSync("⚠️ Ошибка синхронизации","err");renderAll()}}
+async function loadData(){try{const r=await fetch(RAW_URL+"?t="+Date.now());DATA=await r.json();if(!DATA.parks)DATA.parks={};if(!DATA.goalKm)DATA.goalKm=500;setSync("☁️ Данные синхронизированы","ok");document.getElementById("goalInput").value=DATA.goalKm;renderAll()}catch(e){console.error(e);setSync("⚠️ Ошибка синхронизации","err");renderAll()}}
 async function saveData(){setSync("☁️ Сохранение...","");try{await fetch(API,{method:"PATCH",headers:{"Authorization":"token "+TOKEN,"Content-Type":"application/json"},body:JSON.stringify({files:{"data.json":{content:JSON.stringify(DATA)}}})});setSync("☁️ Сохранено","ok")}catch(e){console.error(e);setSync("⚠️ Ошибка сохранения","err")}}
-  async function downloadGPX(url){try{const r=await fetch(url);const b=await r.blob();const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=url;document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(()=>URL.revokeObjectURL(a.href),5000)}catch(e){alert("Ошибка: "+e.message)}}
 function getSortedP(){const arr=P.slice();if(UI.sort==="name")arr.sort((a,b)=>a.n.localeCompare(b.n,"ru"));else if(UI.sort==="recent"){arr.sort((a,b)=>{const ra=getPark(a.id).runs||[],rb=getPark(b.id).runs||[];const da=ra.length?ra[ra.length-1].date:"";const db=rb.length?rb[rb.length-1].date:"";return db.localeCompare(da)})}return arr}
 function buildHTML(){const arr=getSortedP();const el=document.getElementById("content");let html="",curBlock="";arr.forEach(p=>{if(p.b&&p.b!==curBlock){html+=`<div class="st">${p.b}</div>`;curBlock=p.b}
 const bhtml=p.bd.map(x=>`<span class="bd ${x.includes("Бесплатно")&&!x.includes("Платный")?'f':(x.includes("Платный")?'p':'')}">${x}</span>`).join("");
 const inf=p.inf.map(x=>`<p>${x}</p>`).join("");
 const rt=p.r.map(x=>`<div class="ri">${x}</div>`).join("");
-let dl="";if(p.g5)dl+=`<button onclick="downloadGPX('${p.g5}')" class="dlb">⬇️ GPX 5 км</button>`;
-if(p.g10)dl+=`<button onclick="downloadGPX('${p.g10}')" class="dlb g10">⬇️ GPX 10 км</button>`;;
+let dl="";if(p.g5)dl+=`<button onclick="downloadGPX('${p.g5}')" class="dlb">⬇️ GPX 5 км</button>`;if(p.g10)dl+=`<button onclick="downloadGPX('${p.g10}')" class="dlb g10">⬇️ GPX 10 км</button>`;
 html+=`<div class="card" data-id="${p.id}"><div class="ch"><div class="ptg"><h2>${p.n}</h2><span class="pl">${p.l}</span></div><label class="cw"><span>ГОТОВО</span><input type="checkbox" class="cb1"></label></div><div class="br">${bhtml}</div><div class="cb"><div class="ic">${inf}</div><div class="rc"><h4>Маршруты</h4>${rt}</div><div class="dl">${dl}</div></div><div class="runs"><h4>Мои забеги</h4><div class="run-list"></div><button class="add-run">+ Добавить забег</button><div class="run-form"><label>Дистанция<select class="f-dist"><option value="5">5 км</option><option value="10">10 км</option><option value="other">Своя (км)</option></select></label><label class="f-other-label" style="display:none">Сколько км?<input type="number" class="f-other" placeholder="15" step="0.1"></label><label>Дата<input type="date" class="f-date"></label><label>Время (мм:сс)<input type="text" class="f-time" placeholder="54:30"></label><label>Заметка<input type="text" class="f-note" placeholder="Ясно, +12"></label><div class="form-btns"><button class="cancel">Отмена</button><button class="save">Сохранить</button></div></div></div></div>`});el.innerHTML=html}
+async function downloadGPX(url){try{const r=await fetch(url);const b=await r.blob();const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=url;document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(()=>URL.revokeObjectURL(a.href),5000)}catch(e){alert("Ошибка: "+e.message)}}
 function renderRuns(card){const id=card.dataset.id,list=card.querySelector(".run-list"),runs=getPark(id).runs||[];if(!runs.length){list.innerHTML='<div class="empty">Пока нет записей</div>';return}
-list.innerHTML=runs.map((r,i)=>{const cls=r.dist==="5"?"d5":(r.dist==="10"?"d10":"dx");const d=diffPace(r);const pace=paceOf(r);const paceHtml=pace?`<span style="color:var(--m)">${secToTime(pace)}/км</span>`:"";return `<div class="run-item"><div class="run-top"><div class="run-line"><span class="dist ${cls}">${r.dist} км</span>${r.date||"—"} · ${r.time||"—"} ${paceHtml} ${d?`<span class="diff ${d.plus?'plus':'minus'}">${d.text}</span>`:""}</div><button class="rm" data-i="${i}">✕</button></div>${r.note?`<div class="note">${r.note}</div>`:""}</div>`}).join("");
-list.querySelectorAll(".rm").forEach(b=>{b.onclick=()=>{const a=getPark(id).runs;a.splice(+b.dataset.i,1);scheduleSave();renderRuns(card);updateStats()}})}
+const display=runs.map((r,i)=>({...r,_idx:i})).reverse();
+list.innerHTML=display.map(r=>{const cls=r.dist==="5"?"d5":(r.dist==="10"?"d10":"dx");const pace=paceOf(r);const paceHtml=pace?`<span style="color:var(--m)">${secToTime(pace)}/км</span>`:"";
+const prev=runs.slice(0,r._idx).reverse().find(x=>x.dist===r.dist);const prevPace=prev?paceOf(prev):null;const curPace=paceOf(r);
+const diff=(curPace&&prevPace)?curPace-prevPace:null;const diffHtml=diff!==null?`<span class="diff ${diff>0?'plus':'minus'}">${diff>0?'+':'−'}${secToTime(Math.abs(diff))}</span>`:"";
+return `<div class="run-item"><div class="run-top"><div class="run-line"><span class="dist ${cls}">${r.dist} км</span>${r.date||"—"} · ${r.time||"—"} ${paceHtml} ${diffHtml}</div><button class="rm" data-i="${r._idx}">✕</button></div>${r.note?`<div class="note">${r.note}</div>`:""}</div>`}).join("");
+list.querySelectorAll(".rm").forEach(b=>{b.onclick=()=>{const a=getPark(id).runs;a.splice(+b.dataset.i,1);scheduleSave();renderRuns(card);updateStats();renderChart();renderCalendar()}})}
 function totalKm(){let s=0;P.forEach(p=>{(getPark(p.id).runs||[]).forEach(r=>{s+=parseFloat(r.dist)||0})});return s}
 function totalRuns(){let c=0;P.forEach(p=>{c+=(getPark(p.id).runs||[]).length});return c}
 function avgPace(){let sec=0,km=0;P.forEach(p=>{(getPark(p.id).runs||[]).forEach(r=>{const t=timeToSec(r.time),d=parseFloat(r.dist);if(t&&d){sec+=t;km+=d}})});return km?sec/km:null}
@@ -170,21 +208,38 @@ document.getElementById("ach").innerHTML=achievements.map(a=>`<div class="achite
 document.getElementById("pb").style.width=(done/P.length*100)+"%";document.getElementById("pt").innerText=`Пройдено ${done} из ${P.length}`}
 function applyFilter(){document.querySelectorAll(".card").forEach(card=>{const id=card.dataset.id,done=!!getPark(id).done;let show=true;if(UI.filter==="done"&&!done)show=false;if(UI.filter==="notdone"&&done)show=false;card.style.display=show?"":"none"})}
 function bindCards(){document.querySelectorAll(".card").forEach(card=>{const id=card.dataset.id,cb=card.querySelector(".cb1"),form=card.querySelector(".run-form"),addBtn=card.querySelector(".add-run"),sel=card.querySelector(".f-dist"),ol=card.querySelector(".f-other-label"),oi=card.querySelector(".f-other"),di=card.querySelector(".f-date"),ti=card.querySelector(".f-time"),ni=card.querySelector(".f-note");cb.checked=!!getPark(id).done;cb.onchange=()=>{getPark(id).done=cb.checked;scheduleSave();updateStats();applyFilter()};renderRuns(card);addBtn.onclick=()=>{form.classList.add("open");addBtn.style.display="none";if(!di.value)di.value=new Date().toISOString().slice(0,10)};sel.onchange=()=>{ol.style.display=sel.value==="other"?"flex":"none"};function closeForm(){form.classList.remove("open");addBtn.style.display="block";oi.value="";ti.value="";ni.value="";sel.value="5";ol.style.display="none"}form.querySelector(".cancel").onclick=closeForm;
-form.querySelector(".save").onclick=()=>{let d=sel.value;if(d==="other"){d=oi.value.trim();if(!d){alert("Укажите дистанцию");return}}const t=ti.value.trim();if(!t){alert("Укажите время");return}const park=getPark(id);if(!park.runs)park.runs=[];park.runs.push({dist:d,date:di.value,time:t,note:ni.value.trim()});park.done=true;scheduleSave();renderRuns(card);cb.checked=true;updateStats();applyFilter();closeForm()}})}
-function renderAll(){buildHTML();bindCards();updateStats();applyFilter()}
+form.querySelector(".save").onclick=()=>{let d=sel.value;if(d==="other"){d=oi.value.trim();if(!d){alert("Укажите дистанцию");return}}const t=ti.value.trim();if(!t){alert("Укажите время");return}const park=getPark(id);if(!park.runs)park.runs=[];park.runs.push({dist:d,date:di.value,time:t,note:ni.value.trim()});park.done=true;scheduleSave();renderRuns(card);cb.checked=true;updateStats();applyFilter();renderChart();renderCalendar();updateGoal();closeForm()}})}
+function renderAll(){buildHTML();bindCards();updateStats();applyFilter();renderChart();renderCalendar();updateGoal()}
+function updateGoal(){const goal=DATA.goalKm||500;const cur=totalKm();const pct=Math.min(100,(cur/goal)*100);document.getElementById("goalFill").style.width=pct+"%";document.getElementById("goalText").innerText=`${cur.toFixed(1)} / ${goal} км (${pct.toFixed(0)}%)`}
+function renderChart(){const box=document.getElementById("chartBox");const all=[];P.forEach(p=>(getPark(p.id).runs||[]).forEach(r=>{const pace=paceOf(r);if(pace&&r.date)all.push({date:r.date,pace,dist:parseFloat(r.dist)})}));all.sort((a,b)=>a.date.localeCompare(b.date));
+if(all.length<2){box.innerHTML='<div class="bx-title">📈 Динамика темпа</div><div class="empty">Добавьте минимум 2 забега с датой</div>';return}
+const last=all.slice(-20);const w=320,h=140,padL=38,padR=12,padT=15,padB=25;const minP=Math.min(...last.map(r=>r.pace))*0.95;const maxP=Math.max(...last.map(r=>r.pace))*1.05;const range=maxP-minP||1;const stepX=last.length>1?(w-padL-padR)/(last.length-1):0;
+const pts=last.map((r,i)=>{const x=padL+i*stepX;const y=h-padB-((maxP-r.pace)/range)*(h-padT-padB);return{x,y,...r}});
+const path='M'+pts.map(p=>`${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' L');
+const yL=[maxP,(maxP+minP)/2,minP].map((p,i)=>{const y=padT+(i*(h-padT-padB)/2);return `<text x="4" y="${y+3}" fill="var(--m)" font-size="8">${secToTime(p)}</text>`}).join('');
+const xL=`<text x="${padL}" y="${h-8}" fill="var(--m)" font-size="8">${last[0].date.slice(5)}</text><text x="${w-padR}" y="${h-8}" fill="var(--m)" font-size="8" text-anchor="end">${last[last.length-1].date.slice(5)}</text>`;
+const dots=pts.map(p=>{const c=p.dist===10?'var(--o)':(p.dist===5?'var(--g)':'var(--b)');return `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="3" fill="${c}"/>`}).join('');
+box.innerHTML=`<div class="bx-title">📈 Динамика темпа (последние ${last.length})</div><svg viewBox="0 0 ${w} ${h}" style="width:100%;height:160px">${yL}<path d="${path}" fill="none" stroke="var(--b)" stroke-width="1.5" opacity="0.5"/>${dots}${xL}</svg><div class="legend"><span><span class="dot" style="background:var(--g)"></span>5 км</span><span><span class="dot" style="background:var(--o)"></span>10 км</span></div>`}
+function renderCalendar(){const box=document.getElementById("calendarBox");const now=new Date();const year=now.getFullYear();const month=now.getMonth();const first=new Date(year,month,1);const days=new Date(year,month+1,0).getDate();const startWd=(first.getDay()+6)%7;
+const runDays={};P.forEach(p=>(getPark(p.id).runs||[]).forEach(r=>{if(!r.date)return;const[y,m,d]=r.date.split("-").map(Number);if(y===year&&m===month+1)runDays[d]=(runDays[d]||0)+1}));
+const mn=["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"];const wd=["Пн","Вт","Ср","Чт","Пт","Сб","Вс"];
+let c=wd.map(d=>`<div class="cal-wd">${d}</div>`).join("");for(let i=0;i<startWd;i++)c+=`<div class="cal-cell empty"></div>`;
+for(let d=1;d<=days;d++){const t=(d===now.getDate());const hr=runDays[d];c+=`<div class="cal-cell ${t?'today':''} ${hr?'hasrun':''}">${d}</div>`}
+box.innerHTML=`<div class="bx-title">📅 ${mn[month]} ${year}</div><div class="cal-grid">${c}</div>`}
 function exportCSV(){let csv="Парк;Район;Дистанция;Дата;Время;Темп;Заметка\n";P.forEach(p=>{(getPark(p.id).runs||[]).forEach(r=>{const pace=paceOf(r);csv+=`${p.n};${p.l};${r.dist};${r.date||""};${r.time||""};${pace?secToTime(pace)+"/км":""};${(r.note||"").replace(/[;\n]/g,",")}\n`})});const blob=new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="runs.csv";a.click()}
 function copyProgress(){const done=P.filter(p=>getPark(p.id).done).length;const km=totalKm(),runs=totalRuns();const text=`🏃‍♂️ Мой беговой челлендж СПб:\n✅ Парков: ${done}/${P.length}\n🏃 Забегов: ${runs}\n📏 Пробежано: ${km.toFixed(1)} км`;navigator.clipboard.writeText(text).then(()=>alert("Скопировано!")).catch(()=>alert(text))}
 function applyTheme(){document.body.classList.toggle("light",UI.theme==="light");localStorage.setItem("ui_theme",UI.theme)}
 function applyCompact(){document.body.classList.toggle("compact",UI.compact);localStorage.setItem("ui_compact",UI.compact?"1":"0")}
 document.getElementById("themeBtn").onclick=()=>{UI.theme=UI.theme==="light"?"dark":"light";applyTheme()};
 document.getElementById("compactBtn").onclick=()=>{UI.compact=!UI.compact;applyCompact()};
+document.getElementById("goalInput").addEventListener("change",e=>{const v=parseFloat(e.target.value);if(v>0){DATA.goalKm=v;scheduleSave();updateGoal()}});
 document.getElementById("filterSel").value=UI.filter;
 document.getElementById("sortSel").value=UI.sort;
 document.getElementById("filterSel").onchange=e=>{UI.filter=e.target.value;localStorage.setItem("ui_filter",UI.filter);applyFilter()};
 document.getElementById("sortSel").onchange=e=>{UI.sort=e.target.value;localStorage.setItem("ui_sort",UI.sort);renderAll()};
 document.getElementById("csvBtn").onclick=exportCSV;
 document.getElementById("copyBtn").onclick=copyProgress;
-document.getElementById("rb").onclick=()=>{if(confirm("Сбросить весь прогресс?")){DATA={parks:{}};saveData().then(()=>location.reload())}};
+document.getElementById("rb").onclick=()=>{if(confirm("Сбросить весь прогресс?")){DATA={parks:{},goalKm:DATA.goalKm||500};saveData().then(()=>location.reload())}};
 applyTheme();applyCompact();loadData();
 </script>
 </body>
