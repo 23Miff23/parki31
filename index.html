@@ -162,8 +162,10 @@ body.compact .card{padding:8px}
 <div id="content"></div>
 <div class="bottombtns">
 <button id="csvBtn">📥 Скачать CSV</button>
+<button id="jsonBtn">💾 Скачать JSON</button>
+<button id="importBtn">📂 Загрузить JSON</button>
 <button id="copyBtn">📋 Скопировать прогресс</button>
-<button class="danger" id="rb">🗑️ Сбросить всё</button>
+<button class="danger" id="rb">🗑️ Сбросить всё</button><input type="file" id="importFile" accept=".json" style="display:none">
 </div>
 <script>
 const GIST_ID = "1039f0884bc9002c7d3fe5ff8d52f114";
@@ -304,7 +306,8 @@ function renderHeatmap(){
     };
   });
 }
-function exportCSV(){let csv="Парк;Район;Дистанция;Дата;Время;Темп;Заметка\n";P.forEach(p=>{(getPark(p.id).runs||[]).forEach(r=>{const pace=paceOf(r);csv+=`${p.n};${p.l};${r.dist};${r.date||""};${r.time||""};${pace?secToTime(pace)+"/км":""};${(r.note||"").replace(/[;\n]/g,",")}\n`})});const blob=new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="runs.csv";a.click()}
+function exportJSON(){const blob=new Blob([JSON.stringify(DATA,null,2)],{type:"application/json"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="run-backup-"+new Date().toISOString().slice(0,10)+".json";a.click()}
+function importJSON(file){const reader=new FileReader();reader.onload=e=>{try{const j=JSON.parse(e.target.result);if(!j.parks)throw new Error("Нет данных parks");if(confirm("Заменить текущие данные загруженными?")){DATA=j;saveData().then(()=>location.reload())}}catch(err){alert("Ошибка: "+err.message)}};reader.readAsText(file)}function exportCSV(){let csv="Парк;Район;Дистанция;Дата;Время;Темп;Заметка\n";P.forEach(p=>{(getPark(p.id).runs||[]).forEach(r=>{const pace=paceOf(r);csv+=`${p.n};${p.l};${r.dist};${r.date||""};${r.time||""};${pace?secToTime(pace)+"/км":""};${(r.note||"").replace(/[;\n]/g,",")}\n`})});const blob=new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="runs.csv";a.click()}
 function copyProgress(){const done=P.filter(p=>getPark(p.id).done).length;const km=totalKm(),runs=totalRuns();const text=`🏃‍♂️ Мой беговой челлендж СПб:\n✅ Парков: ${done}/${P.length}\n🏃 Забегов: ${runs}\n📏 Пробежано: ${km.toFixed(1)} км`;navigator.clipboard.writeText(text).then(()=>alert("Скопировано!")).catch(()=>alert(text))}
 function applyTheme(){document.body.classList.toggle("light",UI.theme==="light");localStorage.setItem("ui_theme",UI.theme)}
 function applyCompact(){document.body.classList.toggle("compact",UI.compact);localStorage.setItem("ui_compact",UI.compact?"1":"0")}
@@ -326,7 +329,9 @@ document.getElementById("filterSel").value=UI.filter;
 document.getElementById("sortSel").value=UI.sort;
 document.getElementById("filterSel").onchange=e=>{UI.filter=e.target.value;localStorage.setItem("ui_filter",UI.filter);applyFilter()};
 document.getElementById("sortSel").onchange=e=>{UI.sort=e.target.value;localStorage.setItem("ui_sort",UI.sort);renderAll()};
-document.getElementById("csvBtn").onclick=exportCSV;
+document.getElementById("csvBtn").onclick=exportCSV;document.getElementById("jsonBtn").onclick=exportJSON;
+document.getElementById("importBtn").onclick=()=>document.getElementById("importFile").click();
+document.getElementById("importFile").onchange=e=>{if(e.target.files[0])importJSON(e.target.files[0])};
 document.getElementById("copyBtn").onclick=copyProgress;
 document.getElementById("rb").onclick=()=>{if(confirm("Сбросить весь прогресс?")){DATA={parks:{},goalKm:DATA.goalKm||500};saveData().then(()=>location.reload())}};
 applyTheme();applyCompact();loadData();
