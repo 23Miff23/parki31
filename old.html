@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Беговой челлендж СПб</title>
+<style>
+:root{--bg:#12141a;--card:#1a1d26;--br:#2a2f3d;--g:#00ff88;--o:#ff6b35;--b:#38bdf8;--t:#f0f4f8;--m:#94a3b8;--bd:#272d3d}
+body{font-family:-apple-system,sans-serif;background:var(--bg);color:var(--t);margin:0;padding:15px;font-size:11px;line-height:1.35}
+.header{text-align:center;margin-bottom:15px;border-bottom:2px solid var(--br);padding-bottom:12px}
+.header h1{font-size:20px;margin:0 0 4px}.header h1 span{color:var(--g)}.header p{color:var(--m);margin:0;font-size:12px}
+.pw{margin:15px 0;text-align:center}.pc{background:#2a2f3d;border-radius:10px;height:12px;overflow:hidden;margin-bottom:5px}
+.pb{background:var(--g);height:100%;width:0;transition:width .3s}.pt{font-size:11px;color:var(--g);font-weight:bold}
+.st{font-size:16px;color:var(--b);border-left:4px solid var(--b);padding-left:10px;margin:25px 0 12px;text-transform:uppercase}
+.card{background:var(--card);border:1px solid var(--br);border-radius:10px;padding:12px;margin-bottom:12px;box-shadow:0 4px 15px rgba(0,0,0,.3)}
+.ch{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;border-bottom:1px solid var(--br);padding-bottom:8px}
+.ptg h2{font-size:15px;margin:0 0 2px}.pl{font-size:10px;color:var(--o);font-weight:600;text-transform:uppercase}
+.cc{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+.cw{display:flex;align-items:center;gap:5px;font-weight:bold;color:var(--g);font-size:10px;cursor:pointer}
+.cw input{width:18px;height:18px;accent-color:var(--g)}
+.ig{display:flex;flex-direction:column;gap:4px;font-size:9px;color:var(--m);align-items:flex-end}
+.ti{display:flex;gap:5px;align-items:center}.ti label{display:flex;align-items:center;gap:3px}
+input{background:#272d3d;border:1px solid var(--br);color:var(--t);border-radius:3px;padding:3px 4px;font-size:10px}
+input[type=date]{width:85px}input[type=text]{width:50px;text-align:center}
+.br{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px}
+.bd{background:var(--bd);color:var(--t);padding:2px 6px;border-radius:4px;font-size:9px;font-weight:600}
+.bd.f{border:1px solid var(--g);color:var(--g)}.bd.p{border:1px solid var(--o);color:var(--o)}
+.cb{display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:10.5px}
+.ic p{margin:0 0 5px;color:var(--m)}.ic p strong{color:var(--t)}
+.rc{background:rgba(0,0,0,.15);border-radius:6px;padding:8px;border:1px solid rgba(255,255,255,.03)}
+.rc h4{margin:0 0 5px;color:var(--g);font-size:10px;text-transform:uppercase}
+.ri{margin-bottom:5px;font-size:10px}.ri:last-child{margin-bottom:0}
+.dl{margin-top:10px;grid-column:span 2;display:flex;flex-wrap:wrap;gap:8px}
+.dlb{display:inline-block;background:linear-gradient(135deg,#00ff88,#00b359);color:#12141a;padding:8px 14px;border-radius:6px;text-decoration:none;font-weight:bold;font-size:11px}
+.dlb.g10{background:linear-gradient(135deg,#ff6b35,#cc4400);color:#fff}
+.rb{display:block;width:100%;background:transparent;border:1px solid #ff4444;color:#ff4444;padding:10px;border-radius:8px;margin-top:20px;font-weight:bold;font-size:12px;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="header">
+<h1>🏃‍♂️ БЕГОВОЙ ЧЕЛЛЕНДЖ: <span>ПАРКИ СПБ И ЛЕНОБЛАСТИ</span></h1>
+<p>Целевой темп: 5:25 мин/км • 16 локаций</p>
+</div>
+<div class="pw"><div class="pc"><div class="pb" id="pb"></div></div><div class="pt" id="pt">Пройдено 0 из 16</div></div>
+<div id="content"></div>
+<button class="rb" id="rb">Сбросить весь прогресс</button>
+<script>
+const P=[
+{id:1,b:"Блок 1: Центральные парки Санкт-Петербурга",n:"1. ЦПКиО им. Кирова (Елагин остров)",l:"Петроградский район",f:1,bd:["Вход: Платный (вых)","💡 Освещение: Есть","🌱 Просушка: Апрель"],inf:["Плоский, торцовые подъемы на мостах.","2-й Елагин мост. Туалеты есть.","Грунтовый отсев. Шоссейные.","Кофейни и киоски у павильонов."],r:["⚡ 5 км (~27:10): 1 круг по периметру острова.","🔥 10 км (~54:30): 2 кольца + петли по аллеям."],g5:"1-5k.gpx",g10:"1-10k.gpx"},
+{id:2,n:"2. Приморский парк Победы",l:"Крестовский остров",f:1,bd:["Вход: Бесплатно","💡 Освещение: Отличное","🌱 Просушка: Нет"],inf:["Равнинный, сильный ветер с залива.","м. Крестовский остров. Туалеты есть.","Асфальт и грунт. Шоссейные.","Кофейни и рестораны у входа."],r:["⚡ 5 км (~27:00): Батарейная дор., вокруг «Газпром Арены».","🔥 10 км (~54:00): Парк ➔ Южная дорога ➔ Яхтенный мост."],g5:"2-5k.gpx",g10:"2-10k.gpx"},
+{id:3,n:"3. Таврический сад",l:"Центральный район",b:1,bd:["Вход: Бесплатно","💡 Освещение: Частичное","🌱 Просушка: Апрель"],inf:["Абсолютно плоский.","Главный вход с Кирочной ул.","Плотный грунт. Шоссейные.","Оранжерея с кафе."],r:["⚡ 5 км (~27:30): 3.5 круга вокруг прудов.","🔥 10 км (~54:00): 3 круга + набережные Невы."],g5:"3-5k.gpx",g10:"3-10k.gpx"},
+{id:4,n:"4. Александровский парк",l:"Петроградская сторона",b:1,bd:["Вход: Бесплатно","💡 Освещение: Отличное","🌱 Просушка: Нет"],inf:["Равнинный, мосты.","У «Мини-города».","Асфальт, грунт. Шоссейные.","Пекарни на Кронверкском пр."],r:["⚡ 5 км (~27:15): Аллеи + Петропавловская крепость.","🔥 10 км (~54:10): Парк ➔ Троицкий мост ➔ Стрелка В.О."],g5:"4-5k.gpx",g10:"4-10k.gpx"},
+{id:5,n:"5. Летний сад и Марсово поле",l:"Центральный район",b:1,bd:["Вход: Бесплатно (правила)","💡 Освещение: Частичное","🌱 Просушка: Апрель-Май"],inf:["Плоский, строгая геометрия.","У ворот Летнего сада.","Отсев, асфальт. Шоссейные.","Чайный домик."],r:["⚡ 5 км (~28:00): Марсово поле + аллеи сада.","🔥 10 км (~54:00): Марсово поле ➔ Спас на Крови."],g5:"4-5k.gpx",g10:"5-10k.gpx"},
+{id:6,n:"6. Новая Голландия и набережные",l:"Адмиралтейский район",b:1,bd:["Вход: Бесплатно","💡 Освещение: Отличное","🌱 Просушка: Нет"],inf:["Плоский, мосты.","У входа в «Бутылку».","Гравий, дерево, асфальт. Шоссейные.","Рестораны в «Бутылке»."],r:["⚡ 5 км (~27:30): Круги по острову + Коломна.","🔥 10 км (~54:00): Английская наб. ➔ Исаакий."]},
+{id:7,b:"Блок 2: Северные и Южные районы",n:"7. Парк Сосновка",l:"Выборгский район",b:1,bd:["Вход: Бесплатно","💡 Освещение: Частичное","🌱 Просушка: Быстрая"],inf:["Плоский сосновый бор.","Северный пр. / ул. Тореза.","Грунтовые просеки. Шоссейные.","Киоски у входов."],r:["⚡ 5 км (~27:00): 2 кольца по просекам.","🔥 10 км (~54:00): Обход по периметру."],g5:"7-5k.gpx",g10:"7-10k.gpx"},
+{id:8,n:"8. Удельный парк",l:"Выборгский / Приморский",b:1,bd:["Вход: Бесплатно","💡 Освещение: Частичное","🌱 Просушка: Средняя"],inf:["Литориновый уступ (горки).","Аккуратова ул.","Лесные тропы. Шоссе/Трейл.","Киоски у ж/д станции."],r:["⚡ 5 км (~27:30): Двухуровневый круг.","🔥 10 км (~54:10): С штурмом уступа."],g5:"8-5k.gpx",g10:"8-10k.gpx"},
+{id:9,n:"9. Шуваловский парк",l:"пос. Парголово",b:1,bd:["Вход: Бесплатно","💡 Освещение: Нет","🌱 Просушка: Медленная"],inf:["Холмистый, гора Парнас.","Ул. Шишкина.","Грунт, корни. Трейловые!","Магазины у метро «Парнас»."],r:["⚡ 5 км (~29:00): Лесные петли + гора Парнас.","🔥 10 км (~58:00): Большой трейл с холмами."],g5:"9-5k.gpx",g10:"9-10k.gpx"},
+{id:10,n:"10. Московский парк Победы",l:"Московский район",b:1,bd:["Вход: Бесплатно","💡 Освещение: Хорошее","🌱 Просушка: Быстрая"],inf:["Плоский, аллеи.","Главные пропилеи.","Грунт, асфальт. Шоссейные.","Кафе у аттракционов."],r:["⚡ 5 км (~27:10): Змейка вокруг прудов.","🔥 10 км (~54:00): Двойное кольцо."],g5:"10-5k.gpx",g10:"10-10k.gpx"},
+{id:11,n:"11. Парк Героев-Пожарных",l:"Купчино",b:1,bd:["Вход: Бесплатно","💡 Освещение: Отличное","🌱 Просушка: Идеально"],inf:["Равнинный, холмы у карьеров.","м. Проспект Славы.","Новый асфальт. Шоссейные.","Киоски и ТЦ у метро."],r:["⚡ 5 км (~26:45): 2 кольца вокруг карьеров.","🔥 10 км (~54:00): Связка с Интернационалистов."],g5:"11-5k.gpx",g10:"11-10k.gpx"},
+{id:12,b:"Блок 3: Пригороды и Ленобласть",n:"12. ГМЗ «Петергоф»",l:"г. Петергоф",p:1,bd:["Вход: Платный летом","💡 Освещение: Нет","🌱 Просушка: Апрель"],inf:["Уступ к заливу.","Главный вход.","Отсев, брусчатка. Шоссейные.","Кафе на территории."],r:["⚡ 5 км (~27:30): Верхний сад ➔ Нижний парк.","🔥 10 км (~54:00): Нижний парк ➔ Александрия."],g5:"12-5k.gpx"},
+{id:13,n:"13. Александровский и Екатерининский парки",l:"г. Пушкин",b:1,bd:["Вход: Александровский — 0₽","💡 Освещение: Нет","🌱 Просушка: Апрель"],inf:["Равнинный с холмами.","У Ратной палаты.","Грунтовые аллеи. Шоссейные.","Кофейни в Пушкине."],r:["⚡ 5 км (~27:00): Кольцо по Александровскому.","🔥 10 км (~54:00): Переход в Екатерининский."],g5:"13-5k.gpx",g10:"13-10k.gpx"},
+{id:14,n:"14. Павловский парк",l:"г. Павловск",p:1,bd:["Вход: Платный в вых.","💡 Освещение: Нет","🌱 Просушка: Апрель"],inf:["Умеренно-холмистый.","У вокзала.","Отсев, тропы. Шоссейные.","Кафе у вокзала."],r:["⚡ 5 км (~27:10): Вокзал ➔ Храм Дружбы.","🔥 10 км (~53:30): Большой круг."],g5:"14-5k.gpx",g10:"14-10k.gpx"},
+{id:15,n:"15. Гатчинский музей-заповедник",l:"г. Гатчина",b:1,bd:["Вход: Бесплатно","💡 Освещение: Нет","🌱 Просушка: Сезонная"],inf:["Равнинный, берега озер.","У дворца.","Отсев, брусчатка. Шоссейные.","Кафе в центре Гатчины."],r:["⚡ 5 км (~27:00): Вокруг Белого озера.","🔥 10 км (~53:00): Дворец ➔ Черное озеро."],g5:"15-5k.gpx",g10:"15-10k.gpx"},
+{id:16,n:"16. Лемболовские озера",l:"пос. Токсово / Лемболово",b:1,bd:["Вход: Бесплатно (дикая зона)","💡 Освещение: Нет","🌱 Просушка: Медленная"],inf:["Холмистый (Карельский перешеек).","Ж/д ст. Лемболово.","Лесные тропы. Трейловые!","Магазины в поселках."],r:["⚡ 5 км (~29:30): Кросс по холмам.","🔥 10 км (~59:00): Трейловая десятка."]}
+];
+const el=document.getElementById("content");
+let html="",curBlock="";
+P.forEach(p=>{
+if(p.b&&p.b!==curBlock){html+=`<div class="st">${p.b}</div>`;curBlock=p.b}
+const bhtml=p.bd.map(x=>`<span class="bd ${x.includes("Бесплатно")&&!x.includes("Платный")?'f':(x.includes("Платный")?'p':'')}">${x}</span>`).join("");
+const inf=p.inf.map(x=>`<p>${x}</p>`).join("");
+const rt=p.r.map(x=>`<div class="ri">${x}</div>`).join("");
+let dl="";
+if(p.g5)dl+=`<a href="${p.g5}" download class="dlb">⬇️ Скачать GPX 5 км</a>`;
+if(p.g10)dl+=`<a href="${p.g10}" download class="dlb g10">⬇️ Скачать GPX 10 км</a>`;
+html+=`<div class="card" data-id="${p.id}">
+<div class="ch"><div class="ptg"><h2>${p.n}</h2><span class="pl">${p.l}</span></div>
+<div class="cc"><label class="cw"><span>ГОТОВО</span><input type="checkbox" class="cb1"></label>
+<div class="ig"><label>Дата: <input type="date" class="dt"></label>
+<div class="ti"><label>5 км: <input type="text" class="t5" placeholder="00:00"></label><label>10 км: <input type="text" class="t10" placeholder="00:00"></label></div></div></div></div>
+<div class="br">${bhtml}</div>
+<div class="cb"><div class="ic">${inf}</div><div class="rc"><h4>Беговые маршруты</h4>${rt}</div>
+<div class="dl">${dl}</div></div></div>`;
+});
+el.innerHTML=html;
+const cards=document.querySelectorAll(".card");
+function upd(){let c=0;cards.forEach(x=>{if(x.querySelector(".cb1").checked)c++});document.getElementById("pb").style.width=(c/cards.length*100)+"%";document.getElementById("pt").innerText=`Пройдено ${c} из ${cards.length}`}
+cards.forEach(card=>{
+const id=card.dataset.id,cb=card.querySelector(".cb1"),dt=card.querySelector(".dt"),t5=card.querySelector(".t5"),t10=card.querySelector(".t10");
+if(localStorage.getItem("p"+id+"c")==="1")cb.checked=true;
+if(localStorage.getItem("p"+id+"d"))dt.value=localStorage.getItem("p"+id+"d");
+if(localStorage.getItem("p"+id+"5"))t5.value=localStorage.getItem("p"+id+"5");
+if(localStorage.getItem("p"+id+"10"))t10.value=localStorage.getItem("p"+id+"10");
+cb.onchange=()=>{localStorage.setItem("p"+id+"c",cb.checked?"1":"0");upd()};
+dt.onchange=()=>localStorage.setItem("p"+id+"d",dt.value);
+t5.onchange=()=>localStorage.setItem("p"+id+"5",t5.value);
+t10.onchange=()=>localStorage.setItem("p"+id+"10",t10.value);
+});
+upd();
+document.getElementById("rb").onclick=()=>{if(confirm("Сбросить весь прогресс?")){localStorage.clear();location.reload()}};
+</script>
+</body>
+</html>

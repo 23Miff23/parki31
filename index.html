@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Беговой челлендж СПб</title>
+<style>
+:root{--bg:#12141a;--card:#1a1d26;--br:#2a2f3d;--g:#00ff88;--o:#ff6b35;--b:#38bdf8;--t:#f0f4f8;--m:#94a3b8;--bd:#272d3d;--red:#ff5555}
+body.light{--bg:#f4f6fa;--card:#fff;--br:#dde3ec;--g:#059669;--o:#ea580c;--b:#0284c7;--t:#1a1d26;--m:#6b7280;--bd:#eef1f6;--red:#dc2626}
+*{box-sizing:border-box}
+body{font-family:-apple-system,sans-serif;background:var(--bg);color:var(--t);margin:0;padding:12px;font-size:11px;line-height:1.35}
+.header{text-align:center;margin-bottom:12px;border-bottom:2px solid var(--br);padding-bottom:10px}
+.header h1{font-size:19px;margin:0 0 4px}.header h1 span{color:var(--g)}
+.header p{color:var(--m);margin:0;font-size:11px}
+.topbtns{display:flex;gap:6px;justify-content:center;margin:10px 0;flex-wrap:wrap}
+.tbtn{background:var(--card);border:1px solid var(--br);color:var(--t);padding:5px 10px;border-radius:6px;font-size:10px;cursor:pointer}
+.tbtn.active{background:var(--g);color:#12141a;border-color:var(--g);font-weight:bold}
+.sync{text-align:center;font-size:10px;color:var(--m);margin:6px 0}
+.sync.ok{color:var(--g)}.sync.err{color:var(--red)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:10px 0}
+.stat{background:var(--card);border:1px solid var(--br);border-radius:8px;padding:8px 4px;text-align:center}
+.sv{display:block;font-size:16px;font-weight:bold;color:var(--g)}
+.sl{display:block;font-size:9px;color:var(--m);margin-top:2px}
+.ach{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:10px 0}
+.achitem{background:var(--card);border:1px solid var(--br);border-radius:6px;padding:4px 8px;font-size:10px;opacity:.35;filter:grayscale(1)}
+.achitem.on{opacity:1;filter:none;border-color:var(--g)}
+.pw{margin:10px 0;text-align:center}
+.pc{background:var(--br);border-radius:10px;height:12px;overflow:hidden;margin-bottom:5px}
+.pb{background:var(--g);height:100%;width:0;transition:width .3s}
+.pt{font-size:11px;color:var(--g);font-weight:bold}
+.toolbar{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0;align-items:center}
+.toolbar select{background:var(--card);border:1px solid var(--br);color:var(--t);padding:5px 8px;border-radius:6px;font-size:10px;cursor:pointer}
+.st{font-size:15px;color:var(--b);border-left:4px solid var(--b);padding-left:10px;margin:22px 0 10px;text-transform:uppercase}
+.card{background:var(--card);border:1px solid var(--br);border-radius:10px;padding:12px;margin-bottom:10px}
+.ch{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;border-bottom:1px solid var(--br);padding-bottom:8px}
+.ptg h2{font-size:14px;margin:0 0 2px}
+.pl{font-size:9px;color:var(--o);font-weight:600;text-transform:uppercase}
+.cw{display:flex;align-items:center;gap:5px;font-weight:bold;color:var(--g);font-size:10px;cursor:pointer}
+.cw input{width:18px;height:18px;accent-color:var(--g)}
+.br{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px}
+.bd{background:var(--bd);color:var(--t);padding:2px 6px;border-radius:4px;font-size:9px;font-weight:600}
+.bd.f{border:1px solid var(--g);color:var(--g)}.bd.p{border:1px solid var(--o);color:var(--o)}
+.cb{display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:10.5px}
+.ic p{margin:0 0 5px;color:var(--m)}.ic p strong{color:var(--t)}
+.rc{background:rgba(0,0,0,.1);border-radius:6px;padding:8px;border:1px solid var(--br)}
+.rc h4{margin:0 0 5px;color:var(--g);font-size:10px;text-transform:uppercase}
+.ri{margin-bottom:4px;font-size:10px}.ri:last-child{margin-bottom:0}
+.dl{margin-top:10px;grid-column:span 2;display:flex;flex-wrap:wrap;gap:8px}
+.dlb{display:inline-block;background:linear-gradient(135deg,#00ff88,#00b359);color:#12141a;padding:7px 12px;border-radius:6px;text-decoration:none;font-weight:bold;font-size:10px}
+.dlb.g10{background:linear-gradient(135deg,#ff6b35,#cc4400);color:#fff}
+.runs{margin-top:10px;border-top:1px solid var(--br);padding-top:10px}
+.runs h4{margin:0 0 8px;color:var(--b);font-size:10px;text-transform:uppercase}
+.run-list{display:flex;flex-direction:column;gap:5px;margin-bottom:8px}
+.run-item{background:var(--bd);border-radius:6px;padding:6px 8px;font-size:10px}
+.run-top{display:flex;justify-content:space-between;align-items:center}
+.run-line{display:flex;flex-wrap:wrap;align-items:center;gap:4px}
+.dist{font-weight:bold;padding:2px 6px;border-radius:4px}
+.dist.d5{background:rgba(0,255,136,.15);color:var(--g)}
+.dist.d10{background:rgba(255,107,53,.15);color:var(--o)}
+.dist.dx{background:rgba(56,189,248,.15);color:var(--b)}
+.diff{font-weight:bold;font-size:9px}.diff.plus{color:var(--red)}.diff.minus{color:var(--g)}
+.note{color:var(--m);font-size:9px;margin-top:3px;font-style:italic}
+.rm{background:none;border:none;color:var(--red);font-size:14px;cursor:pointer;padding:0 4px;line-height:1}
+.empty{color:var(--m);font-size:10px;padding:4px 0}
+.add-run{background:transparent;border:1px dashed var(--g);color:var(--g);padding:6px 12px;border-radius:6px;font-size:11px;font-weight:bold;cursor:pointer;width:100%}
+.run-form{display:none;background:var(--bd);border-radius:8px;padding:10px;margin-top:8px;flex-direction:column;gap:8px}
+.run-form.open{display:flex}
+.run-form label{font-size:10px;color:var(--m);display:flex;flex-direction:column;gap:3px}
+.run-form input,.run-form select{background:var(--card);border:1px solid var(--br);color:var(--t);border-radius:4px;padding:6px;font-size:11px}
+.form-btns{display:flex;gap:8px}
+.form-btns button{flex:1;padding:8px;border-radius:6px;font-weight:bold;font-size:11px;cursor:pointer;border:none}
+.save{background:var(--g);color:#12141a}
+.cancel{background:var(--bd);color:var(--t)}
+.bottombtns{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.bottombtns button{flex:1;min-width:130px;padding:10px;border-radius:8px;font-weight:bold;font-size:11px;cursor:pointer;border:1px solid var(--br);background:var(--card);color:var(--t)}
+.bottombtns .danger{border-color:var(--red);color:var(--red)}
+body.compact .ic,body.compact .rc,body.compact .br,body.compact .dl,body.compact .pl{display:none}
+body.compact .card{padding:8px}
+</style>
+</head><body>
+<div class="header">
+<h1>🏃‍♂️ БЕГОВОЙ ЧЕЛЛЕНДЖ: <span>ПАРКИ СПБ</span></h1>
+<p>Целевой темп: 5:25 мин/км • 16 локаций</p>
+</div>
+<div class="sync" id="sync">Подключение...</div>
+<div class="stats" id="stats"></div>
+<div class="ach" id="ach"></div>
+<div class="pw"><div class="pc"><div class="pb" id="pb"></div></div><div class="pt" id="pt">Пройдено 0 из 16</div></div>
+<div class="topbtns">
+<button class="tbtn" id="themeBtn">🌗 Тема</button>
+<button class="tbtn" id="compactBtn">📱 Компактно</button>
+</div>
+<div class="toolbar">
+<select id="filterSel">
+<option value="all">Все парки</option>
+<option value="done">Только выполненные</option>
+<option value="notdone">Только невыполненные</option>
+</select>
+<select id="sortSel">
+<option value="default">По порядку</option>
+<option value="name">По алфавиту</option>
+<option value="recent">По последнему забегу</option>
+</select>
+</div>
+<div id="content"></div>
+<div class="bottombtns">
+<button id="csvBtn">📥 Скачать CSV</button>
+<button id="copyBtn">📋 Скопировать прогресс</button>
+<button class="danger" id="rb">🗑️ Сбросить всё</button>
+</div>
+<script>
+const GIST_ID = "1039f0884bc9002c7d3fe5ff8d52f114";
+const TOKEN = "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;
+const API = "https://api.github.com/gists/" + GIST_ID;
+const TARGET_PACE = 325;
+let DATA = {parks:{}};
+let saveTimer;
+let UI = {
+  theme: localStorage.getItem("ui_theme")||"dark",
+  compact: localStorage.getItem("ui_compact")==="1",
+  filter: localStorage.getItem("ui_filter")||"all",
+  sort: localStorage.getItem("ui_sort")||"default"
+};
+const P=[
+{id:1,b:"Блок 1: Центральные парки Санкт-Петербурга",n:"1. ЦПКиО им. Кирова (Елагин остров)",l:"Петроградский район",f:1,bd:["Вход: Платный","💡 Освещение: Есть","🌱 Просушка: Апрель"],inf:["Плоский, торцовые подъемы.","2-й Елагин мост. Туалеты есть.","Грунтовый отсев. Шоссейные.","Кофейни у павильонов."],r:["⚡ 5 км (~27:10): 1 круг по периметру.","🔥 10 км (~54:30): 2 кольца + петли."],g5:"1-5k.gpx",g10:"1-10k.gpx"},
+{id:2,n:"2. Приморский парк Победы",l:"Крестовский остров",f:1,bd:["Вход: Бесплатно","💡 Освещение: Отличное","🌱 Просушка: Нет"],inf:["Равнинный, ветер с залива.","м. Крестовский остров.","Асфальт и грунт. Шоссейные.","Кофейни у входа."],r:["⚡ 5 км (~27:00): Батарейная дор.","🔥 10 км (~54:00): Южная дор. ➔ Яхтенный мост."],g5:"2-5k.gpx",g10:"2-10k.gpx"},
+{id:3,n:"3. Таврический сад",l:"Центральный район",b:1,bd:["Вход: Бесплатно","💡 Освещение: Частичное","🌱 Просушка: Апрель"],inf:["Абсолютно плоский.","Главный вход с Кирочной ул.","Плотный грунт. Шоссейные.","Оранжерея с кафе."],r:["⚡ 5 км (~27:30): 3.5 круга.","🔥 10 км (~54:00): 3 круга + Нева."],g5:"3-5k.gpx",g10:"3-10k.gpx"},
+{id:4,n:"4. Александровский парк",l:"Петроградская сторона",b:1,bd:["Вход: Бесплатно","💡 Освещение: Отличное","🌱 Просушка: Нет"],inf:["Равнинный, мосты.","У «Мини-города».","Асфальт, грунт. Шоссейные.","Пекарни на Кронверкском."],r:["⚡ 5 км (~27:15): Аллеи + Петропавловка.","🔥 10 км (~54:10): Троицкий мост ➔ Стрелка."],g5:"4-5k.gpx",g10:"4-10k.gpx"},
+{id:5,n:"5. Летний сад и Марсово поле",l:"Центральный район",b:1,bd:["Вход: Бесплатно","💡 Освещение: Частичное","🌱 Просушка: Апрель-Май"],inf:["Плоский, строгая геометрия.","У ворот Летнего сада.","Отсев, асфальт. Шоссейные.","Чайный домик."],r:["⚡ 5 км (~28:00): Марсово поле + сад.","🔥 10 км (~54:00): Спас на Крови."],g5:"4-5k.gpx",g10:"5-10k.gpx"},
+{id:6,n:"6. Новая Голландия",l:"Адмиралтейский район",b:1,bd:["Вход: Бесплатно","💡 Освещение: Отличное","🌱 Просушка: Нет"],inf:["Плоский, мосты.","У входа в «Бутылку».","Гравий, дерево. Шоссейные.","Рестораны в «Бутылке»."],r:["⚡ 5 км (~27:30): Остров + Коломна.","🔥 10 км (~54:00): Исаакий ➔ Крюков кан."]},
+{id:7,b:"Блок 2: Северные и Южные районы",n:"7. Парк Сосновка",l:"Выборгский район",b:1,bd:["Вход: Бесплатно","💡 Освещение: Частичное","🌱 Просушка: Быстрая"],inf:["Плоский сосновый бор.","Северный пр. / ул. Тореза.","Грунтовые просеки. Шоссейные.","Киоски у входов."],r:["⚡ 5 км (~27:00): 2 кольца.","🔥 10 км (~54:00): Обход по периметру."],g5:"7-5k.gpx",g10:"7-10k.gpx"},
+{id:8,n:"8. Удельный парк",l:"Выборгский / Приморский",b:1,bd:["Вход: Бесплатно","💡 Освещение: Частичное","🌱 Просушка: Средняя"],inf:["Литориновый уступ (горки).","Аккуратова ул.","Лесные тропы. Шоссе/Трейл.","Киоски у ж/д станции."],r:["⚡ 5 км (~27:30): Двухуровневый круг.","🔥 10 км (~54:10): С штурмом уступа."],g5:"8-5k.gpx",g10:"8-10k.gpx"},
+{id:9,n:"9. Шуваловский парк",l:"пос. Парголово",b:1,bd:["Вход: Бесплатно","💡 Освещение: Нет","🌱 Просушка: Медленная"],inf:["Холмистый, гора Парнас.","Ул. Шишкина.","Грунт, корни. Трейловые!","Магазины у метро «Парнас»."],r:["⚡ 5 км (~29:00): Лесные петли.","🔥 10 км (~58:00): Большой трейл."],g5:"9-5k.gpx",g10:"9-10k.gpx"},
+{id:10,n:"10. Московский парк Победы",l:"Московский район",b:1,bd:["Вход: Бесплатно","💡 Освещение: Хорошее","🌱 Просушка: Быстрая"],inf:["Плоский, аллеи.","Главные пропилеи.","Грунт, асфальт. Шоссейные.","Кафе у аттракционов."],r:["⚡ 5 км (~27:10): Змейка вокруг прудов.","🔥 10 км (~54:00): Двойное кольцо."],g5:"10-5k.gpx",g10:"10-10k.gpx"},
+{id:11,n:"11. Парк Героев-Пожарных",l:"Купчино",b:1,bd:["Вход: Бесплатно","💡 Освещение: Отличное","🌱 Просушка: Идеально"],inf:["Равнинный, холмы у карьеров.","м. Проспект Славы.","Новый асфальт. Шоссейные.","Киоски и ТЦ у метро."],r:["⚡ 5 км (~26:45): 2 кольца.","🔥 10 км (~54:00): С Интернационалистов."],g5:"11-5k.gpx",g10:"11-10k.gpx"},
+{id:12,b:"Блок 3: Пригороды и Ленобласть",n:"12. ГМЗ «Петергоф»",l:"г. Петергоф",p:1,bd:["Вход: Платный летом","💡 Освещение: Нет","🌱 Просушка: Апрель"],inf:["Уступ к заливу.","Главный вход.","Отсев, брусчатка. Шоссейные.","Кафе на территории."],r:["⚡ 5 км (~27:30): Верхний ➔ Нижний парк.","🔥 10 км (~54:00): + Александрия."],g5:"12-5k.gpx"},
+{id:13,n:"13. Александровский и Екатерининский парки",l:"г. Пушкин",b:1,bd:["Вход: Александровский — 0₽","💡 Освещение: Нет","🌱 Просушка: Апрель"],inf:["Равнинный с холмами.","У Ратной палаты.","Грунтовые аллеи. Шоссейные.","Кофейни в Пушкине."],r:["⚡ 5 км (~27:00): Александровский.","🔥 10 км (~54:00): + Екатерининский."],g5:"13-5k.gpx",g10:"13-10k.gpx"},
+{id:14,n:"14. Павловский парк",l:"г. Павловск",p:1,bd:["Вход: Платный в вых.","💡 Освещение: Нет","🌱 Просушка: Апрель"],inf:["Умеренно-холмистый.","У вокзала.","Отсев, тропы. Шоссейные.","Кафе у вокзала."],r:["⚡ 5 км (~27:10): Вокзал ➔ Храм Дружбы.","🔥 10 км (~53:30): Большой круг."],g5:"14-5k.gpx",g10:"14-10k.gpx"},
+{id:15,n:"15. Гатчинский музей-заповедник",l:"г. Гатчина",b:1,bd:["Вход: Бесплатно","💡 Освещение: Нет","🌱 Просушка: Сезонная"],inf:["Равнинный, берега озер.","У дворца.","Отсев, брусчатка. Шоссейные.","Кафе в центре Гатчины."],r:["⚡ 5 км (~27:00): Белое озеро.","🔥 10 км (~53:00): Черное озеро."],g5:"15-5k.gpx",g10:"15-10k.gpx"},
+{id:16,n:"16. Лемболовские озера",l:"пос. Токсово / Лемболово",b:1,bd:["Вход: Бесплатно","💡 Освещение: Нет","🌱 Просушка: Медленная"],inf:["Холмистый (Карельский перешеек).","Ж/д ст. Лемболово.","Лесные тропы. Трейловые!","Магазины в поселках."],r:["⚡ 5 км (~29:30): Кросс по холмам.","🔥 10 км (~59:00): Трейловая десятка."]}
+];function timeToSec(t){if(!t)return 0;const p=t.replace(",",".").split(":");if(p.length===2)return(+p[0])*60+(+p[1]);if(p.length===3)return(+p[0])*3600+(+p[1])*60+(+p[2]);return+p[0]||0}
+function secToTime(s){if(!s)return"—";const m=Math.floor(s/60),sec=Math.round(s%60);return m+":"+String(sec).padStart(2,"0")}
+function paceOf(r){const sec=timeToSec(r.time);const d=parseFloat(r.dist);if(!sec||!d)return null;return sec/d}
+function diffPace(r){const p=paceOf(r);if(!p)return null;const d=p-TARGET_PACE;return{text:(d>=0?"+":"−")+secToTime(Math.abs(d)),plus:d>=0}}
+function setSync(t,c){const e=document.getElementById("sync");e.textContent=t;e.className="sync "+c}
+function scheduleSave(){clearTimeout(saveTimer);saveTimer=setTimeout(saveData,800)}
+function getPark(id){if(!DATA.parks[id])DATA.parks[id]={done:false,runs:[]};return DATA.parks[id]}
+async function loadData(){try{const r=await fetch(API,{headers:{"Authorization":"token "+TOKEN}});const j=await r.json();DATA=JSON.parse(j.files["data.json"].content);if(!DATA.parks)DATA.parks={};setSync("☁️ Данные синхронизированы","ok");renderAll()}catch(e){console.error(e);setSync("⚠️ Ошибка синхронизации","err");renderAll()}}
+async function saveData(){setSync("☁️ Сохранение...","");try{await fetch(API,{method:"PATCH",headers:{"Authorization":"token "+TOKEN,"Content-Type":"application/json"},body:JSON.stringify({files:{"data.json":{content:JSON.stringify(DATA)}}})});setSync("☁️ Сохранено в облаке","ok")}catch(e){console.error(e);setSync("⚠️ Не удалось сохранить","err")}}
+
+function getSortedP(){const arr=P.slice();if(UI.sort==="name")arr.sort((a,b)=>a.n.localeCompare(b.n,"ru"));else if(UI.sort==="recent"){arr.sort((a,b)=>{const ra=getPark(a.id).runs||[],rb=getPark(b.id).runs||[];const da=ra.length?ra[ra.length-1].date:"";const db=rb.length?rb[rb.length-1].date:"";return db.localeCompare(da)})}return arr}
+
+function buildHTML(){const arr=getSortedP();const el=document.getElementById("content");let html="",curBlock="";arr.forEach(p=>{if(p.b&&p.b!==curBlock){html+=`<div class="st">${p.b}</div>`;curBlock=p.b}
+const bhtml=p.bd.map(x=>`<span class="bd ${x.includes("Бесплатно")&&!x.includes("Платный")?'f':(x.includes("Платный")?'p':'')}">${x}</span>`).join("");
+const inf=p.inf.map(x=>`<p>${x}</p>`).join("");
+const rt=p.r.map(x=>`<div class="ri">${x}</div>`).join("");
+let dl="";if(p.g5)dl+=`<a href="${p.g5}" download class="dlb">⬇️ GPX 5 км</a>`;
+if(p.g10)dl+=`<a href="${p.g10}" download class="dlb g10">⬇️ GPX 10 км</a>`;;
+html+=`<div class="card" data-id="${p.id}"><div class="ch"><div class="ptg"><h2>${p.n}</h2><span class="pl">${p.l}</span></div><label class="cw"><span>ГОТОВО</span><input type="checkbox" class="cb1"></label></div><div class="br">${bhtml}</div><div class="cb"><div class="ic">${inf}</div><div class="rc"><h4>Маршруты</h4>${rt}</div><div class="dl">${dl}</div></div><div class="runs"><h4>Мои забеги</h4><div class="run-list"></div><button class="add-run">+ Добавить забег</button><div class="run-form"><label>Дистанция<select class="f-dist"><option value="5">5 км</option><option value="10">10 км</option><option value="other">Своя (км)</option></select></label><label class="f-other-label" style="display:none">Сколько км?<input type="number" class="f-other" placeholder="15" step="0.1"></label><label>Дата<input type="date" class="f-date"></label><label>Время (мм:сс)<input type="text" class="f-time" placeholder="54:30"></label><label>Заметка<input type="text" class="f-note" placeholder="Ясно, +12"></label><div class="form-btns"><button class="cancel">Отмена</button><button class="save">Сохранить</button></div></div></div></div>`});el.innerHTML=html}
+
+function renderRuns(card){const id=card.dataset.id,list=card.querySelector(".run-list"),runs=getPark(id).runs||[];if(!runs.length){list.innerHTML='<div class="empty">Пока нет записей</div>';return}
+list.innerHTML=runs.map((r,i)=>{const cls=r.dist==="5"?"d5":(r.dist==="10"?"d10":"dx");const d=diffPace(r);const pace=paceOf(r);const paceHtml=pace?`<span style="color:var(--m)">${secToTime(pace)}/км</span>`:"";return `<div class="run-item"><div class="run-top"><div class="run-line"><span class="dist ${cls}">${r.dist} км</span>${r.date||"—"} · ${r.time||"—"} ${paceHtml} ${d?`<span class="diff ${d.plus?'plus':'minus'}">${d.text}</span>`:""}</div><button class="rm" data-i="${i}">✕</button></div>${r.note?`<div class="note">${r.note}</div>`:""}</div>`}).join("");
+list.querySelectorAll(".rm").forEach(b=>{b.onclick=()=>{const a=getPark(id).runs;a.splice(+b.dataset.i,1);scheduleSave();renderRuns(card);updateStats()}})}
+
+function totalKm(){let s=0;P.forEach(p=>{(getPark(p.id).runs||[]).forEach(r=>{s+=parseFloat(r.dist)||0})});return s}
+function totalRuns(){let c=0;P.forEach(p=>{c+=(getPark(p.id).runs||[]).length});return c}
+function avgPace(){let sec=0,km=0;P.forEach(p=>{(getPark(p.id).runs||[]).forEach(r=>{const t=timeToSec(r.time),d=parseFloat(r.dist);if(t&&d){sec+=t;km+=d}})});return km?sec/km:null}
+function bestTime(dist){let best=null;P.forEach(p=>{(getPark(p.id).runs||[]).forEach(r=>{if(parseFloat(r.dist)===dist){const t=timeToSec(r.time);if(t&&(!best||t<best))best=t}})});return best}
+
+function updateStats(){const km=totalKm(),runs=totalRuns(),ap=avgPace(),b5=bestTime(5),b10=bestTime(10);document.getElementById("stats").innerHTML=`<div class="stat"><span class="sv">${km.toFixed(1)}</span><span class="sl">км пробежано</span></div><div class="stat"><span class="sv">${runs}</span><span class="sl">забегов</span></div><div class="stat"><span class="sv">${ap?secToTime(ap):"—"}</span><span class="sl">средний темп</span></div><div class="stat"><span class="sv">${b5?secToTime(b5):"—"} / ${b10?secToTime(b10):"—"}</span><span class="sl">рекорд 5/10</span></div>`;
+const done=P.filter(p=>getPark(p.id).done).length;
+const achievements=[{i:"🥇",n:"1 парк",ok:done>=1},{i:"🏃",n:"5 парков",ok:done>=5},{i:"🏅",n:"10 парков",ok:done>=10},{i:"🏆",n:"Все 16",ok:done>=16},{i:"🔥",n:"50 км",ok:km>=50},{i:"💯",n:"100 км",ok:km>=100},{i:"⚡",n:"Десятка",ok:!!b10}];
+document.getElementById("ach").innerHTML=achievements.map(a=>`<div class="achitem ${a.ok?'on':''}">${a.i} ${a.n}</div>`).join("");
+document.getElementById("pb").style.width=(done/P.length*100)+"%";document.getElementById("pt").innerText=`Пройдено ${done} из ${P.length}`}
+
+function applyFilter(){document.querySelectorAll(".card").forEach(card=>{const id=card.dataset.id,done=!!getPark(id).done;let show=true;if(UI.filter==="done"&&!done)show=false;if(UI.filter==="notdone"&&done)show=false;card.style.display=show?"":"none"})}
+
+function bindCards(){document.querySelectorAll(".card").forEach(card=>{const id=card.dataset.id,cb=card.querySelector(".cb1"),form=card.querySelector(".run-form"),addBtn=card.querySelector(".add-run"),sel=card.querySelector(".f-dist"),ol=card.querySelector(".f-other-label"),oi=card.querySelector(".f-other"),di=card.querySelector(".f-date"),ti=card.querySelector(".f-time"),ni=card.querySelector(".f-note");cb.checked=!!getPark(id).done;cb.onchange=()=>{getPark(id).done=cb.checked;scheduleSave();updateStats();applyFilter()};renderRuns(card);addBtn.onclick=()=>{form.classList.add("open");addBtn.style.display="none";if(!di.value)di.value=new Date().toISOString().slice(0,10)};sel.onchange=()=>{ol.style.display=sel.value==="other"?"flex":"none"};function closeForm(){form.classList.remove("open");addBtn.style.display="block";oi.value="";ti.value="";ni.value="";sel.value="5";ol.style.display="none"}form.querySelector(".cancel").onclick=closeForm;
+form.querySelector(".save").onclick=()=>{let d=sel.value;if(d==="other"){d=oi.value.trim();if(!d){alert("Укажите дистанцию");return}}const t=ti.value.trim();if(!t){alert("Укажите время");return}const park=getPark(id);if(!park.runs)park.runs=[];park.runs.push({dist:d,date:di.value,time:t,note:ni.value.trim()});park.done=true;scheduleSave();renderRuns(card);cb.checked=true;updateStats();applyFilter();closeForm()}})}
+
+function renderAll(){buildHTML();bindCards();updateStats();applyFilter()}
+
+function exportCSV(){let csv="Парк;Район;Дистанция;Дата;Время;Темп;Заметка\n";P.forEach(p=>{(getPark(p.id).runs||[]).forEach(r=>{const pace=paceOf(r);csv+=`${p.n};${p.l};${r.dist};${r.date||""};${r.time||""};${pace?secToTime(pace)+"/км":""};${(r.note||"").replace(/[;\n]/g,",")}\n`})});const blob=new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="runs.csv";a.click()}
+
+function copyProgress(){const done=P.filter(p=>getPark(p.id).done).length;const km=totalKm(),runs=totalRuns();const text=`🏃‍♂️ Мой беговой челлендж СПб:\n✅ Парков: ${done}/${P.length}\n🏃 Забегов: ${runs}\n📏 Пробежано: ${km.toFixed(1)} км`;navigator.clipboard.writeText(text).then(()=>alert("Скопировано!")).catch(()=>alert(text))}
+async function downloadGPX(url){
+  try{
+    const r = await fetch(url);
+    if(!r.ok) throw new Error("файл не найден");
+    const blob = await r.blob();
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = url.split("/").pop();
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(()=>URL.revokeObjectURL(a.href), 5000);
+  }catch(e){
+    alert("Не удалось скачать файл: "+e.message);
+  }
+}
+function applyTheme(){document.body.classList.toggle("light",UI.theme==="light");localStorage.setItem("ui_theme",UI.theme)}
+function applyCompact(){document.body.classList.toggle("compact",UI.compact);localStorage.setItem("ui_compact",UI.compact?"1":"0")}
+
+document.getElementById("themeBtn").onclick=()=>{UI.theme=UI.theme==="light"?"dark":"light";applyTheme()};
+document.getElementById("compactBtn").onclick=()=>{UI.compact=!UI.compact;applyCompact()};
+document.getElementById("filterSel").value=UI.filter;
+document.getElementById("sortSel").value=UI.sort;
+document.getElementById("filterSel").onchange=e=>{UI.filter=e.target.value;localStorage.setItem("ui_filter",UI.filter);applyFilter()};
+document.getElementById("sortSel").onchange=e=>{UI.sort=e.target.value;localStorage.setItem("ui_sort",UI.sort);renderAll()};
+document.getElementById("csvBtn").onclick=exportCSV;
+document.getElementById("copyBtn").onclick=copyProgress;
+document.getElementById("rb").onclick=()=>{if(confirm("Сбросить весь прогресс?")){DATA={parks:{}};saveData().then(()=>location.reload())}};
+
+applyTheme();applyCompact();loadData();
+</script>
+</body>
+</html>
