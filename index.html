@@ -162,7 +162,10 @@ body.compact .card{padding:8px}
 <div id="content"></div>
 <div class="bottombtns">
 <button id="csvBtn">📥 Скачать CSV</button>
+<button id="jsonBtn">💾 Скачать JSON</button>
+<button id="importBtn">📂 Загрузить JSON</button>
 <button id="copyBtn">📋 Скопировать прогресс</button>
+<input type="file" id="importFile" accept=".json" style="display:none">
 <button class="danger" id="rb">🗑️ Сбросить всё</button>
 </div>
 <script>
@@ -195,7 +198,7 @@ const P=[
 {id:13,n:"13. Александровский и Екатерининский парки",l:"г. Пушкин",b:1,bd:["Вход: Александровский — 0₽","💡 Освещение: Нет","🌱 Просушка: Апрель"],inf:["Равнинный с холмами.","У Ратной палаты.","Грунтовые аллеи. Шоссейные.","Кофейни в Пушкине."],r:["⚡ 5 км (~27:00): Александровский.","🔥 10 км (~54:00): + Екатерининский."],g5:"13-5k.gpx",g10:"13-10k.gpx"},
 {id:14,n:"14. Павловский парк",l:"г. Павловск",p:1,bd:["Вход: Платный в вых.","💡 Освещение: Нет","🌱 Просушка: Апрель"],inf:["Умеренно-холмистый.","У вокзала.","Отсев, тропы. Шоссейные.","Кафе у вокзала."],r:["⚡ 5 км (~27:10): Вокзал ➔ Храм Дружбы.","🔥 10 км (~53:30): Большой круг."],g5:"14-5k.gpx",g10:"14-10k.gpx"},
 {id:15,n:"15. Гатчинский музей-заповедник",l:"г. Гатчина",b:1,bd:["Вход: Бесплатно","💡 Освещение: Нет","🌱 Просушка: Сезонная"],inf:["Равнинный, берега озер.","У дворца.","Отсев, брусчатка. Шоссейные.","Кафе в центре Гатчины."],r:["⚡ 5 км (~27:00): Белое озеро.","🔥 10 км (~53:00): Черное озеро."],g5:"15-5k.gpx",g10:"15-10k.gpx"},
-{id:16,n:"16. Лемболовские озера",l:"пос. Токсово / Лемболово",b:1,bd:["Вход: Бесплатно","💡 Освещение: Нет","🌱 Просушка: Медленная"],inf:["Холмистый (Карельский перешеек).","Ж/д ст. Лемболово.","Лесные тропы. Трейловые!","Магазины в поселках."],r:["⚡ 5 км (~29:30): Кросс по холмам.","🔥 10 км (~59:00): Трейловая десятка."]},{id:17,n:"17. Английский парк (Петергоф)",l:"г. Петергоф",p:1,bd:["Вход: Платный летом","💡 Освещение: Частичное","🌱 Просушка: Апрель"],inf:["Равнинный с холмами.","От Самсониевского моста.","Грунт, отсев. Шоссейные.","Кафе в Нижнем парке."],r:["⚡ 5 км (~27:30): Круг по периметру парка.","🔥 10 км (~54:00): 2 круга + Нижний парк."],g5:"17-5k.gpx",g10:"17-10k.gpx"},{id:18,n:"18. Луговой парк (Петергоф)",l:"г. Петергоф",b:1,bd:["Вход: Бесплатно","💡 Освещение: Нет","🌱 Просушка: Медленная"],inf:["Равнинный, местами заболочен.","От Западного пруда.","Грунт, трава. Шоссе/трейл.","Питания нет."],r:["⚡ 5 км (~28:30): Вдоль залива и прудов.","🔥 10 км (~56:00): 2 круга + Знаменка."],g5:"18-5k.gpx",g10:"18-10k.gpx"},{id:19,n:"19. Александрийский парк (Петергоф)",l:"г. Петергоф",p:1,bd:["Вход: Платный летом","💡 Освещение: Нет","🌱 Просушка: Апрель"],inf:["Равнинный с холмами.","От дворца Коттедж.","Отсев, грунт. Шоссейные.","Кафе у входа в парк."],r:["⚡ 5 км (~27:00): Круг вокруг Коттеджа.","🔥 10 км (~54:00): 2 круга + Нижний парк."],g5:"19-5k.gpx",g10:"19-10k.gpx"}
+{id:16,n:"16. Лемболовские озера",l:"пос. Токсово / Лемболово",b:1,bd:["Вход: Бесплатно","💡 Освещение: Нет","🌱 Просушка: Медленная"],inf:["Холмистый (Карельский перешеек).","Ж/д ст. Лемболово.","Лесные тропы. Трейловые!","Магазины в поселках."],r:["⚡ 5 км (~29:30): Кросс по холмам.","🔥 10 км (~59:00): Трейловая десятка."]},{id:17,n:"17. Английский парк (Петергоф)",l:"г. Петергоф",p:1,bd:["Вход: Платный летом","💡 Освещение: Частичное","🌱 Просушка: Апрель"],inf:["Равнинный с холмами.","От Самсониевского моста.","Грунт, отсев. Шоссейные.","Кафе в Нижнем парке."],r:["⚡ 5 км (~27:30): Круг по периметру парка.","🔥 10 км (~54:00): 2 круга + Нижний парк."],g5:"17-5k-v2.gpx",g10:"17-10k-v2.gpx"},{id:18,n:"18. Луговой парк (Петергоф)",l:"г. Петергоф",b:1,bd:["Вход: Бесплатно","💡 Освещение: Нет","🌱 Просушка: Медленная"],inf:["Равнинный, местами заболочен.","От Западного пруда.","Грунт, трава. Шоссе/трейл.","Питания нет."],r:["⚡ 5 км (~28:30): Вдоль залива и прудов.","🔥 10 км (~56:00): 2 круга + Знаменка."],g5:"18-5k-v2.gpx",g10:"18-10k-v2.gpx"},{id:19,n:"19. Александрийский парк (Петергоф)",l:"г. Петергоф",p:1,bd:["Вход: Платный летом","💡 Освещение: Нет","🌱 Просушка: Апрель"],inf:["Равнинный с холмами.","От дворца Коттедж.","Отсев, грунт. Шоссейные.","Кафе у входа в парк."],r:["⚡ 5 км (~27:00): Круг вокруг Коттеджа.","🔥 10 км (~54:00): 2 круга + Нижний парк."],g5:"19-5k-v2.gpx",g10:"19-10k-v2.gpx"}
 ];
 function timeToSec(t){if(!t)return 0;const p=t.replace(",",".").split(":");if(p.length===2)return(+p[0])*60+(+p[1]);if(p.length===3)return(+p[0])*3600+(+p[1])*60+(+p[2]);return+p[0]||0}
 function secToTime(s){if(!s&&s!==0)return"—";const m=Math.floor(s/60),sec=Math.round(s%60);return m+":"+String(sec).padStart(2,"0")}
@@ -305,7 +308,8 @@ function renderHeatmap(){
     };
   });
 }
-function exportCSV(){let csv="Парк;Район;Дистанция;Дата;Время;Темп;Заметка\n";P.forEach(p=>{(getPark(p.id).runs||[]).forEach(r=>{const pace=paceOf(r);csv+=`${p.n};${p.l};${r.dist};${r.date||""};${r.time||""};${pace?secToTime(pace)+"/км":""};${(r.note||"").replace(/[;\n]/g,",")}\n`})});const blob=new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="runs.csv";a.click()}
+function exportJSON(){const blob=new Blob([JSON.stringify(DATA,null,2)],{type:"application/json"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="run-backup-"+new Date().toISOString().slice(0,10)+".json";a.click()}
+function importJSON(file){const reader=new FileReader();reader.onload=e=>{try{const j=JSON.parse(e.target.result);if(!j.parks)throw new Error("нет parks");if(confirm("Заменить данные?")){DATA=j;saveData().then(()=>location.reload())}}catch(err){alert("Ошибка: "+err.message)}};reader.readAsText(file)}function exportCSV(){let csv="Парк;Район;Дистанция;Дата;Время;Темп;Заметка\n";P.forEach(p=>{(getPark(p.id).runs||[]).forEach(r=>{const pace=paceOf(r);csv+=`${p.n};${p.l};${r.dist};${r.date||""};${r.time||""};${pace?secToTime(pace)+"/км":""};${(r.note||"").replace(/[;\n]/g,",")}\n`})});const blob=new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="runs.csv";a.click()}
 function copyProgress(){const done=P.filter(p=>getPark(p.id).done).length;const km=totalKm(),runs=totalRuns();const text=`🏃‍♂️ Мой беговой челлендж СПб:\n✅ Парков: ${done}/${P.length}\n🏃 Забегов: ${runs}\n📏 Пробежано: ${km.toFixed(1)} км`;navigator.clipboard.writeText(text).then(()=>alert("Скопировано!")).catch(()=>alert(text))}
 function applyTheme(){document.body.classList.toggle("light",UI.theme==="light");localStorage.setItem("ui_theme",UI.theme)}
 function applyCompact(){document.body.classList.toggle("compact",UI.compact);localStorage.setItem("ui_compact",UI.compact?"1":"0")}
@@ -327,7 +331,9 @@ document.getElementById("filterSel").value=UI.filter;
 document.getElementById("sortSel").value=UI.sort;
 document.getElementById("filterSel").onchange=e=>{UI.filter=e.target.value;localStorage.setItem("ui_filter",UI.filter);applyFilter()};
 document.getElementById("sortSel").onchange=e=>{UI.sort=e.target.value;localStorage.setItem("ui_sort",UI.sort);renderAll()};
-document.getElementById("csvBtn").onclick=exportCSV;
+document.getElementById("csvBtn").onclick=exportCSV;document.getElementById("jsonBtn").onclick=exportJSON;
+document.getElementById("importBtn").onclick=()=>document.getElementById("importFile").click();
+document.getElementById("importFile").onchange=e=>{if(e.target.files[0])importJSON(e.target.files[0])};
 document.getElementById("copyBtn").onclick=copyProgress;
 document.getElementById("rb").onclick=()=>{if(confirm("Сбросить весь прогресс?")){DATA={parks:{},goalKm:DATA.goalKm||500};saveData().then(()=>location.reload())}};
 applyTheme();applyCompact();loadData();
