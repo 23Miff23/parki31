@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Тест Gist</title>
+</head>
+<body style="font-family:sans-serif;padding:20px;background:#12141a;color:#fff;font-size:14px">
+<h2>Тест синхронизации</h2>
+<p>Gist ID: <code>1039f0884bc9002c7d3fe5ff8d52f114</code></p>
+<label>Ваш токен:<br><input id="tk" type="text" style="width:100%;padding:8px;font-size:12px;background:#222;color:#fff;border:1px solid #444" placeholder="ghp_..."></label>
+<br><br>
+<button onclick="run()" style="padding:10px 20px;background:#00ff88;border:none;font-weight:bold;font-size:14px">ЗАПИСАТЬ ТЕСТ В GIST</button>
+<pre id="out" style="background:#222;padding:12px;border-radius:8px;white-space:pre-wrap;word-break:break-all;margin-top:16px"></pre>
+<script>
+const GIST_ID="1039f0884bc9002c7d3fe5ff8d52f114";
+const API="https://api.github.com/gists/"+GIST_ID;
+async function run(){
+  const TOKEN=document.getElementById("tk").value.trim();
+  const out=document.getElementById("out");
+  out.textContent="Отправляю запрос...";
+  try{
+    const body={files:{"data.json":{content:JSON.stringify({test:"ok",time:new Date().toISOString(),parks:{}})}}};
+    const r=await fetch(API,{method:"PATCH",headers:{"Authorization":"token "+TOKEN,"Content-Type":"application/json"},body:JSON.stringify(body)});
+    const txt=await r.text();
+    out.textContent="СТАТУС: "+r.status+"\n\nОТВЕТ:\n"+txt;
+  }catch(e){
+    out.textContent="ОШИБКА СЕТИ: "+e.message;
+  }
+}
+</script>
+</body>
+</html>
