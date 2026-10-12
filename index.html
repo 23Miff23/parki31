@@ -201,12 +201,28 @@ function scheduleSave(){clearTimeout(saveTimer);saveTimer=setTimeout(saveData,30
 function saveData(){try{localStorage.setItem("runData",JSON.stringify(DATA));setSync("💾 Сохранено на телефоне","ok")}catch(e){setSync("⚠️ Ошибка сохранения: "+e.message,"err")}}
 function loadData(){try{const raw=localStorage.getItem("runData");if(raw)DATA=JSON.parse(raw);if(!DATA.parks)DATA.parks={};if(!DATA.goalKm)DATA.goalKm=500;setSync("💾 Данные на телефоне","ok");document.getElementById("goalInput").value=DATA.goalKm;renderAll()}catch(e){console.error(e);setSync("⚠️ Ошибка загрузки: "+e.message,"err");renderAll()}}
 function getPark(id){if(!DATA.parks[id])DATA.parks[id]={done:false,runs:[]};return DATA.parks[id]}function getSortedP(){const arr=P.slice();if(UI.sort==="name")arr.sort((a,b)=>a.n.localeCompare(b.n,"ru"));else if(UI.sort==="recent"){arr.sort((a,b)=>{const ra=getPark(a.id).runs||[],rb=getPark(b.id).runs||[];const da=ra.length?ra[ra.length-1].date:"";const db=rb.length?rb[rb.length-1].date:"";return db.localeCompare(da)})}return arr}
-function buildHTML(){const arr=getSortedP();const el=document.getElementById("content");let html="",curBlock="";arr.forEach(p=>{if(p.b&&typeof p.b==="string"&&p.b!==curBlock){html+=`<div class="st">${p.b}</div>`;curBlock=p.b}
+function buildHTML(){
+const arr=getSortedP();
+const el=document.getElementById("content");
+let html="",curBlock="";
+arr.forEach(p=>{
+if(p.b&&typeof p.b==="string"&&p.b!==curBlock){html+=`<div class="st">${p.b}</div>`;curBlock=p.b}
 const bhtml=p.bd.map(x=>`<span class="bd ${x.includes("Бесплатно")&&!x.includes("Платный")?'f':(x.includes("Платный")?'p':'')}">${x}</span>`).join("");
 const inf=p.inf.map(x=>`<p>${x}</p>`).join("");
 const rt=p.r.map(x=>`<div class="ri">${x}</div>`).join("");
-let dl="";if(p.g5)dl+=`<button onclick="downloadGPX('${p.g5}')" class="dlb">⬇️ GPX 5 км</button>`;if(p.g10)dl+=`<button onclick="downloadGPX('${p.g10}')" class="dlb g10">⬇️ GPX 10 км</button>`;
-html+=`<div class="card" data-id="${p.id}"><div class="ch"><div class="ptg"><h2>${p.n}</h2><span class="pl"><span class="loc-icon">${locIcon(p.l)}</span>${p.l}</span></div><label class="cw"><span>ГОТОВО</span><input type="checkbox" class="cb1"></label></div><div class="br">${bhtml}</div><div class="cb"><div class="ic">${inf}</div><div class="rc"><h4>Маршруты</h4>${rt}</div><div class="dl">${dl}</div></div><div class="runs"><h4>Мои забеги</h4><div class="run-list"></div><button class="add-run">+ Добавить забег</button><div class="run-form"><label>Дистанция<select class="f-dist"><option value="5">5 км</option><option value="10">10 км</option><option value="other">Своя (км)</option></select></label><label class="f-other-label" style="display:none">Сколько км?<input type="number" class="f-other" placeholder="15" step="0.1"></label><label>Дата<input type="date" class="f-date"></label><label>Время (мм:сс)<input type="text" class="f-time" placeholder="54:30"></label><label>Заметка<input type="text" class="f-note" placeholder="Ясно, +12"></label><div class="form-btns"><button class="cancel">Отмена</button><button class="save">Сохранить</button></div></div></div></div>`});el.innerHTML=html}
+let dl="";
+if(p.g5)dl+=`<button onclick="downloadGPX('${p.g5}')" class="dlb">⬇️ GPX 5 км</button>`;
+if(p.g10)dl+=`<button onclick="downloadGPX('${p.g10}')" class="dlb g10">⬇️ GPX 10 км</button>`;
+html+=`<div class="card" data-id="${p.id}">`;
+html+=`<div class="ch"><div class="ptg"><h2>${p.n}</h2><span class="pl"><span class="loc-icon">${locIcon(p.l)}</span>${p.l}</span></div><label class="cw"><span>ГОТОВО</span><input type="checkbox" class="cb1"></label></div>`;
+html+=`<div class="br">${bhtml}</div>`;
+html+=`<div class="cb"><div class="ic">${inf}</div><div class="rc"><h4>Маршруты</h4>${rt}</div><div class="dl">${dl}</div></div>`;
+html+=`<div class="runs"><h4>Мои забеги</h4><div class="run-list"></div><button class="add-run">+ Добавить забег</button><div class="run-form"><label>Дистанция<select class="f-dist"><option value="5">5 км</option><option value="10">10 км</option><option value="other">Своя (км)</option></select></label><label class="f-other-label" style="display:none">Сколько км?<input type="number" class="f-other" placeholder="15" step="0.1"></label><label>Дата<input type="date" class="f-date"></label><label>Время (мм:сс)<input type="text" class="f-time" placeholder="54:30"></label><label>Заметка<input type="text" class="f-note" placeholder="Ясно, +12"></label><div class="form-btns"><button class="cancel">Отмена</button><button class="save">Сохранить</button></div></div>`;
+html+=`</div>`;
+html+=`</div>`;
+});
+el.innerHTML=html;
+}
 async function downloadGPX(url){try{const r=await fetch(url);if(!r.ok)throw new Error("файл не найден");const b=await r.blob();const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=url;document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(()=>URL.revokeObjectURL(a.href),5000)}catch(e){alert("Ошибка: "+e.message)}}
 function renderRuns(card){const id=card.dataset.id,list=card.querySelector(".run-list"),runs=getPark(id).runs||[];if(!runs.length){list.innerHTML='<div class="empty">Пока нет записей</div>';return}
 const display=runs.map((r,i)=>({...r,_idx:i})).reverse();
