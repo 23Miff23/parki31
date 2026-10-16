@@ -15,8 +15,7 @@ body{font-family:-apple-system,sans-serif;background:var(--bg);color:var(--t);ma
 .topbtns{display:flex;gap:6px;justify-content:center;margin:10px 0;flex-wrap:wrap}
 .tbtn{background:var(--card);border:1px solid var(--br);color:var(--t);padding:5px 10px;border-radius:6px;font-size:10px;cursor:pointer}
 .sync{text-align:center;font-size:10px;color:var(--m);margin:6px 0}
-.sync.ok{color:var(--g)}.sync.err{color:var(--red)}
-  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:10px 0}
+.sync.ok{color:var(--g)}.sync.err{color:var(--red)}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:10px 0}
 .stat{background:var(--card);border:1px solid var(--br);border-radius:8px;padding:8px 4px;text-align:center}
 .sv{display:block;font-size:16px;font-weight:bold;color:var(--g)}
 .sl{display:block;font-size:9px;color:var(--m);margin-top:2px}
@@ -27,8 +26,7 @@ body{font-family:-apple-system,sans-serif;background:var(--bg);color:var(--t);ma
 .goal-row input{width:80px;background:var(--bd);border:1px solid var(--br);color:var(--t);border-radius:4px;padding:5px;font-size:11px;text-align:center}
 .goal-progress{background:var(--br);border-radius:6px;height:12px;overflow:hidden;margin-bottom:4px}
 .goal-fill{background:linear-gradient(90deg,var(--g),var(--b));height:100%;width:0;transition:width .4s}
-.goal-text{font-size:10px;color:var(--m);text-align:center}
-  .heatmap{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+.goal-text{font-size:10px;color:var(--m);text-align:center}.heatmap{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
 .hm-cell{aspect-ratio:1;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold;background:var(--bd);color:var(--m);position:relative;cursor:pointer}
 .hm-cell.l1{background:rgba(0,255,136,.2);color:var(--g)}
 .hm-cell.l2{background:rgba(0,255,136,.4);color:var(--g)}
@@ -47,8 +45,7 @@ body{font-family:-apple-system,sans-serif;background:var(--bg);color:var(--t);ma
 .month-diff.up{color:var(--g)}.month-diff.down{color:var(--red)}.month-diff.same{color:var(--m)}
 .best-run{background:linear-gradient(135deg,rgba(0,255,136,.15),rgba(56,189,248,.15));border-radius:8px;padding:8px;font-size:11px;text-align:center;margin-top:8px}
 .forecast-row{display:flex;justify-content:space-between;padding:4px 0;font-size:11px}
-.forecast-row .val{color:var(--g);font-weight:bold}
-  .ach{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:10px 0}
+.forecast-row .val{color:var(--g);font-weight:bold}.ach{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:10px 0}
 .achitem{background:var(--card);border:1px solid var(--br);border-radius:6px;padding:4px 8px;font-size:10px;opacity:.35;filter:grayscale(1)}
 .achitem.on{opacity:1;filter:none;border-color:var(--g)}
 .pw{margin:10px 0;text-align:center}
@@ -62,8 +59,7 @@ body{font-family:-apple-system,sans-serif;background:var(--bg);color:var(--t);ma
 .ch{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;border-bottom:1px solid var(--br);padding-bottom:8px}
 .ptg h2{font-size:14px;margin:0 0 2px}
 .pl{font-size:9px;color:var(--o);font-weight:600;text-transform:uppercase}
-.loc-icon{display:inline-block;margin-right:3px;font-size:11px}
-  .cw{display:flex;align-items:center;gap:5px;font-weight:bold;color:var(--g);font-size:10px;cursor:pointer}
+.loc-icon{display:inline-block;margin-right:3px;font-size:11px}.cw{display:flex;align-items:center;gap:5px;font-weight:bold;color:var(--g);font-size:10px;cursor:pointer}
 .cw input{width:18px;height:18px;accent-color:var(--g)}
 .br{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px}
 .bd{background:var(--bd);color:var(--t);padding:2px 6px;border-radius:4px;font-size:9px;font-weight:600}
@@ -150,8 +146,7 @@ body.compact .card{padding:8px}
 <button class="danger" id="rb">🗑️ Сбросить всё</button>
 </div>
 <input type="file" id="importFile" accept=".json" style="display:none">
-<script>
-  let DATA = JSON.parse(localStorage.getItem("runData") || '{"parks":{},"goalKm":500}');
+<script>let DATA = JSON.parse(localStorage.getItem("runData") || '{"parks":{},"goalKm":500}');
 let saveTimer;
 let UI = {
   theme: localStorage.getItem("ui_theme")||"dark",
@@ -160,27 +155,25 @@ let UI = {
   sort: localStorage.getItem("ui_sort")||"default"
 };
 const P=[
-{id:1,b:"Блок 1: Центральные парки Санкт-Петербурга",n:"1. ЦПКиО им. Кирова (Елагин остров)",l:"Петроградский район",f:1,bd:["Вход: Платный","💡 Освещение: Есть","🌱 Просушка: Апрель"],inf:["Плоский, торцовые подъемы.","2-й Елагин мост. Туалеты есть.","Грунтовый отсев. Шоссейные.","Кофейни у павильонов."],r:["⚡ 5 км (~27:10): 1 круг.","🔥 10 км (~54:30): 2 кольца + петли."],g5:"1-5k.gpx",g10:"1-10k.gpx"},
-{id:2,n:"2. Приморский парк Победы",l:"Крестовский остров",f:1,bd:["Вход: Бесплатно","💡 Освещение: Отличное","🌱 Просушка: Нет"],inf:["Равнинный, ветер с залива.","м. Крестовский остров.","Асфальт и грунт. Шоссейные.","Кофейни у входа."],r:["⚡ 5 км (~27:00): Батарейная дор.","🔥 10 км (~54:00): Южная дор. ➔ Яхтенный мост."],g5:"2-5k.gpx",g10:"2-10k.gpx"},
+{id:1,b:"Блок 1: Центральные парки Санкт-Петербурга",n:"1. ЦПКиО им. Кирова (Елагин остров)",l:"Петроградский район",f:1,bd:["Вход: Платный","💡 Освещение: Есть","🌱 Просушка: Апрель"],inf:["Плоский, торцовые подъемы.","2-й Елагин мост. Туалеты есть.","Грунтовый отсев. Шоссейные.","Кофейни у павильонов."],r:["⚡ 5 км (~27:10): 1 круг.","🔥 10 км (~54:30): 2 кольца + петли."],g5:"1-5k.gpx",g10:"1-10k-v2.gpx"},
+{id:2,n:"2. Приморский парк Победы",l:"Крестовский остров",f:1,bd:["Вход: Бесплатно","💡 Освещение: Отличное","🌱 Просушка: Нет"],inf:["Равнинный, ветер с залива.","м. Крестовский остров.","Асфальт и грунт. Шоссейные.","Кофейни у входа."],r:["⚡ 5 км (~27:00): Батарейная дор.","🔥 10 км (~54:00): Южная дор. → Яхтенный мост."],g5:"2-5k.gpx",g10:"2-10k.gpx"},
 {id:3,n:"3. Таврический сад",l:"Центральный район",b:1,bd:["Вход: Бесплатно","💡 Освещение: Частичное","🌱 Просушка: Апрель"],inf:["Абсолютно плоский.","Главный вход с Кирочной ул.","Плотный грунт. Шоссейные.","Оранжерея с кафе."],r:["⚡ 5 км (~27:30): 3.5 круга.","🔥 10 км (~54:00): 3 круга + Нева."],g5:"3-5k.gpx",g10:"3-10k.gpx"},
-{id:4,n:"4. Александровский парк",l:"Петроградская сторона",b:1,bd:["Вход: Бесплатно","💡 Освещение: Отличное","🌱 Просушка: Нет"],inf:["Равнинный, мосты.","У «Мини-города».","Асфальт, грунт. Шоссейные.","Пекарни на Кронверкском."],r:["⚡ 5 км (~27:15): Аллеи + Петропавловка.","🔥 10 км (~54:10): Троицкий мост ➔ Стрелка."],g5:"4-5k.gpx",g10:"4-10k.gpx"},
+{id:4,n:"4. Александровский парк",l:"Петроградская сторона",b:1,bd:["Вход: Бесплатно","💡 Освещение: Отличное","🌱 Просушка: Нет"],inf:["Равнинный, мосты.","У «Мини-города».","Асфальт, грунт. Шоссейные.","Пекарни на Кронверкском."],r:["⚡ 5 км (~27:15): Аллеи + Петропавловка.","🔥 10 км (~54:10): Троицкий мост → Стрелка."],g5:"4-5k.gpx",g10:"4-10k.gpx"},
 {id:5,n:"5. Летний сад и Марсово поле",l:"Центральный район",b:1,bd:["Вход: Бесплатно","💡 Освещение: Частичное","🌱 Просушка: Апрель-Май"],inf:["Плоский, строгая геометрия.","У ворот Летнего сада.","Отсев, асфальт. Шоссейные.","Чайный домик."],r:["⚡ 5 км (~28:00): Марсово поле + сад.","🔥 10 км (~54:00): Спас на Крови."],g5:"4-5k.gpx",g10:"5-10k.gpx"},
-{id:6,n:"6. Новая Голландия",l:"Адмиралтейский район",b:1,bd:["Вход: Бесплатно","💡 Освещение: Отличное","🌱 Просушка: Нет"],inf:["Плоский, мосты.","У входа в «Бутылку».","Гравий, дерево. Шоссейные.","Рестораны в «Бутылке»."],r:["⚡ 5 км (~27:30): Остров + Коломна.","🔥 10 км (~54:00): Исаакий ➔ Крюков кан."]},
+{id:6,n:"6. Новая Голландия",l:"Адмиралтейский район",b:1,bd:["Вход: Бесплатно","💡 Освещение: Отличное","🌱 Просушка: Нет"],inf:["Плоский, мосты.","У входа в «Бутылку».","Гравий, дерево. Шоссейные.","Рестораны в «Бутылке»."],r:["⚡ 5 км (~27:30): Остров + Коломна.","🔥 10 км (~54:00): Исаакий → Крюков кан."]},
 {id:7,b:"Блок 2: Северные и Южные районы",n:"7. Парк Сосновка",l:"Выборгский район",b:1,bd:["Вход: Бесплатно","💡 Освещение: Частичное","🌱 Просушка: Быстрая"],inf:["Плоский сосновый бор.","Северный пр. / ул. Тореза.","Грунтовые просеки. Шоссейные.","Киоски у входов."],r:["⚡ 5 км (~27:00): 2 кольца.","🔥 10 км (~54:00): Обход по периметру."],g5:"7-5k.gpx",g10:"7-10k.gpx"},
 {id:8,n:"8. Удельный парк",l:"Выборгский / Приморский",b:1,bd:["Вход: Бесплатно","💡 Освещение: Частичное","🌱 Просушка: Средняя"],inf:["Литориновый уступ (горки).","Аккуратова ул.","Лесные тропы. Шоссе/Трейл.","Киоски у ж/д станции."],r:["⚡ 5 км (~27:30): Двухуровневый круг.","🔥 10 км (~54:10): С штурмом уступа."],g5:"8-5k.gpx",g10:"8-10k.gpx"},
 {id:9,n:"9. Шуваловский парк",l:"пос. Парголово",b:1,bd:["Вход: Бесплатно","💡 Освещение: Нет","🌱 Просушка: Медленная"],inf:["Холмистый, гора Парнас.","Ул. Шишкина.","Грунт, корни. Трейловые!","Магазины у метро «Парнас»."],r:["⚡ 5 км (~29:00): Лесные петли.","🔥 10 км (~58:00): Большой трейл."],g5:"9-5k.gpx",g10:"9-10k.gpx"},
-{id:10,n:"10. Московский парк Победы",l:"Московский район",b:1,bd:["Вход: Бесплатно","💡 Освещение: Хорошее","🌱 Просушка: Быстрая"],inf:["Плоский, аллеи.","Главные пропилеи.","Грунт, асфальт. Шоссейные.","Кафе у аттракционов."],r:["⚡ 5 км (~27:10): Змейка вокруг прудов.","🔥 10 км (~54:00): Двойное кольцо."],g5:"10-5k.gpx",g10:"10-10k.gpx"},
-  {id:11,n:"11. Парк Героев-Пожарных",l:"Купчино",b:1,bd:["Вход: Бесплатно","💡 Освещение: Отличное","🌱 Просушка: Идеально"],inf:["Равнинный, холмы у карьеров.","м. Проспект Славы.","Новый асфальт. Шоссейные.","Киоски и ТЦ у метро."],r:["⚡ 5 км (~26:45): 2 кольца.","🔥 10 км (~54:00): С Интернационалистов."],g5:"11-5k.gpx",g10:"11-10k.gpx"},
-{id:12,b:"Блок 3: Пригороды и Ленобласть",n:"12. ГМЗ «Петергоф»",l:"г. Петергоф",p:1,bd:["Вход: Платный летом","💡 Освещение: Нет","🌱 Просушка: Апрель"],inf:["Уступ к заливу.","Главный вход.","Отсев, брусчатка. Шоссейные.","Кафе на территории."],r:["⚡ 5 км (~27:30): Верхний ➔ Нижний парк.","🔥 10 км (~54:00): + Александрия."],g5:"12-5k.gpx"},
+{id:10,n:"10. Московский парк Победы",l:"Московский район",b:1,bd:["Вход: Бесплатно","💡 Освещение: Хорошее","🌱 Просушка: Быстрая"],inf:["Плоский, аллеи.","Главные пропилеи.","Грунт, асфальт. Шоссейные.","Кафе у аттракционов."],r:["⚡ 5 км (~27:10): Змейка вокруг прудов.","🔥 10 км (~54:00): Двойное кольцо."],g5:"10-5k.gpx",g10:"10-10k.gpx"},{id:11,n:"11. Парк Героев-Пожарных",l:"Купчино",b:1,bd:["Вход: Бесплатно","💡 Освещение: Отличное","🌱 Просушка: Идеально"],inf:["Равнинный, холмы у карьеров.","м. Проспект Славы.","Новый асфальт. Шоссейные.","Киоски и ТЦ у метро."],r:["⚡ 5 км (~26:45): 2 кольца.","🔥 10 км (~54:00): С Интернационалистов."],g5:"11-5k.gpx",g10:"11-10k.gpx"},
+{id:12,b:"Блок 3: Пригороды и Ленобласть",n:"12. ГМЗ «Петергоф»",l:"г. Петергоф",p:1,bd:["Вход: Платный летом","💡 Освещение: Нет","🌱 Просушка: Апрель"],inf:["Уступ к заливу.","Главный вход.","Отсев, брусчатка. Шоссейные.","Кафе на территории."],r:["⚡ 5 км (~27:30): Верхний → Нижний парк.","🔥 10 км (~54:00): + Александрия."],g5:"12-5k.gpx"},
 {id:13,n:"13. Александровский и Екатерининский парки",l:"г. Пушкин",b:1,bd:["Вход: Александровский — 0₽","💡 Освещение: Нет","🌱 Просушка: Апрель"],inf:["Равнинный с холмами.","У Ратной палаты.","Грунтовые аллеи. Шоссейные.","Кофейни в Пушкине."],r:["⚡ 5 км (~27:00): Александровский.","🔥 10 км (~54:00): + Екатерининский."],g5:"13-5k.gpx",g10:"13-10k.gpx"},
-{id:14,n:"14. Павловский парк",l:"г. Павловск",p:1,bd:["Вход: Платный в вых.","💡 Освещение: Нет","🌱 Просушка: Апрель"],inf:["Умеренно-холмистый.","У вокзала.","Отсев, тропы. Шоссейные.","Кафе у вокзала."],r:["⚡ 5 км (~27:10): Вокзал ➔ Храм Дружбы.","🔥 10 км (~53:30): Большой круг."],g5:"14-5k.gpx",g10:"14-10k.gpx"},
+{id:14,n:"14. Павловский парк",l:"г. Павловск",p:1,bd:["Вход: Платный в вых.","💡 Освещение: Нет","🌱 Просушка: Апрель"],inf:["Умеренно-холмистый.","У вокзала.","Отсев, тропы. Шоссейные.","Кафе у вокзала."],r:["⚡ 5 км (~27:10): Вокзал → Храм Дружбы.","🔥 10 км (~53:30): Большой круг."],g5:"14-5k.gpx",g10:"14-10k.gpx"},
 {id:15,n:"15. Гатчинский музей-заповедник",l:"г. Гатчина",b:1,bd:["Вход: Бесплатно","💡 Освещение: Нет","🌱 Просушка: Сезонная"],inf:["Равнинный, берега озер.","У дворца.","Отсев, брусчатка. Шоссейные.","Кафе в центре Гатчины."],r:["⚡ 5 км (~27:00): Белое озеро.","🔥 10 км (~53:00): Черное озеро."],g5:"15-5k.gpx",g10:"15-10k.gpx"},
 {id:16,n:"16. Лемболовские озера",l:"пос. Токсово / Лемболово",b:1,bd:["Вход: Бесплатно","💡 Освещение: Нет","🌱 Просушка: Медленная"],inf:["Холмистый (Карельский перешеек).","Ж/д ст. Лемболово.","Лесные тропы. Трейловые!","Магазины в поселках."],r:["⚡ 5 км (~29:30): Кросс по холмам.","🔥 10 км (~59:00): Трейловая десятка."]},
 {id:17,n:"17. Английский парк (Петергоф)",l:"г. Петергоф",p:1,bd:["Вход: Платный летом","💡 Освещение: Частичное","🌱 Просушка: Апрель"],inf:["Равнинный с холмами.","От Самсониевского моста.","Грунт, отсев. Шоссейные.","Кафе в Нижнем парке."],r:["⚡ 5 км (~27:30): Круг по периметру.","🔥 10 км (~54:00): 2 круга + Нижний парк."],g5:"17-5k.gpx",g10:"17-10k.gpx"},
 {id:18,n:"18. Луговой парк (Петергоф)",l:"г. Петергоф",b:1,bd:["Вход: Бесплатно","💡 Освещение: Нет","🌱 Просушка: Медленная"],inf:["Равнинный, местами заболочен.","От Западного пруда.","Грунт, трава. Шоссе/трейл.","Питания нет."],r:["⚡ 5 км (~28:30): Вдоль залива и прудов.","🔥 10 км (~56:00): 2 круга + Знаменка."],g5:"18-5k.gpx",g10:"18-10k.gpx"},
 {id:19,n:"19. Александрийский парк (Петергоф)",l:"г. Петергоф",p:1,bd:["Вход: Платный летом","💡 Освещение: Нет","🌱 Просушка: Апрель"],inf:["Равнинный с холмами.","От дворца Коттедж.","Отсев, грунт. Шоссейные.","Кафе у входа в парк."],r:["⚡ 5 км (~27:00): Круг вокруг Коттеджа.","🔥 10 км (~54:00): 2 круга + Нижний парк."],g5:"19-5k.gpx",g10:"19-10k.gpx"}
-];
-  function locIcon(loc){const l=(loc||"").toLowerCase();if(l.includes("петроград"))return "🌉";if(l.includes("крестов"))return "🏟️";if(l.includes("центральн"))return "🏛️";if(l.includes("адмиралтей"))return "⚓";if(l.includes("выборг"))return "🌲";if(l.includes("приморск"))return "🌊";if(l.includes("московск"))return "🏙️";if(l.includes("купчино"))return "🌳";if(l.includes("петергоф"))return "⛲";if(l.includes("пушкин"))return "👑";if(l.includes("павловск"))return "🍂";if(l.includes("гатчин"))return "🏰";if(l.includes("токсов")||l.includes("лемболов"))return "🏕️";return "📍"}
+];function locIcon(loc){const l=(loc||"").toLowerCase();if(l.includes("петроград"))return "🌉";if(l.includes("крестов"))return "🏟️";if(l.includes("центральн"))return "🏛️";if(l.includes("адмиралтей"))return "⚓";if(l.includes("выборг"))return "🌲";if(l.includes("приморск"))return "🌊";if(l.includes("московск"))return "🏙️";if(l.includes("купчино"))return "🌳";if(l.includes("петергоф"))return "⛲";if(l.includes("пушкин"))return "👑";if(l.includes("павловск"))return "🍂";if(l.includes("гатчин"))return "🏰";if(l.includes("токсов")||l.includes("лемболов"))return "🏕️";return "📍"}
 function timeToSec(t){if(!t)return 0;const p=t.replace(",",".").split(":");if(p.length===2)return(+p[0])*60+(+p[1]);if(p.length===3)return(+p[0])*3600+(+p[1])*60+(+p[2]);return+p[0]||0}
 function secToTime(s){if(s===null||s===undefined||isNaN(s))return"—";const m=Math.floor(s/60),sec=Math.round(s%60);return m+":"+String(sec).padStart(2,"0")}
 function paceOf(r){const sec=timeToSec(r.time);const d=parseFloat(r.dist);if(!sec||!d)return null;return sec/d}
@@ -189,8 +182,7 @@ function scheduleSave(){clearTimeout(saveTimer);saveTimer=setTimeout(saveData,30
 function saveData(){try{localStorage.setItem("runData",JSON.stringify(DATA));setSync("💾 Сохранено на телефоне","ok")}catch(e){setSync("⚠️ Ошибка: "+e.message,"err")}}
 function loadData(){try{const raw=localStorage.getItem("runData");if(raw)DATA=JSON.parse(raw);if(!DATA.parks)DATA.parks={};if(!DATA.goalKm)DATA.goalKm=500;setSync("💾 Данные на телефоне","ok");document.getElementById("goalInput").value=DATA.goalKm;renderAll()}catch(e){console.error(e);setSync("⚠️ Ошибка загрузки","err");renderAll()}}
 function getPark(id){if(!DATA.parks[id])DATA.parks[id]={done:false,runs:[]};return DATA.parks[id]}
-function getSortedP(){const arr=P.slice();if(UI.sort==="name")arr.sort((a,b)=>a.n.localeCompare(b.n,"ru"));else if(UI.sort==="recent"){arr.sort((a,b)=>{const ra=getPark(a.id).runs||[],rb=getPark(b.id).runs||[];const da=ra.length?ra[ra.length-1].date:"";const db=rb.length?rb[rb.length-1].date:"";return db.localeCompare(da)})}return arr}
-  function buildHTML(){
+function getSortedP(){const arr=P.slice();if(UI.sort==="name")arr.sort((a,b)=>a.n.localeCompare(b.n,"ru"));else if(UI.sort==="recent"){arr.sort((a,b)=>{const ra=getPark(a.id).runs||[],rb=getPark(b.id).runs||[];const da=ra.length?ra[ra.length-1].date:"";const db=rb.length?rb[rb.length-1].date:"";return db.localeCompare(da)})}return arr}function buildHTML(){
 const arr=getSortedP();
 const el=document.getElementById("content");
 let html="",curBlock="";
