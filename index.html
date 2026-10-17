@@ -10,23 +10,24 @@ body.light{--bg:#f4f6fa;--card:#fff;--br:#dde3ec;--g:#059669;--o:#ea580c;--b:#02
 *{box-sizing:border-box}
 body{font-family:-apple-system,sans-serif;background:var(--bg);color:var(--t);margin:0;padding:12px;font-size:11px;line-height:1.35}
 .header{text-align:center;margin-bottom:12px;border-bottom:2px solid var(--br);padding-bottom:10px}
-.header h1{font-size:19px;margin:0 0 4px}.header h1 span{color:var(--g)}
+.header h1{font-size:19px;margin:0 0 4px}
+.header h1 span{color:var(--g)}
 .header p{color:var(--m);margin:0;font-size:11px}
 .topbtns{display:flex;gap:6px;justify-content:center;margin:10px 0;flex-wrap:wrap}
 .tbtn{background:var(--card);border:1px solid var(--br);color:var(--t);padding:5px 10px;border-radius:6px;font-size:10px;cursor:pointer}
-.sync{text-align:center;font-size:10px;color:var(--m);margin:6px 0}
-.sync.ok{color:var(--g)}.sync.err{color:var(--red)}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:10px 0}
+.sync{text-align:center;font-size:10px;color:var(--g);margin:6px 0}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:10px 0}
 .stat{background:var(--card);border:1px solid var(--br);border-radius:8px;padding:8px 4px;text-align:center}
 .sv{display:block;font-size:16px;font-weight:bold;color:var(--g)}
 .sl{display:block;font-size:9px;color:var(--m);margin-top:2px}
 .box{background:var(--card);border:1px solid var(--br);border-radius:10px;padding:12px;margin:10px 0}
 .bx-title{font-size:11px;color:var(--b);font-weight:bold;margin-bottom:8px}
 .goal-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
-.goal-row label{font-size:11px}
 .goal-row input{width:80px;background:var(--bd);border:1px solid var(--br);color:var(--t);border-radius:4px;padding:5px;font-size:11px;text-align:center}
 .goal-progress{background:var(--br);border-radius:6px;height:12px;overflow:hidden;margin-bottom:4px}
 .goal-fill{background:linear-gradient(90deg,var(--g),var(--b));height:100%;width:0;transition:width .4s}
-.goal-text{font-size:10px;color:var(--m);text-align:center}.heatmap{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+.goal-text{font-size:10px;color:var(--m);text-align:center}
+.heatmap{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
 .hm-cell{aspect-ratio:1;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold;background:var(--bd);color:var(--m);position:relative;cursor:pointer}
 .hm-cell.l1{background:rgba(0,255,136,.2);color:var(--g)}
 .hm-cell.l2{background:rgba(0,255,136,.4);color:var(--g)}
@@ -42,33 +43,38 @@ body{font-family:-apple-system,sans-serif;background:var(--bg);color:var(--t);ma
 .month-row{display:flex;justify-content:space-between;padding:4px 0;font-size:11px;border-bottom:1px dashed var(--br)}
 .month-row:last-child{border-bottom:none}
 .month-diff{font-weight:bold;font-size:10px}
-.month-diff.up{color:var(--g)}.month-diff.down{color:var(--red)}.month-diff.same{color:var(--m)}
+.month-diff.up{color:var(--g)}
+.month-diff.down{color:var(--red)}
+.month-diff.same{color:var(--m)}
 .best-run{background:linear-gradient(135deg,rgba(0,255,136,.15),rgba(56,189,248,.15));border-radius:8px;padding:8px;font-size:11px;text-align:center;margin-top:8px}
 .forecast-row{display:flex;justify-content:space-between;padding:4px 0;font-size:11px}
-.forecast-row .val{color:var(--g);font-weight:bold}.ach{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:10px 0}
+.forecast-row .val{color:var(--g);font-weight:bold}
+.ach{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:10px 0}
 .achitem{background:var(--card);border:1px solid var(--br);border-radius:6px;padding:4px 8px;font-size:10px;opacity:.35;filter:grayscale(1)}
 .achitem.on{opacity:1;filter:none;border-color:var(--g)}
 .pw{margin:10px 0;text-align:center}
 .pc{background:var(--br);border-radius:10px;height:12px;overflow:hidden;margin-bottom:5px}
 .pb{background:var(--g);height:100%;width:0;transition:width .3s}
 .pt{font-size:11px;color:var(--g);font-weight:bold}
-.toolbar{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0;align-items:center}
-.toolbar select{background:var(--card);border:1px solid var(--br);color:var(--t);padding:5px 8px;border-radius:6px;font-size:10px;cursor:pointer}
+.toolbar{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}
+.toolbar select{background:var(--card);border:1px solid var(--br);color:var(--t);padding:5px 8px;border-radius:6px;font-size:10px}
 .st{font-size:15px;color:var(--b);border-left:4px solid var(--b);padding-left:10px;margin:22px 0 10px;text-transform:uppercase}
 .card{background:var(--card);border:1px solid var(--br);border-radius:10px;padding:12px;margin-bottom:10px}
 .ch{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;border-bottom:1px solid var(--br);padding-bottom:8px}
 .ptg h2{font-size:14px;margin:0 0 2px}
 .pl{font-size:9px;color:var(--o);font-weight:600;text-transform:uppercase}
-.loc-icon{display:inline-block;margin-right:3px;font-size:11px}.cw{display:flex;align-items:center;gap:5px;font-weight:bold;color:var(--g);font-size:10px;cursor:pointer}
+.loc-icon{display:inline-block;margin-right:3px;font-size:11px}
+.cw{display:flex;align-items:center;gap:5px;font-weight:bold;color:var(--g);font-size:10px;cursor:pointer}
 .cw input{width:18px;height:18px;accent-color:var(--g)}
 .br{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px}
 .bd{background:var(--bd);color:var(--t);padding:2px 6px;border-radius:4px;font-size:9px;font-weight:600}
-.bd.f{border:1px solid var(--g);color:var(--g)}.bd.p{border:1px solid var(--o);color:var(--o)}
+.bd.f{border:1px solid var(--g);color:var(--g)}
+.bd.p{border:1px solid var(--o);color:var(--o)}
 .cb{display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:10.5px}
-.ic p{margin:0 0 5px;color:var(--m)}.ic p strong{color:var(--t)}
+.ic p{margin:0 0 5px;color:var(--m)}
 .rc{background:rgba(0,0,0,.1);border-radius:6px;padding:8px;border:1px solid var(--br)}
 .rc h4{margin:0 0 5px;color:var(--g);font-size:10px;text-transform:uppercase}
-.ri{margin-bottom:4px;font-size:10px}.ri:last-child{margin-bottom:0}
+.ri{margin-bottom:4px;font-size:10px}
 .dl{margin-top:10px;grid-column:span 2;display:flex;flex-wrap:wrap;gap:8px}
 .dlb{display:inline-block;background:linear-gradient(135deg,#00ff88,#00b359);color:#12141a;padding:7px 12px;border-radius:6px;text-decoration:none;font-weight:bold;font-size:10px;border:none;cursor:pointer}
 .dlb.g10{background:linear-gradient(135deg,#ff6b35,#cc4400);color:#fff}
@@ -82,9 +88,11 @@ body{font-family:-apple-system,sans-serif;background:var(--bg);color:var(--t);ma
 .dist.d5{background:rgba(0,255,136,.15);color:var(--g)}
 .dist.d10{background:rgba(255,107,53,.15);color:var(--o)}
 .dist.dx{background:rgba(56,189,248,.15);color:var(--b)}
-.diff{font-weight:bold;font-size:9px}.diff.plus{color:var(--red)}.diff.minus{color:var(--g)}
+.diff{font-weight:bold;font-size:9px}
+.diff.plus{color:var(--red)}
+.diff.minus{color:var(--g)}
 .note{color:var(--m);font-size:9px;margin-top:3px;font-style:italic}
-.rm{background:none;border:none;color:var(--red);font-size:14px;cursor:pointer;padding:0 4px;line-height:1}
+.rm{background:none;border:none;color:var(--red);font-size:14px;cursor:pointer;padding:0 4px}
 .empty{color:var(--m);font-size:10px;padding:4px 0}
 .add-run{background:transparent;border:1px dashed var(--g);color:var(--g);padding:6px 12px;border-radius:6px;font-size:11px;font-weight:bold;cursor:pointer;width:100%}
 .run-form{display:none;background:var(--bd);border-radius:8px;padding:10px;margin-top:8px;flex-direction:column;gap:8px}
@@ -101,8 +109,7 @@ body{font-family:-apple-system,sans-serif;background:var(--bg);color:var(--t);ma
 body.compact .ic,body.compact .rc,body.compact .br,body.compact .dl,body.compact .pl,body.compact .box{display:none}
 body.compact .card{padding:8px}
 </style>
-</head>
-<body>
+</head><body>
 <div class="header">
 <h1>🏃‍♂️ БЕГОВОЙ ЧЕЛЛЕНДЖ: <span>ПАРКИ СПБ</span></h1>
 <p>Целевой темп: 5:25 мин/км • 19 локаций</p>
@@ -124,15 +131,25 @@ body.compact .card{padding:8px}
 </div>
 <div class="box" id="monthBox"></div>
 <div class="box" id="forecastBox"></div>
+<div class="box" id="chartBox"></div>
 <div class="box">
 <div class="bx-title">🔥 Серия и 🟩 Карта парков</div>
 <div style="display:flex;gap:12px;align-items:center;margin-bottom:10px">
-<div style="flex:1;text-align:center"><div style="font-size:22px;font-weight:bold;color:var(--g)" id="streakNum">0</div><div style="font-size:10px;color:var(--m)">недель подряд</div></div>
+<div style="flex:1;text-align:center">
+<div style="font-size:22px;font-weight:bold;color:var(--g)" id="streakNum">0</div>
+<div style="font-size:10px;color:var(--m)">недель подряд</div>
+</div>
 <div style="flex:2"><div class="heatmap" id="heatmap"></div></div>
 </div>
 </div>
-<div class="box" id="chartBox"></div>
-<div class="box"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><button id="calPrev" class="tbtn" style="padding:3px 10px">←</button><div class="bx-title" id="calTitle" style="margin:0"></div><button id="calNext" class="tbtn" style="padding:3px 10px">→</button></div><div class="cal-grid" id="calGrid"></div></div>
+<div class="box">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+<button class="tbtn" id="calPrev">←</button>
+<div class="bx-title" id="calTitle" style="margin:0"></div>
+<button class="tbtn" id="calNext">→</button>
+</div>
+<div class="cal-grid" id="calGrid"></div>
+</div>
 <div class="toolbar">
 <select id="filterSel"><option value="all">Все парки</option><option value="done">Выполненные</option><option value="notdone">Невыполненные</option></select>
 <select id="sortSel"><option value="default">По порядку</option><option value="name">По алфавиту</option><option value="recent">По последнему забегу</option></select>
@@ -146,17 +163,11 @@ body.compact .card{padding:8px}
 <button class="danger" id="rb">🗑️ Сбросить всё</button>
 </div>
 <input type="file" id="importFile" accept=".json" style="display:none">
-<script>let DATA = JSON.parse(localStorage.getItem("runData") || '{"parks":{},"goalKm":500}');
+<script>let DATA=JSON.parse(localStorage.getItem("runData")||'{"parks":{},"goalKm":500}');
 let saveTimer;
-let UI = {
-  theme: localStorage.getItem("ui_theme")||"dark",
-  compact: localStorage.getItem("ui_compact")==="1",
-  filter: localStorage.getItem("ui_filter")||"all",
-sort: localStorage.getItem("ui_sort")||"default",
-calOffset: 0
-};
+let UI={theme:localStorage.getItem("ui_theme")||"dark",compact:localStorage.getItem("ui_compact")==="1",filter:localStorage.getItem("ui_filter")||"all",sort:localStorage.getItem("ui_sort")||"default",calOffset:0};
 const P=[
-{id:1,b:"Блок 1: Центральные парки Санкт-Петербурга",n:"1. ЦПКиО им. Кирова (Елагин остров)",l:"Петроградский район",f:1,bd:["Вход: Платный","💡 Освещение: Есть","🌱 Просушка: Апрель"],inf:["Плоский, торцовые подъемы.","2-й Елагин мост. Туалеты есть.","Грунтовый отсев. Шоссейные.","Кофейни у павильонов."],r:["⚡ 5 км (~27:10): 1 круг.","🔥 10 км (~54:30): 2 кольца + петли."],g5:"1-5k.gpx",g10:"1-10k-v2.gpx"},
+{id:1,b:"Блок 1: Центральные парки Санкт-Петербурга",n:"1. ЦПКиО им. Кирова (Елагин остров)",l:"Петроградский район",f:1,bd:["Вход: Платный","💡 Освещение: Есть","🌱 Просушка: Апрель"],inf:["Плоский, торцовые подъемы.","2-й Елагин мост. Туалеты есть.","Грунтовый отсев. Шоссейные.","Кофейни у павильонов."],r:["⚡ 5 км (~27:10): 1 круг.","🔥 10 км (~54:30): 2 кольца + петли."],g5:"1-5k.gpx",g10:"1-10k.gpx"},
 {id:2,n:"2. Приморский парк Победы",l:"Крестовский остров",f:1,bd:["Вход: Бесплатно","💡 Освещение: Отличное","🌱 Просушка: Нет"],inf:["Равнинный, ветер с залива.","м. Крестовский остров.","Асфальт и грунт. Шоссейные.","Кофейни у входа."],r:["⚡ 5 км (~27:00): Батарейная дор.","🔥 10 км (~54:00): Южная дор. → Яхтенный мост."],g5:"2-5k.gpx",g10:"2-10k.gpx"},
 {id:3,n:"3. Таврический сад",l:"Центральный район",b:1,bd:["Вход: Бесплатно","💡 Освещение: Частичное","🌱 Просушка: Апрель"],inf:["Абсолютно плоский.","Главный вход с Кирочной ул.","Плотный грунт. Шоссейные.","Оранжерея с кафе."],r:["⚡ 5 км (~27:30): 3.5 круга.","🔥 10 км (~54:00): 3 круга + Нева."],g5:"3-5k.gpx",g10:"3-10k.gpx"},
 {id:4,n:"4. Александровский парк",l:"Петроградская сторона",b:1,bd:["Вход: Бесплатно","💡 Освещение: Отличное","🌱 Просушка: Нет"],inf:["Равнинный, мосты.","У «Мини-города».","Асфальт, грунт. Шоссейные.","Пекарни на Кронверкском."],r:["⚡ 5 км (~27:15): Аллеи + Петропавловка.","🔥 10 км (~54:10): Троицкий мост → Стрелка."],g5:"4-5k.gpx",g10:"4-10k.gpx"},
@@ -165,7 +176,8 @@ const P=[
 {id:7,b:"Блок 2: Северные и Южные районы",n:"7. Парк Сосновка",l:"Выборгский район",b:1,bd:["Вход: Бесплатно","💡 Освещение: Частичное","🌱 Просушка: Быстрая"],inf:["Плоский сосновый бор.","Северный пр. / ул. Тореза.","Грунтовые просеки. Шоссейные.","Киоски у входов."],r:["⚡ 5 км (~27:00): 2 кольца.","🔥 10 км (~54:00): Обход по периметру."],g5:"7-5k.gpx",g10:"7-10k.gpx"},
 {id:8,n:"8. Удельный парк",l:"Выборгский / Приморский",b:1,bd:["Вход: Бесплатно","💡 Освещение: Частичное","🌱 Просушка: Средняя"],inf:["Литориновый уступ (горки).","Аккуратова ул.","Лесные тропы. Шоссе/Трейл.","Киоски у ж/д станции."],r:["⚡ 5 км (~27:30): Двухуровневый круг.","🔥 10 км (~54:10): С штурмом уступа."],g5:"8-5k.gpx",g10:"8-10k.gpx"},
 {id:9,n:"9. Шуваловский парк",l:"пос. Парголово",b:1,bd:["Вход: Бесплатно","💡 Освещение: Нет","🌱 Просушка: Медленная"],inf:["Холмистый, гора Парнас.","Ул. Шишкина.","Грунт, корни. Трейловые!","Магазины у метро «Парнас»."],r:["⚡ 5 км (~29:00): Лесные петли.","🔥 10 км (~58:00): Большой трейл."],g5:"9-5k.gpx",g10:"9-10k.gpx"},
-{id:10,n:"10. Московский парк Победы",l:"Московский район",b:1,bd:["Вход: Бесплатно","💡 Освещение: Хорошее","🌱 Просушка: Быстрая"],inf:["Плоский, аллеи.","Главные пропилеи.","Грунт, асфальт. Шоссейные.","Кафе у аттракционов."],r:["⚡ 5 км (~27:10): Змейка вокруг прудов.","🔥 10 км (~54:00): Двойное кольцо."],g5:"10-5k.gpx",g10:"10-10k.gpx"},{id:11,n:"11. Парк Героев-Пожарных",l:"Купчино",b:1,bd:["Вход: Бесплатно","💡 Освещение: Отличное","🌱 Просушка: Идеально"],inf:["Равнинный, холмы у карьеров.","м. Проспект Славы.","Новый асфальт. Шоссейные.","Киоски и ТЦ у метро."],r:["⚡ 5 км (~26:45): 2 кольца.","🔥 10 км (~54:00): С Интернационалистов."],g5:"11-5k.gpx",g10:"11-10k.gpx"},
+{id:10,n:"10. Московский парк Победы",l:"Московский район",b:1,bd:["Вход: Бесплатно","💡 Освещение: Хорошее","🌱 Просушка: Быстрая"],inf:["Плоский, аллеи.","Главные пропилеи.","Грунт, асфальт. Шоссейные.","Кафе у аттракционов."],r:["⚡ 5 км (~27:10): Змейка вокруг прудов.","🔥 10 км (~54:00): Двойное кольцо."],g5:"10-5k.gpx",g10:"10-10k.gpx"},
+{id:11,n:"11. Парк Героев-Пожарных",l:"Купчино",b:1,bd:["Вход: Бесплатно","💡 Освещение: Отличное","🌱 Просушка: Идеально"],inf:["Равнинный, холмы у карьеров.","м. Проспект Славы.","Новый асфальт. Шоссейные.","Киоски и ТЦ у метро."],r:["⚡ 5 км (~26:45): 2 кольца.","🔥 10 км (~54:00): С Интернационалистов."],g5:"11-5k.gpx",g10:"11-10k.gpx"},
 {id:12,b:"Блок 3: Пригороды и Ленобласть",n:"12. ГМЗ «Петергоф»",l:"г. Петергоф",p:1,bd:["Вход: Платный летом","💡 Освещение: Нет","🌱 Просушка: Апрель"],inf:["Уступ к заливу.","Главный вход.","Отсев, брусчатка. Шоссейные.","Кафе на территории."],r:["⚡ 5 км (~27:30): Верхний → Нижний парк.","🔥 10 км (~54:00): + Александрия."],g5:"12-5k.gpx"},
 {id:13,n:"13. Александровский и Екатерининский парки",l:"г. Пушкин",b:1,bd:["Вход: Александровский — 0₽","💡 Освещение: Нет","🌱 Просушка: Апрель"],inf:["Равнинный с холмами.","У Ратной палаты.","Грунтовые аллеи. Шоссейные.","Кофейни в Пушкине."],r:["⚡ 5 км (~27:00): Александровский.","🔥 10 км (~54:00): + Екатерининский."],g5:"13-5k.gpx",g10:"13-10k.gpx"},
 {id:14,n:"14. Павловский парк",l:"г. Павловск",p:1,bd:["Вход: Платный в вых.","💡 Освещение: Нет","🌱 Просушка: Апрель"],inf:["Умеренно-холмистый.","У вокзала.","Отсев, тропы. Шоссейные.","Кафе у вокзала."],r:["⚡ 5 км (~27:10): Вокзал → Храм Дружбы.","🔥 10 км (~53:30): Большой круг."],g5:"14-5k.gpx",g10:"14-10k.gpx"},
@@ -178,108 +190,32 @@ const P=[
 function timeToSec(t){if(!t)return 0;const p=t.replace(",",".").split(":");if(p.length===2)return(+p[0])*60+(+p[1]);if(p.length===3)return(+p[0])*3600+(+p[1])*60+(+p[2]);return+p[0]||0}
 function secToTime(s){if(s===null||s===undefined||isNaN(s))return"—";const m=Math.floor(s/60),sec=Math.round(s%60);return m+":"+String(sec).padStart(2,"0")}
 function paceOf(r){const sec=timeToSec(r.time);const d=parseFloat(r.dist);if(!sec||!d)return null;return sec/d}
-function setSync(t,c){const e=document.getElementById("sync");e.textContent=t;e.className="sync "+c}
+function setSync(t){document.getElementById("sync").textContent=t}
 function scheduleSave(){clearTimeout(saveTimer);saveTimer=setTimeout(saveData,300)}
-function saveData(){try{localStorage.setItem("runData",JSON.stringify(DATA));setSync("💾 Сохранено на телефоне","ok")}catch(e){setSync("⚠️ Ошибка: "+e.message,"err")}}
-function loadData(){try{const raw=localStorage.getItem("runData");if(raw)DATA=JSON.parse(raw);if(!DATA.parks)DATA.parks={};if(!DATA.goalKm)DATA.goalKm=500;setSync("💾 Данные на телефоне","ok");document.getElementById("goalInput").value=DATA.goalKm;renderAll()}catch(e){console.error(e);setSync("⚠️ Ошибка загрузки","err");renderAll()}}
+function saveData(){try{localStorage.setItem("runData",JSON.stringify(DATA));setSync("💾 Сохранено на телефоне")}catch(e){setSync("⚠️ Ошибка")}}
+function loadData(){try{const raw=localStorage.getItem("runData");if(raw)DATA=JSON.parse(raw);if(!DATA.parks)DATA.parks={};if(!DATA.goalKm)DATA.goalKm=500;setSync("💾 Данные на телефоне");document.getElementById("goalInput").value=DATA.goalKm;renderAll()}catch(e){setSync("⚠️ Ошибка");renderAll()}}
 function getPark(id){if(!DATA.parks[id])DATA.parks[id]={done:false,runs:[]};return DATA.parks[id]}
-function getSortedP(){const arr=P.slice();if(UI.sort==="name")arr.sort((a,b)=>a.n.localeCompare(b.n,"ru"));else if(UI.sort==="recent"){arr.sort((a,b)=>{const ra=getPark(a.id).runs||[],rb=getPark(b.id).runs||[];const da=ra.length?ra[ra.length-1].date:"";const db=rb.length?rb[rb.length-1].date:"";return db.localeCompare(da)})}return arr}function buildHTML(){
-const arr=getSortedP();
-const el=document.getElementById("content");
-let html="",curBlock="";
-arr.forEach(p=>{
-if(p.b&&typeof p.b==="string"&&p.b!==curBlock){html+=`<div class="st">${p.b}</div>`;curBlock=p.b}
-const bhtml=p.bd.map(x=>`<span class="bd ${x.includes("Бесплатно")&&!x.includes("Платный")?'f':(x.includes("Платный")?'p':'')}">${x}</span>`).join("");
-const inf=p.inf.map(x=>`<p>${x}</p>`).join("");
-const rt=p.r.map(x=>`<div class="ri">${x}</div>`).join("");
-let dl="";
-if(p.g5)dl+=`<button onclick="downloadGPX('${p.g5}')" class="dlb">⬇️ GPX 5 км</button>`;
-if(p.g10)dl+=`<button onclick="downloadGPX('${p.g10}')" class="dlb g10">⬇️ GPX 10 км</button>`;
-html+=`<div class="card" data-id="${p.id}">`;
-html+=`<div class="ch"><div class="ptg"><h2>${p.n}</h2><span class="pl"><span class="loc-icon">${locIcon(p.l)}</span>${p.l}</span></div><label class="cw"><span>ГОТОВО</span><input type="checkbox" class="cb1"></label></div>`;
-html+=`<div class="br">${bhtml}</div>`;
-html+=`<div class="cb"><div class="ic">${inf}</div><div class="rc"><h4>Маршруты</h4>${rt}</div><div class="dl">${dl}</div></div>`;
-html+=`<div class="runs"><h4>Мои забеги</h4><div class="run-list"></div><button class="add-run">+ Добавить забег</button><div class="run-form"><label>Дистанция<select class="f-dist"><option value="5">5 км</option><option value="10">10 км</option><option value="other">Своя (км)</option></select></label><label class="f-other-label" style="display:none">Сколько км?<input type="number" class="f-other" placeholder="15" step="0.1"></label><label>Дата<input type="date" class="f-date"></label><label>Время (мм:сс)<input type="text" class="f-time" placeholder="54:30"></label><label>Заметка<input type="text" class="f-note" placeholder="Ясно, +12"></label><div class="form-btns"><button class="cancel">Отмена</button><button class="save">Сохранить</button></div></div>`;
-html+=`</div></div>`;
-});
-el.innerHTML=html;
-}
+function getSortedP(){const arr=P.slice();if(UI.sort==="name")arr.sort((a,b)=>a.n.localeCompare(b.n,"ru"));return arr}
+function buildHTML(){const arr=getSortedP();let html="",curBlock="";arr.forEach(p=>{if(p.b&&typeof p.b==="string"&&p.b!==curBlock){html+=`<div class="st">${p.b}</div>`;curBlock=p.b}const bhtml=p.bd.map(x=>`<span class="bd ${x.includes("Бесплатно")&&!x.includes("Платный")?'f':(x.includes("Платный")?'p':'')}">${x}</span>`).join("");const inf=p.inf.map(x=>`<p>${x}</p>`).join("");const rt=p.r.map(x=>`<div class="ri">${x}</div>`).join("");let dl="";if(p.g5)dl+=`<button onclick="downloadGPX('${p.g5}')" class="dlb">⬇️ GPX 5 км</button>`;if(p.g10)dl+=`<button onclick="downloadGPX('${p.g10}')" class="dlb g10">⬇️ GPX 10 км</button>`;html+=`<div class="card" data-id="${p.id}"><div class="ch"><div class="ptg"><h2>${p.n}</h2><span class="pl"><span class="loc-icon">${locIcon(p.l)}</span>${p.l}</span></div><label class="cw"><span>ГОТОВО</span><input type="checkbox" class="cb1"></label></div><div class="br">${bhtml}</div><div class="cb"><div class="ic">${inf}</div><div class="rc"><h4>Маршруты</h4>${rt}</div><div class="dl">${dl}</div></div><div class="runs"><h4>Мои забеги</h4><div class="run-list"></div><button class="add-run">+ Добавить забег</button><div class="run-form"><label>Дистанция<select class="f-dist"><option value="5">5 км</option><option value="10">10 км</option><option value="other">Своя (км)</option></select></label><label class="f-other-label" style="display:none">Сколько км?<input type="number" class="f-other" placeholder="15" step="0.1"></label><label>Дата<input type="date" class="f-date"></label><label>Время (мм:сс)<input type="text" class="f-time" placeholder="54:30"></label><label>Заметка<input type="text" class="f-note" placeholder="Ясно, +12"></label><div class="form-btns"><button class="cancel">Отмена</button><button class="save">Сохранить</button></div></div></div></div>`});document.getElementById("content").innerHTML=html}
 async function downloadGPX(url){try{const r=await fetch(url);if(!r.ok)throw new Error("файл не найден");const b=await r.blob();const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=url;document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(()=>URL.revokeObjectURL(a.href),5000)}catch(e){alert("Ошибка: "+e.message)}}
-function renderRuns(card){const id=card.dataset.id,list=card.querySelector(".run-list"),runs=getPark(id).runs||[];if(!runs.length){list.innerHTML='<div class="empty">Пока нет записей</div>';return}
-const display=runs.map((r,i)=>({...r,_idx:i})).reverse();
-list.innerHTML=display.map(r=>{const cls=r.dist==="5"?"d5":(r.dist==="10"?"d10":"dx");const pace=paceOf(r);const paceHtml=pace?`<span style="color:var(--m)">${secToTime(pace)}/км</span>`:"";const prev=runs.slice(0,r._idx).reverse().find(x=>x.dist===r.dist);const prevPace=prev?paceOf(prev):null;const curPace=paceOf(r);const diff=(curPace&&prevPace)?curPace-prevPace:null;const diffHtml=diff!==null?`<span class="diff ${diff>0?'plus':'minus'}">${diff>0?'+':'−'}${secToTime(Math.abs(diff))}</span>`:"";return `<div class="run-item"><div class="run-top"><div class="run-line"><span class="dist ${cls}">${r.dist} км</span>${r.date||"—"} · ${r.time||"—"} ${paceHtml} ${diffHtml}</div><button class="rm" data-i="${r._idx}">✕</button></div>${r.note?`<div class="note">${r.note}</div>`:""}</div>`}).join("");
-list.querySelectorAll(".rm").forEach(b=>{b.onclick=()=>{const a=getPark(id).runs;a.splice(+b.dataset.i,1);saveData();renderRuns(card);updateStats();renderChart();renderCalendar();renderStreak();renderHeatmap();renderMonths();renderForecast()}})}
+function renderRuns(card){const id=card.dataset.id,list=card.querySelector(".run-list"),runs=getPark(id).runs||[];if(!runs.length){list.innerHTML='<div class="empty">Пока нет записей</div>';return}const display=runs.map((r,i)=>({...r,_idx:i})).reverse();list.innerHTML=display.map(r=>{const cls=r.dist==="5"?"d5":(r.dist==="10"?"d10":"dx");const pace=paceOf(r);const paceHtml=pace?`<span style="color:var(--m)">${secToTime(pace)}/км</span>`:"";return `<div class="run-item"><div class="run-top"><div class="run-line"><span class="dist ${cls}">${r.dist} км</span>${r.date||"—"} · ${r.time||"—"} ${paceHtml}</div><button class="rm" data-i="${r._idx}">✕</button></div>${r.note?`<div class="note">${r.note}</div>`:""}</div>`}).join("");list.querySelectorAll(".rm").forEach(b=>{b.onclick=()=>{const a=getPark(id).runs;a.splice(+b.dataset.i,1);saveData();renderRuns(card);updateStats();renderCalendar();renderStreak();renderHeatmap();renderMonths();renderForecast();renderChart()}})}
 function totalKm(){let s=0;P.forEach(p=>{(getPark(p.id).runs||[]).forEach(r=>{s+=parseFloat(r.dist)||0})});return s}
 function totalRuns(){let c=0;P.forEach(p=>{c+=(getPark(p.id).runs||[]).length});return c}
 function avgPace(){let sec=0,km=0;P.forEach(p=>{(getPark(p.id).runs||[]).forEach(r=>{const t=timeToSec(r.time),d=parseFloat(r.dist);if(t&&d){sec+=t;km+=d}})});return km?sec/km:null}
-function bestTime(dist){let best=null;P.forEach(p=>{(getPark(p.id).runs||[]).forEach(r=>{if(parseFloat(r.dist)===dist){const t=timeToSec(r.time);if(t&&(!best||t<best))best=t}})});return best}
-function updateStats(){const km=totalKm(),runs=totalRuns(),ap=avgPace(),b5=bestTime(5),b10=bestTime(10);document.getElementById("stats").innerHTML=`<div class="stat"><span class="sv">${km.toFixed(1)}</span><span class="sl">км</span></div><div class="stat"><span class="sv">${runs}</span><span class="sl">забегов</span></div><div class="stat"><span class="sv">${ap?secToTime(ap):"—"}</span><span class="sl">темп</span></div><div class="stat"><span class="sv">${b5?secToTime(b5):"—"} / ${b10?secToTime(b10):"—"}</span><span class="sl">рекорд</span></div>`;const done=P.filter(p=>getPark(p.id).done).length;const ach=[{i:"🥇",n:"1",ok:done>=1},{i:"🏃",n:"5",ok:done>=5},{i:"🏅",n:"10",ok:done>=10},{i:"🏆",n:"19",ok:done>=19},{i:"🔥",n:"50км",ok:km>=50},{i:"💯",n:"100км",ok:km>=100},{i:"⚡",n:"10км",ok:!!b10}];document.getElementById("ach").innerHTML=ach.map(a=>`<div class="achitem ${a.ok?'on':''}">${a.i} ${a.n}</div>`).join("");document.getElementById("pb").style.width=(done/P.length*100)+"%";document.getElementById("pt").innerText=`Пройдено ${done} из ${P.length}`}
+function updateStats(){const km=totalKm(),runs=totalRuns(),ap=avgPace();document.getElementById("stats").innerHTML=`<div class="stat"><span class="sv">${km.toFixed(1)}</span><span class="sl">км</span></div><div class="stat"><span class="sv">${runs}</span><span class="sl">забегов</span></div><div class="stat"><span class="sv">${ap?secToTime(ap):"—"}</span><span class="sl">темп</span></div><div class="stat"><span class="sv">${runs?Math.round(km/runs*100)/100:"—"}</span><span class="sl">км/забег</span></div>`;const done=P.filter(p=>getPark(p.id).done).length;const ach=[{i:"🥇",n:"1",ok:done>=1},{i:"🏃",n:"5",ok:done>=5},{i:"🏅",n:"10",ok:done>=10},{i:"🏆",n:"19",ok:done>=19},{i:"🔥",n:"50км",ok:km>=50},{i:"💯",n:"100км",ok:km>=100}];document.getElementById("ach").innerHTML=ach.map(a=>`<div class="achitem ${a.ok?'on':''}">${a.i} ${a.n}</div>`).join("");document.getElementById("pb").style.width=(done/P.length*100)+"%";document.getElementById("pt").innerText=`Пройдено ${done} из ${P.length}`}
 function applyFilter(){document.querySelectorAll(".card").forEach(card=>{const id=card.dataset.id,done=!!getPark(id).done;let show=true;if(UI.filter==="done"&&!done)show=false;if(UI.filter==="notdone"&&done)show=false;card.style.display=show?"":"none"})}
-function bindCards(){document.querySelectorAll(".card").forEach(card=>{const id=card.dataset.id,cb=card.querySelector(".cb1"),form=card.querySelector(".run-form"),addBtn=card.querySelector(".add-run"),sel=card.querySelector(".f-dist"),ol=card.querySelector(".f-other-label"),oi=card.querySelector(".f-other"),di=card.querySelector(".f-date"),ti=card.querySelector(".f-time"),ni=card.querySelector(".f-note");cb.checked=!!getPark(id).done;cb.onchange=()=>{getPark(id).done=cb.checked;scheduleSave();updateStats();applyFilter();renderHeatmap()};renderRuns(card);addBtn.onclick=()=>{form.classList.add("open");addBtn.style.display="none";if(!di.value)di.value=new Date().toISOString().slice(0,10)};sel.onchange=()=>{ol.style.display=sel.value==="other"?"flex":"none"};function closeForm(){form.classList.remove("open");addBtn.style.display="block";oi.value="";ti.value="";ni.value="";sel.value="5";ol.style.display="none"}form.querySelector(".cancel").onclick=closeForm;form.querySelector(".save").onclick=()=>{let d=sel.value;if(d==="other"){d=oi.value.trim();if(!d){alert("Укажите дистанцию");return}}const t=ti.value.trim();if(!t){alert("Укажите время");return}const park=getPark(id);if(!park.runs)park.runs=[];park.runs.push({dist:d,date:di.value,time:t,note:ni.value.trim()});park.done=true;saveData();renderRuns(card);cb.checked=true;updateStats();applyFilter();renderChart();renderCalendar();updateGoal();renderStreak();renderHeatmap();renderMonths();renderForecast();closeForm()}})}
-function renderAll(){buildHTML();bindCards();updateStats();applyFilter();renderChart();renderCalendar();updateGoal();renderStreak();renderHeatmap();renderMonths();renderForecast()}
 function updateGoal(){const goal=DATA.goalKm||500;const cur=totalKm();const pct=Math.min(100,(cur/goal)*100);document.getElementById("goalFill").style.width=pct+"%";document.getElementById("goalText").innerText=`${cur.toFixed(1)} / ${goal} км (${pct.toFixed(0)}%)`}
-function renderChart(){
-const box=document.getElementById("chartBox");
-const all=[];
-P.forEach(p=>(getPark(p.id).runs||[]).forEach(r=>{const pace=paceOf(r);if(pace&&r.date)all.push({date:r.date,pace,dist:parseFloat(r.dist)})}));
-all.sort((a,b)=>a.date.localeCompare(b.date));
-if(all.length<2){box.innerHTML='<div class="bx-title">📈 Динамика темпа</div><div class="empty">Нужно 2+ забега с датой</div>';return}
-const last=all.slice(-20);
-const w=320,h=160,padL=42,padR=12,padT=20,padB=28;
-const minP=Math.min(...last.map(r=>r.pace))*0.95;
-const maxP=Math.max(...last.map(r=>r.pace))*1.05;
-const range=maxP-minP||1;
-const stepX=last.length>1?(w-padL-padR)/(last.length-1):0;
-const pts=last.map((r,i)=>{
-  const x=padL+i*stepX;
-  const y=h-padB-((maxP-r.pace)/range)*(h-padT-padB);
-  return {x:x,y:y,pace:r.pace,dist:r.dist};
-});
-let svg='<svg viewBox="0 0 '+w+' '+h+'" style="width:100%;height:180px">';
-const y1=maxP,y2=(maxP+minP)/2,y3=minP;
-svg+='<text x="4" y="'+(padT+3)+'" fill="#94a3b8" font-size="8">'+secToTime(y1)+'</text>';
-svg+='<text x="4" y="'+(padT+(h-padT-padB)/2+3)+'" fill="#94a3b8" font-size="8">'+secToTime(y2)+'</text>';
-svg+='<text x="4" y="'+(h-padB+3)+'" fill="#94a3b8" font-size="8">'+secToTime(y3)+'</text>';
-let path='M';
-pts.forEach((p,i)=>{path+=(i===0?'':' L')+p.x.toFixed(1)+','+p.y.toFixed(1)});
-svg+='<path d="'+path+'" fill="none" stroke="#38bdf8" stroke-width="1.5" opacity="0.6"/>';
-pts.forEach(p=>{
-  const c=p.dist===10?'#ff6b35':(p.dist===5?'#00ff88':'#38bdf8');
-  svg+='<circle cx="'+p.x.toFixed(1)+'" cy="'+p.y.toFixed(1)+'" r="3.5" fill="'+c+'"/>';
-});
-svg+='<text x="'+padL+'" y="'+(h-8)+'" fill="#94a3b8" font-size="8">'+last[0].date.slice(5)+'</text>';
-svg+='<text x="'+(w-padR)+'" y="'+(h-8)+'" fill="#94a3b8" font-size="8" text-anchor="end">'+last[last.length-1].date.slice(5)+'</text>';
-svg+='</svg>';
-box.innerHTML='<div class="bx-title">📈 Динамика темпа (последние '+last.length+')</div>'+svg+'<div class="legend"><span><span class="dot" style="background:#00ff88"></span>5 км</span><span><span class="dot" style="background:#ff6b35"></span>10 км</span></div>';
-}const box=document.getElementById("chartBox");
-const all=[];
-P.forEach(p=>(getPark(p.id).runs||[]).forEach(r=>{const pace=paceOf(r);if(pace&&r.date)all.push({date:r.date,pace,dist:parseFloat(r.dist)})}));
-all.sort((a,b)=>a.date.localeCompare(b.date));
-if(all.length<2){box.innerHTML='<div class="bx-title">📈 Динамика темпа</div><div class="empty">Нужно 2+ забега с датой</div>';return}
-const last=all.slice(-20);
-const w=320,h=160,padL=42,padR=12,padT=20,padB=28;
-const minP=Math.min(...last.map(r=>r.pace))*0.95;
-const maxP=Math.max(...last.map(r=>r.pace))*1.05;
-const range=maxP-minP||1;
-const stepX=last.length>1?(w-padL-padR)/(last.length-1):0;const pts=last.map((r,i)=>{const x=padL+i*stepX;const y=h-padB-((maxP-r.pace)/range)*(h-padT-padB);return{x,y,pace:r.pace,dist:r.dist,date:r.date}});
-const path="M"+pts.map(p=>`${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(" L");
-let yL="";
-[maxP,(maxP+minP)/2,minP].forEach((p,i)=>{const y=padT+(i*(h-padT-padB)/2);yL+=`<text x="4" y="${y+3}" fill="var(--m)" font-size="8">${secToTime(p)}</text>`});
-const xL=`<text x="${padL}" y="${h-8}" fill="var(--m)" font-size="8">${last[0].date.slice(5)}</text><text x="${w-padR}" y="${h-8}" fill="var(--m)" font-size="8" text-anchor="end">${last[last.length-1].date.slice(5)}</text>`;
-const dots=pts.map(p=>{const c=p.dist===10?"var(--o)":(p.dist===5?"var(--g)":"var(--b)");return `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="3.5" fill="${c}"/>`}).join("");
-box.innerHTML=`<div class="bx-title">📈 Динамика темпа (последние ${last.length})</div>`;
-box.innerHTML+=`<svg viewBox="0 0 ${w} ${h}" style="width:100%;height:180px">`;
-box.innerHTML+=`${yL}<path d="${path}" fill="none" stroke="var(--b)" stroke-width="1.5" opacity="0.5"/>${dots}${xL}`;
-box.innerHTML+=`</svg>`;
-box.innerHTML+=`<div class="legend"><span><span class="dot" style="background:var(--g)"></span>5 км</span><span><span class="dot" style="background:var(--o)"></span>10 км</span></div>`;
-function renderCalendar(){const grid=document.getElementById("calGrid");const title=document.getElementById("calTitle");if(!grid)return;const now=new Date();const target=new Date(now.getFullYear(),now.getMonth()+(UI.calOffset||0),1);const year=target.getFullYear();const month=target.getMonth();const first=new Date(year,month,1);const days=new Date(year,month+1,0).getDate();const startWd=(first.getDay()+6)%7;const runDays={};P.forEach(p=>(getPark(p.id).runs||[]).forEach(r=>{if(!r.date)return;const[y,m,d]=r.date.split("-").map(Number);if(y===year&&m===month+1)runDays[d]=(runDays[d]||0)+1}));const mn=["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"];const wd=["Пн","Вт","Ср","Чт","Пт","Сб","Вс"];let c=wd.map(d=>`<div class="cal-wd">${d}</div>`).join("");for(let i=0;i<startWd;i++)c+=`<div class="cal-cell empty"></div>`;const isThisMonth=(year===now.getFullYear()&&month===now.getMonth());for(let d=1;d<=days;d++){const t=(isThisMonth&&d===now.getDate());const hr=runDays[d];c+=`<div class="cal-cell ${t?'today':''} ${hr?'hasrun':''}">${d}</div>`}title.textContent=mn[month]+" "+year;grid.innerHTML=c;}function allRunDates(){const dates=[];P.forEach(p=>(getPark(p.id).runs||[]).forEach(r=>{if(r.date)dates.push(r.date)}));return dates}
+function renderCalendar(){const grid=document.getElementById("calGrid");if(!grid)return;const now=new Date();const target=new Date(now.getFullYear(),now.getMonth()+(UI.calOffset||0),1);const year=target.getFullYear();const month=target.getMonth();const days=new Date(year,month+1,0).getDate();const startWd=(new Date(year,month,1).getDay()+6)%7;const runDays={};P.forEach(p=>(getPark(p.id).runs||[]).forEach(r=>{if(!r.date)return;const[y,m,d]=r.date.split("-").map(Number);if(y===year&&m===month+1)runDays[d]=(runDays[d]||0)+1}));const mn=["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"];const wd=["Пн","Вт","Ср","Чт","Пт","Сб","Вс"];let c=wd.map(d=>`<div class="cal-wd">${d}</div>`).join("");for(let i=0;i<startWd;i++)c+=`<div class="cal-cell empty"></div>`;const isTm=(year===now.getFullYear()&&month===now.getMonth());for(let d=1;d<=days;d++){const t=(isTm&&d===now.getDate());const hr=runDays[d];c+=`<div class="cal-cell ${t?'today':''} ${hr?'hasrun':''}">${d}</div>`}document.getElementById("calTitle").textContent=mn[month]+" "+year;grid.innerHTML=c}
+function allRunDates(){const d=[];P.forEach(p=>(getPark(p.id).runs||[]).forEach(r=>{if(r.date)d.push(r.date)}));return d}
 function weekKey(d){const dt=new Date(d);const dow=(dt.getDay()+6)%7;dt.setDate(dt.getDate()-dow);return dt.toISOString().slice(0,10)}
-function renderStreak(){const dates=allRunDates().map(d=>weekKey(d));const uniq=[...new Set(dates)].sort();if(!uniq.length){document.getElementById("streakNum").textContent="0";return}const now=new Date();const thisWeek=weekKey(now.toISOString().slice(0,10));let streak=0;let cur=thisWeek;if(!uniq.includes(cur)){const prev=new Date();prev.setDate(prev.getDate()-7);cur=weekKey(prev.toISOString().slice(0,10))}while(uniq.includes(cur)){streak++;const prev=new Date(cur);prev.setDate(prev.getDate()-7);cur=weekKey(prev.toISOString().slice(0,10))}document.getElementById("streakNum").textContent=streak}
-function renderHeatmap(){const box=document.getElementById("heatmap");if(!box)return;box.innerHTML=P.map(p=>{const runs=getPark(p.id).runs||[];const n=runs.length;const done=getPark(p.id).done;let lvl=0;if(n>=1)lvl=1;if(n>=3)lvl=2;if(n>=6)lvl=3;if(n>=10)lvl=4;return `<div class="hm-cell l${lvl} ${done?'done':''}" data-id="${p.id}">${p.id}</div>`}).join("");box.querySelectorAll(".hm-cell").forEach(c=>{c.onclick=()=>{const card=document.querySelector(`.card[data-id="${c.dataset.id}"]`);if(card){card.scrollIntoView({behavior:"smooth",block:"start"});card.style.outline="2px solid var(--o)";setTimeout(()=>card.style.outline="",1800)}}})}
-function getMonthStats(){const months={};P.forEach(p=>(getPark(p.id).runs||[]).forEach(r=>{if(!r.date)return;const key=r.date.slice(0,7);if(!months[key])months[key]={km:0,runs:0};months[key].km+=(parseFloat(r.dist)||0);months[key].runs++}));return months}
-function renderMonths(){const box=document.getElementById("monthBox");if(!box)return;const months=getMonthStats();const keys=Object.keys(months).sort().reverse();if(!keys.length){box.innerHTML='<div class="bx-title">📊 Месяцы</div><div class="empty">Нет данных</div>';return}const mn=["Янв","Фев","Мар","Апр","Май","Июн","Июл","Авг","Сен","Окт","Ноя","Дек"];let html='<div class="bx-title">📊 Сравнение месяцев</div>';keys.slice(0,6).forEach((k,i)=>{const [y,m]=k.split("-");const s=months[k];const next=keys[i+1]?months[keys[i+1]]:null;let dh="";if(next){const d=s.km-next.km;const pct=next.km?Math.round((d/next.km)*100):0;dh=`<span class="month-diff ${d>0?'up':(d<0?'down':'same')}">${d>0?'+':''}${pct}%</span>`}html+=`<div class="month-row"><span>${mn[+m-1]} ${y}</span><span>${s.km.toFixed(1)} км · ${s.runs} заб. ${dh}</span></div>`});box.innerHTML=html}
-function renderForecast(){const box=document.getElementById("forecastBox");if(!box)return;const all=[];P.forEach(p=>(getPark(p.id).runs||[]).forEach(r=>{const pace=paceOf(r);if(pace)all.push(pace)}));if(!all.length){box.innerHTML='<div class="bx-title">🔮 Прогноз</div><div class="empty">Нет забегов</div>';return}const avg=all.reduce((a,b)=>a+b,0)/all.length;const last5=all.slice(-5);const recent=last5.length?last5.reduce((a,b)=>a+b,0)/last5.length:avg;const fmt=s=>`${Math.floor(s/60)}:${String(Math.round(s%60)).padStart(2,"0")}`;let bh="";const tm=new Date().toISOString().slice(0,7);let best=null;P.forEach(p=>(getPark(p.id).runs||[]).forEach(r=>{if(!r.date||!r.date.startsWith(tm))return;const pace=paceOf(r);if(pace&&(!best||pace<best.pace))best={...r,pace,park:p.n}}));if(best)bh=`<div class="best-run">🏆 Лучший месяца: ${best.dist} км за ${best.time}<br><span style="font-size:9px;color:var(--m)">${best.park}</span></div>`;box.innerHTML=`<div class="bx-title">🔮 Прогноз</div><div class="forecast-row"><span>Средний</span><span class="val">${fmt(avg)}/км</span></div><div class="forecast-row"><span>Последние 5</span><span class="val">${fmt(recent)}/км</span></div><div class="forecast-row"><span>Прогноз 5 км</span><span class="val">${fmt(recent*5)}</span></div><div class="forecast-row"><span>Прогноз 10 км</span><span class="val">${fmt(recent*10)}</span></div><div class="forecast-row"><span>Прогноз 21 км</span><span class="val">${fmt(recent*21)}</span></div>${bh}`}
-function exportCSV(){let csv="Парк;Район;Дистанция;Дата;Время;Темп;Заметка\n";P.forEach(p=>{(getPark(p.id).runs||[]).forEach(r=>{const pace=paceOf(r);csv+=`${p.n};${p.l};${r.dist};${r.date||""};${r.time||""};${pace?secToTime(pace)+"/км":""};${(r.note||"").replace(/[;\n]/g,",")}\n`})});const blob=new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="runs.csv";a.click()}
+function renderStreak(){const uniq=[...new Set(allRunDates().map(d=>weekKey(d)))].sort();if(!uniq.length){document.getElementById("streakNum").textContent="0";return}const now=new Date();let cur=weekKey(now.toISOString().slice(0,10));if(!uniq.includes(cur)){const p=new Date();p.setDate(p.getDate()-7);cur=weekKey(p.toISOString().slice(0,10))}let streak=0;while(uniq.includes(cur)){streak++;const p=new Date(cur);p.setDate(p.getDate()-7);cur=weekKey(p.toISOString().slice(0,10))}document.getElementById("streakNum").textContent=streak}
+function renderHeatmap(){const box=document.getElementById("heatmap");if(!box)return;box.innerHTML=P.map(p=>{const n=(getPark(p.id).runs||[]).length;const done=getPark(p.id).done;let lvl=0;if(n>=1)lvl=1;if(n>=3)lvl=2;if(n>=6)lvl=3;if(n>=10)lvl=4;return `<div class="hm-cell l${lvl} ${done?'done':''}" data-id="${p.id}">${p.id}</div>`}).join("");box.querySelectorAll(".hm-cell").forEach(c=>{c.onclick=()=>{const card=document.querySelector(`.card[data-id="${c.dataset.id}"]`);if(card){card.scrollIntoView({behavior:"smooth",block:"start"});card.style.outline="2px solid var(--o)";setTimeout(()=>card.style.outline="",1800)}}})}
+function renderMonths(){const box=document.getElementById("monthBox");if(!box)return;const months={};P.forEach(p=>(getPark(p.id).runs||[]).forEach(r=>{if(!r.date)return;const k=r.date.slice(0,7);if(!months[k])months[k]={km:0,runs:0};months[k].km+=(parseFloat(r.dist)||0);months[k].runs++}));const keys=Object.keys(months).sort().reverse();if(!keys.length){box.innerHTML='<div class="bx-title">📊 Сравнение месяцев</div><div class="empty">Нет данных</div>';return}const mn=["Янв","Фев","Мар","Апр","Май","Июн","Июл","Авг","Сен","Окт","Ноя","Дек"];let html='<div class="bx-title">📊 Сравнение месяцев</div>';keys.slice(0,6).forEach((k,i)=>{const[y,m]=k.split("-");const s=months[k];const next=keys[i+1]?months[keys[i+1]]:null;let dh="";if(next){const d=s.km-next.km;const pct=next.km?Math.round((d/next.km)*100):0;const cls=d>0?"up":(d<0?"down":"same");dh=`<span class="month-diff ${cls}">${d>0?'+':''}${pct}%</span>`}html+=`<div class="month-row"><span>${mn[+m-1]} ${y}</span><span>${s.km.toFixed(1)} км · ${s.runs} заб. ${dh}</span></div>`});box.innerHTML=html}
+function renderForecast(){const box=document.getElementById("forecastBox");if(!box)return;const all=[];P.forEach(p=>(getPark(p.id).runs||[]).forEach(r=>{const pace=paceOf(r);if(pace)all.push(pace)}));if(!all.length){box.innerHTML='<div class="bx-title">🔮 Прогноз</div><div class="empty">Нет забегов</div>';return}const avg=all.reduce((a,b)=>a+b,0)/all.length;const last5=all.slice(-5);const recent=last5.length?last5.reduce((a,b)=>a+b,0)/last5.length:avg;const fmt=s=>{if(!s||isNaN(s))return"—";const t=Math.round(s);const h=Math.floor(t/3600);const m=Math.floor((t%3600)/60);const sc=t%60;if(h>0)return h+":"+String(m).padStart(2,"0")+":"+String(sc).padStart(2,"0");return m+":"+String(sc).padStart(2,"0")};let bh="";const tm=new Date().toISOString().slice(0,7);let best=null;P.forEach(p=>(getPark(p.id).runs||[]).forEach(r=>{if(!r.date||!r.date.startsWith(tm))return;const pace=paceOf(r);if(pace&&(!best||pace<best.pace))best={...r,pace,park:p.n}}));if(best)bh=`<div class="best-run">🏆 Лучший месяца: ${best.dist} км за ${best.time}<br><span style="font-size:9px;color:var(--m)">${best.park}</span></div>`;box.innerHTML=`<div class="bx-title">🔮 Прогноз</div><div class="forecast-row"><span>Средний</span><span class="val">${fmt(avg)}/км</span></div><div class="forecast-row"><span>Последние 5</span><span class="val">${fmt(recent)}/км</span></div><div class="forecast-row"><span>Прогноз 5 км</span><span class="val">${fmt(recent*5)}</span></div><div class="forecast-row"><span>Прогноз 10 км</span><span class="val">${fmt(recent*10)}</span></div><div class="forecast-row"><span>Прогноз 21 км</span><span class="val">${fmt(recent*21)}</span></div>${bh}`}
+function renderChart(){const box=document.getElementById("chartBox");if(!box)return;const all=[];P.forEach(p=>(getPark(p.id).runs||[]).forEach(r=>{const pace=paceOf(r);if(pace&&r.date)all.push({date:r.date,pace:pace,dist:parseFloat(r.dist)})}));all.sort((a,b)=>a.date.localeCompare(b.date));if(all.length<2){box.innerHTML='<div class="bx-title">📈 Динамика темпа</div><div class="empty">Нужно 2+ забега</div>';return}const last=all.slice(-20);const w=320,h=160,padL=42,padR=12,padT=20,padB=28;const minP=Math.min.apply(null,last.map(r=>r.pace))*0.95;const maxP=Math.max.apply(null,last.map(r=>r.pace))*1.05;const range=maxP-minP||1;const stepX=last.length>1?(w-padL-padR)/(last.length-1):0;const pts=last.map((r,i)=>{const x=padL+i*stepX;const y=h-padB-((maxP-r.pace)/range)*(h-padT-padB);return{x:x,y:y,dist:r.dist}});let svg='<svg viewBox="0 0 '+w+' '+h+'" style="width:100%;height:180px">';svg+='<text x="4" y="'+(padT+3)+'" fill="#94a3b8" font-size="8">'+secToTime(maxP)+'</text>';svg+='<text x="4" y="'+(padT+(h-padT-padB)/2+3)+'" fill="#94a3b8" font-size="8">'+secToTime((maxP+minP)/2)+'</text>';svg+='<text x="4" y="'+(h-padB+3)+'" fill="#94a3b8" font-size="8">'+secToTime(minP)+'</text>';let path='M';pts.forEach(function(p,i){path+=(i===0?'':' L')+p.x.toFixed(1)+','+p.y.toFixed(1)});svg+='<path d="'+path+'" fill="none" stroke="#38bdf8" stroke-width="1.5" opacity="0.6"/>';pts.forEach(function(p){const c=p.dist===10?'#ff6b35':(p.dist===5?'#00ff88':'#38bdf8');svg+='<circle cx="'+p.x.toFixed(1)+'" cy="'+p.y.toFixed(1)+'" r="3.5" fill="'+c+'"/>'});svg+='<text x="'+padL+'" y="'+(h-8)+'" fill="#94a3b8" font-size="8">'+last[0].date.slice(5)+'</text>';svg+='<text x="'+(w-padR)+'" y="'+(h-8)+'" fill="#94a3b8" font-size="8" text-anchor="end">'+last[last.length-1].date.slice(5)+'</text>';svg+='</svg>';box.innerHTML='<div class="bx-title">📈 Динамика темпа ('+last.length+' забегов)</div>'+svg+'<div style="display:flex;gap:12px;justify-content:center;font-size:10px;color:#94a3b8;margin-top:4px"><span><span style="color:#00ff88">●</span> 5 км</span><span><span style="color:#ff6b35">●</span> 10 км</span></div>'}
+function bindCards(){document.querySelectorAll(".card").forEach(card=>{const id=card.dataset.id,cb=card.querySelector(".cb1"),form=card.querySelector(".run-form"),addBtn=card.querySelector(".add-run"),sel=card.querySelector(".f-dist"),ol=card.querySelector(".f-other-label"),oi=card.querySelector(".f-other"),di=card.querySelector(".f-date"),ti=card.querySelector(".f-time"),ni=card.querySelector(".f-note");cb.checked=!!getPark(id).done;cb.onchange=()=>{getPark(id).done=cb.checked;scheduleSave();updateStats();applyFilter();renderHeatmap()};renderRuns(card);addBtn.onclick=()=>{form.classList.add("open");addBtn.style.display="none";if(!di.value)di.value=new Date().toISOString().slice(0,10)};sel.onchange=()=>{ol.style.display=sel.value==="other"?"flex":"none"};function closeForm(){form.classList.remove("open");addBtn.style.display="block";oi.value="";ti.value="";ni.value="";sel.value="5";ol.style.display="none"}form.querySelector(".cancel").onclick=closeForm;form.querySelector(".save").onclick=()=>{let d=sel.value;if(d==="other"){d=oi.value.trim();if(!d){alert("Укажите дистанцию");return}}const t=ti.value.trim();if(!t){alert("Укажите время");return}const park=getPark(id);if(!park.runs)park.runs=[];park.runs.push({dist:d,date:di.value,time:t,note:ni.value.trim()});park.done=true;saveData();renderRuns(card);cb.checked=true;updateStats();applyFilter();updateGoal();renderStreak();renderHeatmap();renderMonths();renderForecast();renderChart();renderCalendar();closeForm()}})}
+function renderAll(){buildHTML();bindCards();updateStats();applyFilter();updateGoal();renderStreak();renderHeatmap();renderMonths();renderForecast();renderCalendar();renderChart()}
+function exportCSV(){let csv="Парк;Дистанция;Дата;Время;Темп;Заметка\n";P.forEach(p=>{(getPark(p.id).runs||[]).forEach(r=>{const pace=paceOf(r);csv+=`${p.n};${r.dist};${r.date||""};${r.time||""};${pace?secToTime(pace)+"/км":""};${(r.note||"").replace(/[;\n]/g,",")}\n`})});const blob=new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="runs.csv";a.click()}
 function exportJSON(){const blob=new Blob([JSON.stringify(DATA,null,2)],{type:"application/json"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="run-backup-"+new Date().toISOString().slice(0,10)+".json";a.click()}
 function importJSON(file){const reader=new FileReader();reader.onload=e=>{try{const j=JSON.parse(e.target.result);if(!j.parks)throw new Error("нет parks");if(confirm("Заменить данные?")){DATA=j;saveData();location.reload()}}catch(err){alert("Ошибка: "+err.message)}};reader.readAsText(file)}
 function copyProgress(){const done=P.filter(p=>getPark(p.id).done).length;const km=totalKm(),runs=totalRuns();const text=`🏃 Мой челлендж СПб:\nПарков: ${done}/${P.length}\nЗабегов: ${runs}\nПробежано: ${km.toFixed(1)} км`;navigator.clipboard.writeText(text).then(()=>alert("Скопировано!")).catch(()=>alert(text))}
@@ -293,14 +229,15 @@ document.getElementById("filterSel").value=UI.filter;
 document.getElementById("sortSel").value=UI.sort;
 document.getElementById("filterSel").onchange=e=>{UI.filter=e.target.value;localStorage.setItem("ui_filter",UI.filter);applyFilter()};
 document.getElementById("sortSel").onchange=e=>{UI.sort=e.target.value;localStorage.setItem("ui_sort",UI.sort);renderAll()};
+document.getElementById("calPrev").onclick=()=>{UI.calOffset=(UI.calOffset||0)-1;renderCalendar()};
+document.getElementById("calNext").onclick=()=>{UI.calOffset=(UI.calOffset||0)+1;renderCalendar()};
 document.getElementById("csvBtn").onclick=exportCSV;
 document.getElementById("jsonBtn").onclick=exportJSON;
 document.getElementById("importBtn").onclick=()=>document.getElementById("importFile").click();
 document.getElementById("importFile").onchange=e=>{if(e.target.files[0])importJSON(e.target.files[0])};
 document.getElementById("copyBtn").onclick=copyProgress;
 document.getElementById("rb").onclick=()=>{if(confirm("Сбросить весь прогресс?")){DATA={parks:{},goalKm:DATA.goalKm||500};saveData();location.reload()}};
-document.getElementById("calPrev").onclick=()=>{UI.calOffset=(UI.calOffset||0)-1;renderCalendar()};
-document.getElementById("calNext").onclick=()=>{UI.calOffset=(UI.calOffset||0)+1;renderCalendar()};applyTheme();applyCompact();loadData();
+applyTheme();applyCompact();loadData();
 </script>
 </body>
 </html>
